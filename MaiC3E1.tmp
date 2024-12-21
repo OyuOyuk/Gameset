@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjpi46v0ixskd"]
+
+[ext_resource type="Script" path="res://Grids.gd" id="1_043rh"]
+[ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/example.png" id="1_lbwbn"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a777o"]
+texture = ExtResource("1_lbwbn")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:0/0/custom_data_0 = 1
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0/custom_data_0 = 2
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0/custom_data_0 = 3
+
+[sub_resource type="TileSet" id="TileSet_sk1ye"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "Terrain"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_a777o")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="map" type="Node2D" parent="."]
+
+[node name="world" type="TileMap" parent="map" node_paths=PackedStringArray("displayTilemap")]
+texture_filter = 1
+tile_set = SubResource("TileSet_sk1ye")
+rendering_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(2, 65536, 0, 1, 65536, 0, -65535, 65536, 0, -65534, 65536, 0, 3, 65536, 0, -65533, 65536, 0, -65536, 0, 0, 0, 65536, 0, 65535, 0, 0, -1, 0, 0, 65536, 65536, 0, 65537, 65536, 0, 65538, 65536, 0, 65539, 65536, 0, -65532, 65536, 0, 4, 65536, 0, 65540, 0, 0, 65541, 0, 0, 5, 0, 0, -65531, 0, 0, -131067, 0, 0, -131068, 0, 0, -131069, 0, 0, -131070, 0, 0, -131071, 0, 0, -131072, 0, 0, 131076, 0, 0, 131075, 0, 0, 131074, 65536, 0, 131077, 0, 0, 196610, 0, 0, 196609, 0, 0, 131073, 65536, 0, 131072, 0, 0, 196607, 0, 0, 131071, 0, 0, 262143, 0, 0, 196608, 0, 0, 196611, 0, 0, 196612, 0, 0, 262142, 65536, 0, 196606, 65536, 0, 131070, 65536, 0, 65534, 65536, 0, -2, 65536, 0, -65538, 65536, 0, -65537, 65536, 0, -131073, 65536, 0, -196608, 65536, 0, -196607, 65536, 0, -196606, 65536, 0, -196605, 65536, 0, -196604, 65536, 0, -196603, 65536, 0, -196602, 65536, 0, -131066, 65536, 0, -65530, 65536, 0, 6, 65536, 0, 65542, 65536, 0, 131078, 65536, 0, 196614, 65536, 0, 196613, 65536, 0, 262149, 65536, 0, 262148, 65536, 0, 262147, 65536, 0, 262146, 65536, 0, 262145, 65536, 0, 262144, 65536, 0, 327679, 65536, 0, 327678, 65536, 0)
+script = ExtResource("1_043rh")
+displayTilemap = NodePath("")
+
+[node name="Camera2D" type="Camera2D" parent="."]

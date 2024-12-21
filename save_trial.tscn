@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://pmbb48gp76xa"]
+
+[ext_resource type="Script" path="res://trial_save.gd" id="1_imi4c"]
+
+[node name="save_trial" type="Node2D"]
+
+[node name="grid" type="TileMap" parent="."]
+format = 2
+
+[node name="trial_save" type="Node2D" parent="."]
+script = ExtResource("1_imi4c")

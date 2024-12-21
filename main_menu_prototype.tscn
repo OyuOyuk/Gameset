@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bnbjftctbm0o5"]
+
+[node name="MainMenuPrototype" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 646.0
+color = Color(0, 0, 0, 1)
+
+[node name="Continue" type="Button" parent="."]
+layout_mode = 0
+offset_left = 447.0
+offset_top = 166.0
+offset_right = 704.0
+offset_bottom = 207.0
+text = "Continue"
+
+[node name="Save" type="Button" parent="."]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 240.0
+offset_right = 703.0
+offset_bottom = 281.0
+text = "Save
+"
+
+[node name="Load" type="Button" parent="."]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 312.0
+offset_right = 703.0
+offset_bottom = 353.0
+text = "Load"
