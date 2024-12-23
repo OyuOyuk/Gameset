@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=26 format=3 uid="uid://bjpi46v0ixskd"]
 
-[ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
+[ext_resource type="Script" path="res://Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/Grids.gd" id="1_043rh"]
 [ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/example.png" id="1_lbwbn"]
 [ext_resource type="Texture2D" uid="uid://cvp7e1qtsag6q" path="res://assets/grass_dirt.png" id="2_3h775"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://script/worldGen.gd" id="8_p8gn7"]
 [ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="10_y6tl6"]
 [ext_resource type="PackedScene" uid="uid://bnbjftctbm0o5" path="res://mainMenu.tscn" id="11_jr1r2"]
-[ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 
@@ -122,16 +121,16 @@ sources/0 = SubResource("TileSetAtlasSource_f0ijb")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_6uaq8")
 
-[node name="world" type="Node2D" parent="."]
+[node name="map" type="Node2D" parent="."]
 
-[node name="worldgen" type="Node2D" parent="world" node_paths=PackedStringArray("world", "water")]
+[node name="worldgen" type="Node2D" parent="map" node_paths=PackedStringArray("world", "water")]
 script = ExtResource("8_p8gn7")
 LandNoise = SubResource("NoiseTexture2D_a0bt4")
 WaterNoise = SubResource("NoiseTexture2D_f5dxa")
 world = NodePath("world")
 water = NodePath("water")
 
-[node name="world" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
+[node name="world" type="TileMap" parent="map/worldgen" node_paths=PackedStringArray("displayTilemap")]
 texture_filter = 1
 tile_set = SubResource("TileSet_sk1ye")
 rendering_quadrant_size = 32
@@ -140,21 +139,21 @@ script = ExtResource("1_043rh")
 displayTilemap = NodePath("../view")
 dirtPlaceholderAtlasCoord = Vector2i(1, 0)
 
-[node name="view" type="TileMap" parent="world/worldgen"]
+[node name="view" type="TileMap" parent="map/worldgen"]
 texture_filter = 1
 position = Vector2(16, 16)
 tile_set = SubResource("TileSet_gj5gs")
 rendering_quadrant_size = 32
 format = 2
 
-[node name="water" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
+[node name="water" type="TileMap" parent="map/worldgen" node_paths=PackedStringArray("displayTilemap")]
 tile_set = SubResource("TileSet_18tfa")
 rendering_quadrant_size = 32
 format = 2
 script = ExtResource("5_mifmk")
 displayTilemap = NodePath("../water_view")
 
-[node name="water_view" type="TileMap" parent="world/worldgen"]
+[node name="water_view" type="TileMap" parent="map/worldgen"]
 texture_filter = 1
 position = Vector2(16, 16)
 tile_set = SubResource("TileSet_0c131")
@@ -164,8 +163,8 @@ format = 2
 [node name="Player" parent="." instance=ExtResource("5_bj60p")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-script = ExtResource("11_sn3m7")
-
-[node name="MainMenuPrototype" parent="." instance=ExtResource("11_jr1r2")]
+zoom = Vector2(0.1, 0.1)
 
 [node name="map_trial" parent="." instance=ExtResource("10_y6tl6")]
+
+[node name="MainMenuPrototype" parent="." instance=ExtResource("11_jr1r2")]

@@ -1,0 +1,135 @@
+[gd_scene load_steps=19 format=3 uid="uid://b3sn53f22sgb0"]
+
+[ext_resource type="Script" path="res://script/key.gd" id="1_1hdib"]
+[ext_resource type="Texture2D" uid="uid://bw76xf45l4k4v" path="res://assets/hextiles.png" id="1_iqo37"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="3_jnioq"]
+[ext_resource type="Script" path="res://script/Map.gd" id="3_ojbmr"]
+[ext_resource type="Texture2D" uid="uid://btcwm5blhrj34" path="res://assets/hexagonal_patterns.png" id="4_julou"]
+[ext_resource type="Texture2D" uid="uid://8xttpfy1wihg" path="res://assets/hexagonal_patterns1.png" id="5_p3e7t"]
+[ext_resource type="Texture2D" uid="uid://b0tt0l7ob4pii" path="res://assets/hexagonal_patterns2.png" id="6_t7v85"]
+[ext_resource type="Texture2D" uid="uid://btxyms2xmhnxg" path="res://assets/rivers.png" id="8_uqmol"]
+[ext_resource type="Script" path="res://River.gd" id="9_8kt4k"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mhcjp"]
+texture = ExtResource("1_iqo37")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_r21ft"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_mhcjp")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kcx5n"]
+seed = 781
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5hkpk"]
+noise = SubResource("FastNoiseLite_kcx5n")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d4brm"]
+texture = ExtResource("4_julou")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+3:0/size_in_atlas = Vector2i(3, 3)
+3:0/0 = 0
+6:0/size_in_atlas = Vector2i(3, 3)
+6:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_42x56"]
+texture = ExtResource("5_p3e7t")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+3:0/size_in_atlas = Vector2i(3, 3)
+3:0/0 = 0
+6:0/size_in_atlas = Vector2i(3, 3)
+6:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lb737"]
+texture = ExtResource("6_t7v85")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+3:0/size_in_atlas = Vector2i(3, 3)
+3:0/0 = 0
+6:0/size_in_atlas = Vector2i(3, 3)
+6:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ex4b4"]
+texture = ExtResource("8_uqmol")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_l0ctt"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_d4brm")
+sources/1 = SubResource("TileSetAtlasSource_42x56")
+sources/2 = SubResource("TileSetAtlasSource_lb737")
+sources/3 = SubResource("TileSetAtlasSource_ex4b4")
+
+[node name="map_trial" type="Node2D"]
+script = ExtResource("1_1hdib")
+
+[node name="Grid" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_r21ft")
+format = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_jnioq")
+
+[node name="Map" type="Node2D" parent="." node_paths=PackedStringArray("tilemap", "displayTilemap")]
+script = ExtResource("3_ojbmr")
+biomeNoise = SubResource("NoiseTexture2D_5hkpk")
+tilemap = NodePath("../Grid")
+displayTilemap = NodePath("../Display")
+
+[node name="Display" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_l0ctt")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "rivers"
+layer_1/name = "map"
+layer_1/tile_data = PackedInt32Array()
+
+[node name="River" type="Node2D" parent="."]
+script = ExtResource("9_8kt4k")

@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://bnbjftctbm0o5"]
+[gd_scene load_steps=3 format=3 uid="uid://bnbjftctbm0o5"]
+
+[ext_resource type="Script" path="res://mainMenu.gd" id="1_pgl83"]
+[ext_resource type="Script" path="res://script/saveManager.gd" id="2_um3qg"]
 
 [node name="MainMenuPrototype" type="Control"]
 layout_mode = 3
@@ -7,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_pgl83")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -38,3 +42,12 @@ offset_top = 312.0
 offset_right = 703.0
 offset_bottom = 353.0
 text = "Load"
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_um3qg")
+
+[connection signal="pressed" from="Save" to="Control" method="_on_save_pressed"]
+[connection signal="pressed" from="Load" to="Control" method="_on_load_pressed"]
