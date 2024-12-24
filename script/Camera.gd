@@ -5,6 +5,7 @@ var dragging = false
 var mouse_start_pos 
 var original_pos = position
 var screen_start_position
+var map_size
 func _ready():
 	pass
 func _input(event):
@@ -21,5 +22,6 @@ func _input(event):
 			
 			dragging = false
 	elif event is InputEventMouseMotion and dragging:
+	
 		position = zoom * (mouse_start_pos - event.position) + screen_start_position
 

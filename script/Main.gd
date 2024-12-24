@@ -30,9 +30,11 @@ func _process(delta):
 		if camera.screen == "map":
 			camera.screen = "main"
 			player.movement = true
+			
 		else:
 			camera.screen = "map"
 			player.movement = false
+			
 		
 		main_menu_scene.visible = false
 		map_scene.visible = !map_scene.visible

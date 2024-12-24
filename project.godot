@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SaveManager="*res://script/saveManager.gd"
+SaveManager="*res://script/managerScripts/saveManager.gd"
+WorldManager="*res://script/managerScripts/worldManager.gd"
 
 [input]
 

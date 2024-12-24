@@ -1,5 +1,5 @@
 extends Node2D
-"""
+
 
 var size = Vector2i(100, 100)
 var riverStarters = 5
@@ -37,6 +37,11 @@ var riverTileSet = {
 	"0,1,0,1,1,1": Vector2i(15,1),
 	
 }
+func _ready():
+	generateRivers()
+func generateRivers():
+	pass
+"""
 func generateRivers():
 	print("Generating rivers...")
 	var rng = RandomNumberGenerator.new()
@@ -65,7 +70,7 @@ func generateRivers():
 				y = size.y/2 -1
 				x = rng.randf_range(-size.x/2, size.x/2)
 		print("River starting at:", Vector2i(x, y), " with direction:", direction)
-		var tileData = tiles[Vector2i(x,y)]
+		var tileData =WorldManager.get_chunk(Vector2i(x, y))
 		tileData.river_connection = direction
 
 		var neighbor = neighborFinder(x, y, ",".join(direction))
@@ -104,10 +109,8 @@ func riverDirector(x,y, direction):
 	print("DEBUG: Finding neighbor for tile:", Vector2i(x, y))
 	print("DEBUG: Direction vector received:", direction)
 	print("Directing river from:", Vector2i(x, y), " with direction:", direction)
-	if !(Vector2i(x,y ) in tiles):
-		print("No tile at:", Vector2i(x, y), "Skipping.")
-		return
-	var tileData = tiles[Vector2i(x, y)]
+
+	var tileData =WorldManager.get_chunk(Vector2i(x, y))
 	var sides = direction.duplicate()
 	var len = direction.size() # Copy the array to avoid modifying the original
 	var n = 2
@@ -134,6 +137,5 @@ func riverDirector(x,y, direction):
 		occupied.append(before) 
 	print("Occupied sides:", occupied)
 	return
-
-"""
+	"""
 

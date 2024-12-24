@@ -29,13 +29,12 @@ func mapGenerator():
 	var tile
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):
-			tile = worldData.new()
-			tile.pos = Vector2i(x, y)
-			tiles[tile.pos] = tile
+			WorldManager.generate_chunk(Vector2i(x,y))
+
 
 	for xs in range(-size.x/2, size.x/2):
 		for ys in range(-size.y/2, size.y/2):
-			var tileData = tiles[Vector2i(xs, ys)]
+			var tileData = WorldManager.get_chunk(Vector2i(xs, ys))
 			var biome_noise = noise.get_noise_2d(xs, ys)
 			if biome_noise >=-0.1:
 				tileData.biome = "GRASSLANDS"
@@ -49,7 +48,7 @@ func mapSetup():
 	print("Setting up map...")
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):
-			var tileData = tiles[Vector2i(x,y)]
+			var tileData = WorldManager.get_chunk(Vector2i(x, y))
 			if tileData.biome == "GRASSLANDS":
 				tilemap.set_cell(0,Vector2i(x,y), 0, Vector2i(1, 0))
 			elif tileData.biome == "FOREST":
@@ -68,7 +67,7 @@ func mapDrawer():
 		# Iterate through the entire map
 		for x in range(-size.x/2, size.x/2):
 			for y in range(-size.y/2, size.y/2):
-				var tileData = tiles[Vector2i(x, y)]
+				var tileData = WorldManager.get_chunk(Vector2i(x, y))
 				# Check if the tile matches the current biome type
 				if tileData.biome == biome:
 					randomize()

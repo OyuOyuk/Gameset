@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnbjftctbm0o5"]
 
 [ext_resource type="Script" path="res://mainMenu.gd" id="1_pgl83"]
-[ext_resource type="Script" path="res://script/saveManager.gd" id="2_um3qg"]
+[ext_resource type="Script" path="res://script/managerScripts/saveManager.gd" id="2_bfn4u"]
 
 [node name="MainMenuPrototype" type="Control"]
 layout_mode = 3
@@ -47,7 +47,7 @@ text = "Load"
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("2_um3qg")
+script = ExtResource("2_bfn4u")
 
 [connection signal="pressed" from="Save" to="Control" method="_on_save_pressed"]
 [connection signal="pressed" from="Load" to="Control" method="_on_load_pressed"]
