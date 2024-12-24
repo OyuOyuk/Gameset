@@ -30,6 +30,7 @@ func mapGenerator():
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):
 			WorldManager.generate_chunk(Vector2i(x,y))
+			WorldManager.generate_chunk(Vector2i(x,y)).river_connection = [0, 0, 0, 0, 0, 0]
 
 
 	for xs in range(-size.x/2, size.x/2):

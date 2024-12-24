@@ -11,3 +11,8 @@ func generate_chunk(chunk_pos):
 
 func get_chunk(chunk_pos):
 	return tiles.get(chunk_pos, null)
+func check_chunk(chunk_pos):
+	if tiles.has(chunk_pos):
+		return true
+	else:
+		return false

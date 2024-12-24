@@ -1,8 +1,8 @@
 extends Node2D
 
-
 var size = Vector2i(100, 100)
-var riverStarters = 5
+@onready var riverTileMap = get_node("riverDisplay")
+var riverStartCount = 5
 var riverTileSet = {
 	"1,0,0,0,1,0":Vector2i(0, 0),
 	"1,0,0,1,0,0": Vector2i(1,0),
@@ -38,9 +38,74 @@ var riverTileSet = {
 	
 }
 func _ready():
+	
 	generateRivers()
+
 func generateRivers():
-	pass
+	var x = -size.x/2
+	var y = -size.y/2
+	var riverStarterOptions = []
+	var riverStarters = []
+	var riverDirection
+	for xv in range(-size.x/2, size.x/2):
+		if WorldManager.get_chunk(Vector2i(xv,y)) != null:
+			riverStarterOptions.append(Vector2i(xv,y))
+	for yv in range(-size.y/2, size.y/2):
+		if WorldManager.get_chunk(Vector2i(x,yv)) != null:
+			riverStarterOptions.append(Vector2i(x,yv))
+	for time in range(riverStartCount):
+		riverStarters.append(riverStarterOptions.pick_random())
+	print(riverStarters)
+	for river in riverStarters:
+		if river.x == -50:
+			riverDirection = [0, 0, 0, 1, 0, 0]
+			WorldManager.get_chunk(river).river_connection = [1, 0, 0, 1, 0, 0]
+		elif river.y == -50:
+			riverDirection = [0, 0, 0, 0, 1, 0]
+			WorldManager.get_chunk(river).river_connection = [0, 1, 0, 0, 1, 0]
+		var next = neighborFinder(river, riverDirection)
+		print(next)
+		riverDirector(next,riverDirection)
+	
+func neighborFinder(pos : Vector2i, direction):
+	var directions = {
+		"0,0,0,0,1,0": Vector2i(0, 1),  # move down          2 
+		"0,1,0,0,0,0": Vector2i(0, -1), # move up         1       3
+		"0,0,1,0,0,0":Vector2i(1, -1),  # move right_up   6      4
+		"1,0,0,0,0,0":Vector2i(-1, -1), # move left_up         5
+		"0,0,0,1,0,0": Vector2i(1, 0),  # move right_down
+		"0,0,0,0,0,1": Vector2i(-1, 0)  # move left_down
+	}
+	return pos + directions[",".join(direction)]
+func riverDirector(pos : Vector2i, incomingDirection):
+	
+	var direction = incomingDirection.duplicate() #direction means like the where the river comes from Incoming means where the river is from the old chunks
+	for item in range(direction.size()):
+		direction[item] = incomingDirection[(item + 3) % incomingDirection.size()]
+	var incomingIndex = direction.find(1)
+	var occupiedSides = []
+	occupiedSides.append(incomingIndex)
+	occupiedSides.append((incomingIndex-1+6)%6)
+	occupiedSides.append((incomingIndex+1)%6)
+	if WorldManager.get_chunk(pos).river_connection != [0, 0, 0, 0, 0, 0]:
+		riverMerger(pos, incomingIndex)
+	var unoccupiedSides = []
+	for i in range(6):
+		if i not in occupiedSides:
+			unoccupiedSides.append(i)
+	var outgoingIndex = unoccupiedSides.pick_random()
+	WorldManager.get_chunk(pos).river_connection[outgoingIndex] = 1
+	WorldManager.get_chunk(pos).river_connection[incomingIndex] = 1
+	
+	
+	var outgoingDirection = [0, 0, 0, 0, 0, 0]
+	outgoingDirection[outgoingIndex] = 1
+	var next = neighborFinder(pos, outgoingDirection)
+	print(next)
+	if WorldManager.check_chunk(next):
+		riverDirector(next, outgoingDirection)
+func riverMerger(pos : Vector2i, incomingIndex):
+	WorldManager.get_chunk(pos).river_connection[incomingIndex] = 1
 """
 func generateRivers():
 	print("Generating rivers...")
