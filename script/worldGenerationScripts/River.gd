@@ -57,16 +57,20 @@ func generateRivers():
 	for time in range(riverStartCount):
 		riverStarters.append(riverStarterOptions.pick_random())
 	print(riverStarters)
+	var nogozone 
 	for river in riverStarters:
 		if river.x == -50:
 			riverDirection = [0, 0, 0, 1, 0, 0]
 			WorldManager.get_chunk(river).river_connection = [2, 0, 0, 1, 0, 0]
+			nogozone = [0, 1, 5]
 		elif river.y == -50:
 			riverDirection = [0, 0, 0, 0, 1, 0]
 			WorldManager.get_chunk(river).river_connection = [0, 2, 0, 0, 1, 0]
+			nogozone = [0, 1, 2]
 		var next = neighborFinder(river, riverDirection)
 		print(next)
-		riverDirector(next,riverDirection)
+		
+		riverDirector(next,riverDirection, nogozone)
 	
 func neighborFinder(pos : Vector2i, direction):
 	var directions = {
@@ -78,7 +82,7 @@ func neighborFinder(pos : Vector2i, direction):
 		"0,0,0,0,0,1": Vector2i(-1, 0)  # move left_down
 	}
 	return pos + directions[",".join(direction)]
-func riverDirector(pos : Vector2i, incomingDirection):
+func riverDirector(pos : Vector2i, incomingDirection, nogozone):
 	
 	var direction = incomingDirection.duplicate() #direction means like the where the river comes from Incoming means where the river is from the old chunks
 	for item in range(direction.size()):
@@ -88,8 +92,10 @@ func riverDirector(pos : Vector2i, incomingDirection):
 	occupiedSides.append(incomingIndex)
 	occupiedSides.append((incomingIndex-1+6)%6)
 	occupiedSides.append((incomingIndex+1)%6)
+	occupiedSides.append_array(nogozone)
 	if WorldManager.get_chunk(pos).river_connection != [0, 0, 0, 0, 0, 0]:
 		riverMerger(pos, incomingIndex)
+		return
 	var unoccupiedSides = []
 	for i in range(6):
 		if i not in occupiedSides:
@@ -104,7 +110,7 @@ func riverDirector(pos : Vector2i, incomingDirection):
 	var next = neighborFinder(pos, outgoingDirection)
 	print(next)
 	if WorldManager.check_chunk(next):
-		riverDirector(next, outgoingDirection)
+		riverDirector(next, outgoingDirection, nogozone)
 func riverMerger(pos : Vector2i, incomingIndex):
 	if WorldManager.get_chunk(pos).river_connection[(incomingIndex-1+6)%6] == 2 or WorldManager.get_chunk(pos).river_connection[(incomingIndex+1)%6]  == 2 or WorldManager.get_chunk(pos).river_connection[incomingIndex]:
 		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
