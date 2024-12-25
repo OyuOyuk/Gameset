@@ -1,7 +1,7 @@
 extends Node2D
 
 var size = Vector2i(100, 100)
-@onready var riverTileMap = get_node("riverDisplay")
+@export var riverTileMap : TileMap
 var riverStartCount = 5
 var riverTileSet = {
 	"1,0,0,0,1,0":Vector2i(0, 0),
@@ -14,7 +14,7 @@ var riverTileSet = {
 	"1,0,1,0,1,0": Vector2i(7,0),
 	"0,1,1,0,1,0": Vector2i(8,0),
 	"1,0,0,1,1,0": Vector2i(9,0),
-	#"1,0,1,0,1,0": Vector2i(10,0),
+	"0,1,1,0,1,1": Vector2i(10,1),
 	"1,0,1,1,0,0": Vector2i(11,0),
 	"1,0,1,0,0,1": Vector2i(12,0),
 	"0,0,1,0,1,1": Vector2i(14,0),
@@ -24,7 +24,7 @@ var riverTileSet = {
 	"0,0,1,0,1,0": Vector2i(1,1),
 	"0,0,0,1,0,1": Vector2i(2,1),
 	"1,1,0,1,0,0": Vector2i(3,1),
-	#"0,1,0,1,0,1": Vector2i(4,1),
+	"1,0,1,1,0,1": Vector2i(4,1),
 	"1,0,0,1,0,1": Vector2i(5,1),
 	"0,1,1,0,0,1": Vector2i(6,1),
 	"0,1,0,1,0,1": Vector2i(7,1),
@@ -35,12 +35,13 @@ var riverTileSet = {
 	"1,1,1,0,1,0": Vector2i(13,1),
 	"0,1,1,1,0,1": Vector2i(14,1),
 	"0,1,0,1,1,1": Vector2i(15,1),
+	"1,1,1,1,1,1": Vector2i(10,0),
 	
 }
 func _ready():
 	
 	generateRivers()
-
+	riverTiler()
 func generateRivers():
 	var x = -size.x/2
 	var y = -size.y/2
@@ -59,10 +60,10 @@ func generateRivers():
 	for river in riverStarters:
 		if river.x == -50:
 			riverDirection = [0, 0, 0, 1, 0, 0]
-			WorldManager.get_chunk(river).river_connection = [1, 0, 0, 1, 0, 0]
+			WorldManager.get_chunk(river).river_connection = [2, 0, 0, 1, 0, 0]
 		elif river.y == -50:
 			riverDirection = [0, 0, 0, 0, 1, 0]
-			WorldManager.get_chunk(river).river_connection = [0, 1, 0, 0, 1, 0]
+			WorldManager.get_chunk(river).river_connection = [0, 2, 0, 0, 1, 0]
 		var next = neighborFinder(river, riverDirection)
 		print(next)
 		riverDirector(next,riverDirection)
@@ -95,8 +96,8 @@ func riverDirector(pos : Vector2i, incomingDirection):
 			unoccupiedSides.append(i)
 	var outgoingIndex = unoccupiedSides.pick_random()
 	WorldManager.get_chunk(pos).river_connection[outgoingIndex] = 1
-	WorldManager.get_chunk(pos).river_connection[incomingIndex] = 1
-	
+	WorldManager.get_chunk(pos).river_connection[incomingIndex] = 2
+	print(WorldManager.get_chunk(pos).river_connection)
 	
 	var outgoingDirection = [0, 0, 0, 0, 0, 0]
 	outgoingDirection[outgoingIndex] = 1
@@ -105,7 +106,24 @@ func riverDirector(pos : Vector2i, incomingDirection):
 	if WorldManager.check_chunk(next):
 		riverDirector(next, outgoingDirection)
 func riverMerger(pos : Vector2i, incomingIndex):
-	WorldManager.get_chunk(pos).river_connection[incomingIndex] = 1
+	if WorldManager.get_chunk(pos).river_connection[(incomingIndex-1+6)%6] == 2 or WorldManager.get_chunk(pos).river_connection[(incomingIndex+1)%6]  == 2 or WorldManager.get_chunk(pos).river_connection[incomingIndex]:
+		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
+	elif WorldManager.get_chunk(pos).river_connection.count(1) > 2:
+		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
+	else:
+		WorldManager.get_chunk(pos).river_connection[incomingIndex]
+			
+func changer(connections):
+	for index in range(connections.size()):
+		if connections[index] == 2:
+			connections[index] = 1
+	return connections
+func riverTiler():
+	for x in range(-size.x/2, size.x/2):
+		for y in range(-size.y/2, size.y/2):
+			if WorldManager.get_chunk(Vector2i(x,y)).river_connection != [0, 0, 0, 0, 0, 0]: 
+				riverTileMap.set_cell(0, Vector2i(x,y), 0, riverTileSet[",".join(changer(WorldManager.get_chunk(Vector2i(x,y)).river_connection))] )	
+			
 """
 func generateRivers():
 	print("Generating rivers...")

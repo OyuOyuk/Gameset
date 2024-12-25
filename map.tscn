@@ -135,6 +135,9 @@ texture_region_size = Vector2i(32, 32)
 13:1/0 = 0
 14:1/0 = 0
 15:1/0 = 0
+4:1/0 = 0
+10:0/0 = 0
+10:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_rhohp"]
 tile_shape = 3
@@ -164,8 +167,9 @@ layer_0/name = "rivers"
 layer_1/name = "map"
 layer_1/tile_data = PackedInt32Array()
 
-[node name="River" type="Node2D" parent="."]
+[node name="River" type="Node2D" parent="." node_paths=PackedStringArray("riverTileMap")]
 script = ExtResource("9_8kt4k")
+riverTileMap = NodePath("riverDisplay")
 
 [node name="riverDisplay" type="TileMap" parent="River"]
 tile_set = SubResource("TileSet_rhohp")
