@@ -71,17 +71,35 @@ func generateRivers():
 		print(next)
 		
 		riverDirector(next,riverDirection, nogozone)
-	
-func neighborFinder(pos : Vector2i, direction):
-	var directions = {
-		"0,0,0,0,1,0": Vector2i(0, 1),  # move down          2 
-		"0,1,0,0,0,0": Vector2i(0, -1), # move up         1       3
-		"0,0,1,0,0,0":Vector2i(1, -1),  # move right_up   6      4
-		"1,0,0,0,0,0":Vector2i(-1, -1), # move left_up         5
-		"0,0,0,1,0,0": Vector2i(1, 0),  # move right_down
-		"0,0,0,0,0,1": Vector2i(-1, 0)  # move left_down
+func neighborFinder(pos: Vector2i, direction):
+	# Check if the column is even or odd
+	var is_even_column = pos.x % 2 == 0
+
+	# Define neighbor offsets for even and odd columns
+	var directions_even = {
+		"0,0,0,0,1,0": Vector2i(0, 1),  # Down
+		"0,1,0,0,0,0": Vector2i(0, -1), # Up
+		"0,0,1,0,0,0": Vector2i(1, 0),  # Right-Up
+		"1,0,0,0,0,0": Vector2i(-1, 0), # Left-Up
+		"0,0,0,1,0,0": Vector2i(1, 1),  # Right-Down
+		"0,0,0,0,0,1": Vector2i(-1, 1)  # Left-Down
 	}
+
+	var directions_odd = {
+		"0,0,0,0,1,0": Vector2i(0, 1),  # Down
+		"0,1,0,0,0,0": Vector2i(0, -1), # Up
+		"0,0,1,0,0,0": Vector2i(1, -1), # Right-Up
+		"1,0,0,0,0,0": Vector2i(-1, -1), # Left-Up
+		"0,0,0,1,0,0": Vector2i(1, 0),  # Right-Down
+		"0,0,0,0,0,1": Vector2i(-1, 0)  # Left-Down
+	}
+
+	# Select directions based on column parity
+	var directions = directions_odd if is_even_column else directions_even
+
+	# Return the new position
 	return pos + directions[",".join(direction)]
+
 func riverDirector(pos : Vector2i, incomingDirection, nogozone):
 	
 	var direction = incomingDirection.duplicate() #direction means like the where the river comes from Incoming means where the river is from the old chunks
