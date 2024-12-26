@@ -6,11 +6,11 @@ var current_screen = "main"
 
 @onready var camera = get_node("Player/Camera2D")  
 @onready var player = get_node("Player") 
-
+@onready var world = get_node("world")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
-	
+	world.visible = true
 	map_scene.visible = false
 	main_menu_scene.visible = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,11 +31,12 @@ func _process(delta):
 			camera.screen = "main"
 			player.movement = true
 			
+			
 		else:
 			camera.screen = "map"
 			player.movement = false
 			
-		
+		world.visible = !world.visible
 		main_menu_scene.visible = false
 		map_scene.visible = !map_scene.visible
 		

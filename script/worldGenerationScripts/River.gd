@@ -131,8 +131,8 @@ func riverDirector(pos : Vector2i, incomingDirection, nogozone):
 	if WorldManager.check_chunk(next):
 		riverDirector(next, outgoingDirection, nogozone)
 func riverMerger(pos : Vector2i, incomingIndex):
-#	if WorldManager.get_chunk(pos).river_connection[(incomingIndex-1+6)%6] == 2 or WorldManager.get_chunk(pos).river_connection[(incomingIndex+1)%6]  == 2 or WorldManager.get_chunk(pos).river_connection[incomingIndex]:
-#		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
+	if (WorldManager.get_chunk(pos).river_connection[(incomingIndex-1+6)%6] == 2 or WorldManager.get_chunk(pos).river_connection[(incomingIndex+1)%6]  == 2 ) and WorldManager.get_chunk(pos).river_connection[incomingIndex] == 1:
+		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
 	if WorldManager.get_chunk(pos).river_connection.count(1) > 3:
 		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
 	else:
@@ -146,7 +146,7 @@ func changer(connections):
 func riverTiler():
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):
-			if WorldManager.get_chunk(Vector2i(x,y)).river_connection != [0, 0, 0, 0, 0, 0]: 
+			if WorldManager.get_chunk(Vector2i(x,y)).river_connection != [0, 0, 0, 0, 0, 0] and WorldManager.get_chunk(Vector2i(x,y)).biome != "WATER": 
 				riverTileMap.set_cell(0, Vector2i(x,y), 0, riverTileSet[",".join(changer(WorldManager.get_chunk(Vector2i(x,y)).river_connection))] )	
 			
 """
