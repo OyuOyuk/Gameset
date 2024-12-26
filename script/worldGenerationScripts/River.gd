@@ -55,6 +55,7 @@ func generateRivers():
 		if WorldManager.get_chunk(Vector2i(x,yv)) != null:
 			riverStarterOptions.append(Vector2i(x,yv))
 	for time in range(riverStartCount):
+		randomize()
 		riverStarters.append(riverStarterOptions.pick_random())
 	print(riverStarters)
 	var nogozone 
@@ -132,7 +133,7 @@ func riverDirector(pos : Vector2i, incomingDirection, nogozone):
 func riverMerger(pos : Vector2i, incomingIndex):
 	if WorldManager.get_chunk(pos).river_connection[(incomingIndex-1+6)%6] == 2 or WorldManager.get_chunk(pos).river_connection[(incomingIndex+1)%6]  == 2 or WorldManager.get_chunk(pos).river_connection[incomingIndex]:
 		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
-	elif WorldManager.get_chunk(pos).river_connection.count(1) > 2:
+	elif WorldManager.get_chunk(pos).river_connection.count(1) > 3:
 		WorldManager.get_chunk(pos).river_connection = [1,1,1,1,1,1]
 	else:
 		WorldManager.get_chunk(pos).river_connection[incomingIndex]
