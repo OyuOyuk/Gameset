@@ -12,11 +12,16 @@ var noise : Noise
 var water_noise : Noise
 var size  = Vector2i(50,100)
 var values = {
-	"GRASSLANDS" : [0, 1],
+	"GRASSLANDS" : -0.2,
+	"FOREST" : -0.2,
+	"SAND" : -0.2
 }
-var tiles ={
-	
+var values_water = {
+	"GRASSLANDS" :-0.3,
+	"FOREST" : -0.3,
+	"SAND" : -0.3
 }
+
 @onready var script_a = $world
 @onready var script_b = $water
 func _ready():
@@ -27,28 +32,32 @@ func _ready():
 	generateWorld()
 	script_a._ready()
 	script_b._ready()
-
+func waterGen():
+	randomize()
+	var radius = randi() % 30 + 20
+	
+	
+		
 
 func assignTiles():
 	var min = - size.x/2
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
-		
-			var tile = chunkData.new()
-			tile.pos = Vector2i(x, y)
+			WorldManager.generate_tile(Vector2i(x,y))
+			
+			var player_tile = WorldManager.get_chunk(WorldManager.get_player_chunk())
 			var terrain_noise_val = noise.get_noise_2d(x, y)
 			var water_noise_val = water_noise.get_noise_2d(x, y)
+			var noise_param 
+			if terrain_noise_val >= values[player_tile.biome]:
+				WorldManager.get_tile(Vector2i(x,y)).tileType = type.GRASS
+			else:
+				WorldManager.get_tile(Vector2i(x,y)).tileType = type.DIRT
 
-			if terrain_noise_val >=-0.1:
-				tile.tileType = type.GRASS
-			elif terrain_noise_val <-0.1:
-				tile.tileType = type.DIRT
-
-			if water_noise_val >= -0.2:
-				tile.waterPrescence = false
-			elif water_noise_val < -0.2:
-				tile.waterPrescence = true
-			tiles[Vector2i(x,y)] = tile
+			if water_noise_val >=values_water[player_tile.biome]:
+				WorldManager.get_tile(Vector2i(x,y)).waterPrescence = false
+			elif water_noise_val < values_water[ player_tile.biome]:
+				WorldManager.get_tile(Vector2i(x,y)).waterPrescence = true
 		if y > 0:
 			min = min + 0.5
 		else:
@@ -59,15 +68,14 @@ func generateWorld():
 	var min = -size.x/2
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
-			var tileData = tiles[Vector2i(x,y)]
-			
-			if tileData.tileType == type.GRASS :
+
+			if WorldManager.get_tile(Vector2i(x,y)).tileType == type.GRASS :
 				world.set_cell(0,Vector2i(x,y), 0, Vector2i(0, 0))
-			elif tileData.tileType == type.DIRT:
+			elif WorldManager.get_tile(Vector2i(x,y)).tileType == type.DIRT:
 				world.set_cell(0,Vector2i(x,y), 0, Vector2i(1, 0))
-			if tileData.waterPrescence == true:
+			if WorldManager.get_tile(Vector2i(x,y)).waterPrescence == true:
 				water.set_cell(0,Vector2i(x,y), 0, Vector2i(0, 0))
-			elif tileData.waterPrescence == false:
+			elif WorldManager.get_tile(Vector2i(x,y)).waterPrescence == false:
 				water.set_cell(0,Vector2i(x,y), 0, Vector2i(1, 0))
 		if y > 0:
 			min = min + 0.5

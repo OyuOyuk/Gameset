@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b3sn53f22sgb0"]
+[gd_scene load_steps=30 format=3 uid="uid://b3sn53f22sgb0"]
 
 [ext_resource type="Texture2D" uid="uid://bw76xf45l4k4v" path="res://assets/hextiles.png" id="1_iqo37"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Map.gd" id="3_ojbmr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://btxyms2xmhnxg" path="res://assets/rivers.png" id="8_uqmol"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/River.gd" id="9_8kt4k"]
 [ext_resource type="Script" path="res://outline.gd" id="9_kgb5s"]
+[ext_resource type="Script" path="res://outline_menu.gd" id="10_xgq1e"]
 [ext_resource type="Texture2D" uid="uid://ci4nidounco0e" path="res://assets/trees.png" id="11_sa1pc"]
 [ext_resource type="Texture2D" uid="uid://brfhpfa3mvi5t" path="res://assets/lake.png" id="12_nenw6"]
 [ext_resource type="Script" path="res://Decorations.gd" id="12_tuorx"]
@@ -146,6 +147,11 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_j2w56")
 sources/1 = SubResource("TileSetAtlasSource_xutp0")
 
+[sub_resource type="TileSet" id="TileSet_hedm1"]
+tile_shape = 3
+tile_offset_axis = 1
+tile_size = Vector2i(32, 32)
+
 [node name="map_trial" type="Node2D"]
 
 [node name="Grid" type="TileMap" parent="."]
@@ -193,3 +199,8 @@ tile_set = SubResource("TileSet_xsv7q")
 rendering_quadrant_size = 32
 format = 2
 script = ExtResource("12_tuorx")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_hedm1")
+format = 2
+script = ExtResource("10_xgq1e")

@@ -68,7 +68,7 @@ func mapSetup():
 func mapDrawer():
 	print("Drawing map...")
 	# Draw the biomes in order (Grasslands -> Forest -> Desert)
-	var biome_order = ["GRASSLANDS", "FOREST", "WATER", "SAND"]
+	var biome_order = [ "WATER", "SAND","FOREST","GRASSLANDS" ]
 
 	# Iterate through each biome in the order
 	for biome in biome_order:
