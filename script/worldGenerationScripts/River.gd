@@ -146,16 +146,15 @@ func changer(connections):
 func riverTiler():
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):
-			var before =WorldManager.get_chunk(Vector2i(x,y)).river_connection[5]
-			var timer = 0
-			for i in range(6):
-				if WorldManager.get_chunk(Vector2i(x,y)).river_connection[i] == before and WorldManager.get_chunk(Vector2i(x,y)).river_connection[i] != 0:
+			var timer =WorldManager.get_chunk(Vector2i(x,y)).river_connection[5]
+
+			for i in range(5):
+				if WorldManager.get_chunk(Vector2i(x,y)).river_connection[i] == 1:
 					timer = timer + 1
-				elif WorldManager.get_chunk(Vector2i(x,y)).river_connection[i] != before:
+				elif WorldManager.get_chunk(Vector2i(x,y)).river_connection[i] != 1:
 					timer = 0
 				if timer >= 3:
 					WorldManager.get_chunk(Vector2i(x,y)).river_connection = [1, 1, 1, 1, 1, 1]
-				before = WorldManager.get_chunk(Vector2i(x,y)).river_connection[i]
 			if WorldManager.get_chunk(Vector2i(x,y)).river_connection != [0, 0, 0, 0, 0, 0] and WorldManager.get_chunk(Vector2i(x,y)).biome != "WATER": 
 				
 				riverTileMap.set_cell(0, Vector2i(x,y), 0, riverTileSet[",".join(changer(WorldManager.get_chunk(Vector2i(x,y)).river_connection))] )	

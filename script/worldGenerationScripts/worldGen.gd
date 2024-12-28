@@ -28,7 +28,8 @@ func _ready():
 	
 	noise = LandNoise.noise
 	water_noise = WaterNoise.noise
-	assignTiles()
+	var current_chunk = WorldManager.get_chunk(WorldManager.get_current_chunk())
+	assignTiles(current_chunk)
 	generateWorld()
 	script_a._ready()
 	script_b._ready()
@@ -39,24 +40,24 @@ func waterGen():
 	
 		
 
-func assignTiles():
+func assignTiles(current_chunk):
 	var min = - size.x/2
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
-			WorldManager.generate_tile(Vector2i(x,y))
-			
-			var player_tile = WorldManager.get_chunk(WorldManager.get_player_chunk())
+
 			var terrain_noise_val = noise.get_noise_2d(x, y)
 			var water_noise_val = water_noise.get_noise_2d(x, y)
+			WorldManager.get_chunk(current_chunk)
+			WorldManager.generate_tile(Vector2i(x,y))
 			var noise_param 
-			if terrain_noise_val >= values[player_tile.biome]:
+			if terrain_noise_val >= values[current_chunk.biome]:
 				WorldManager.get_tile(Vector2i(x,y)).tileType = type.GRASS
 			else:
 				WorldManager.get_tile(Vector2i(x,y)).tileType = type.DIRT
 
-			if water_noise_val >=values_water[player_tile.biome]:
+			if water_noise_val >=values_water[current_chunk.biome]:
 				WorldManager.get_tile(Vector2i(x,y)).waterPrescence = false
-			elif water_noise_val < values_water[ player_tile.biome]:
+			elif water_noise_val < values_water[current_chunk.biome]:
 				WorldManager.get_tile(Vector2i(x,y)).waterPrescence = true
 		if y > 0:
 			min = min + 0.5

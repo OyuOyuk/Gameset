@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=3 uid="uid://bho2fxr4u5lj8"]
+
+[ext_resource type="Texture2D" uid="uid://cd47jbhhftgci" path="res://assets/background.png" id="1_ld05r"]
+
+[node name="mapPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 392.0
+offset_bottom = 128.0
+texture = ExtResource("1_ld05r")
+
+[node name="MoveHere" type="Label" parent="."]
+modulate = Color(0.254902, 0.152941, 0.0784314, 1)
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 128.0
+offset_bottom = 47.0
+text = " Move Here?"
+
+[node name="Yes" type="Button" parent="."]
+modulate = Color(0.820762, 0.549795, 0.279857, 1)
+layout_mode = 0
+offset_left = 32.0
+offset_top = 56.0
+offset_right = 128.0
+offset_bottom = 88.0
+text = "Yes
+"
+
+[node name="knownInfo" type="Label" parent="."]
+modulate = Color(0.254734, 0.152712, 0.0798448, 1)
+layout_mode = 0
+offset_left = 192.0
+offset_top = 16.0
+offset_right = 343.0
+offset_bottom = 39.0
+text = "Known Information"
+
+[node name="Biome" type="Label" parent="."]
+modulate = Color(0.254902, 0.152941, 0.0784314, 1)
+layout_mode = 0
+offset_left = 200.0
+offset_top = 48.0
+offset_right = 254.0
+offset_bottom = 71.0
+text = "Biome:
+"
+
+[node name="Structures" type="Label" parent="."]
+modulate = Color(0.254902, 0.152941, 0.0784314, 1)
+layout_mode = 0
+offset_left = 200.0
+offset_top = 72.0
+offset_right = 285.0
+offset_bottom = 95.0
+text = "Structures:"
+
+[node name="info" type="Label" parent="."]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 48.0
+offset_right = 344.0
+offset_bottom = 71.0
+
+[node name="info2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 72.0
+offset_right = 344.0
+offset_bottom = 95.0

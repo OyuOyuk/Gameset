@@ -7,6 +7,7 @@ var current_screen = "main"
 @onready var camera = get_node("Player/Camera2D")  
 @onready var player = get_node("Player") 
 @onready var world = get_node("world")
+@onready var world_grid = get_node("map_trial/Grid")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
@@ -30,12 +31,12 @@ func _process(delta):
 		if camera.screen == "map":
 			camera.screen = "main"
 			player.movement = true
-			
+			world_grid.on_screen = false
 			
 		else:
 			camera.screen = "map"
 			player.movement = false
-			
+			world_grid.on_screen = true
 		world.visible = !world.visible
 		main_menu_scene.visible = false
 		map_scene.visible = !map_scene.visible
