@@ -1,5 +1,5 @@
-extends TileMap
-
+extends Node2D
+@export var tilemap : TileMap
 var size = Vector2i(100, 100)
 var deco = {
 	0 : Vector2i(0,0),
@@ -23,8 +23,8 @@ func mapGeneration():
 			if tile.biome == "FOREST" and random_binary == 0 and tile.river_connection == [0,0,0,0,0,0]:
 				randomize()
 				random_binary = randi() % 6
-				set_cell(0, Vector2i(x,y), 0, deco[random_binary])
+				tilemap.set_cell(2, Vector2i(x,y), 3, deco[random_binary])
 			random_binary = randi() % 4
 			if tile.lake == true and tile.river_connection == [0,0,0,0,0,0] and tile.biome != "WATER":
-				set_cell(0, Vector2i(x,y), 1, deco[random_binary])
+				tilemap.set_cell(2, Vector2i(x,y), 4, deco[random_binary])
 			

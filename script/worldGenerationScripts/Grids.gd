@@ -82,7 +82,9 @@ func calculate_display_tile(coords: Vector2i) -> Vector2i:
 		print_debug("Missing key for neighbours: ", neighbour_array)
 		return  Vector2i(1, 0)  # Default fallback
 func get_world_tile(coords : Vector2i) -> TileType:
+	
 	var atlas_coord = get_cell_atlas_coords(0, coords)
+
 	if atlas_coord == grassPlaceholderAtlasCoord:
 		return TileType.GRASS
 	else:

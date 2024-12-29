@@ -157,7 +157,7 @@ func riverTiler():
 					WorldManager.get_chunk(Vector2i(x,y)).river_connection = [1, 1, 1, 1, 1, 1]
 			if WorldManager.get_chunk(Vector2i(x,y)).river_connection != [0, 0, 0, 0, 0, 0] and WorldManager.get_chunk(Vector2i(x,y)).biome != "WATER": 
 				
-				riverTileMap.set_cell(0, Vector2i(x,y), 0, riverTileSet[",".join(changer(WorldManager.get_chunk(Vector2i(x,y)).river_connection))] )	
+				riverTileMap.set_cell(1, Vector2i(x,y), 2, riverTileSet[",".join(changer(WorldManager.get_chunk(Vector2i(x,y)).river_connection))] )	
 			
 """
 func generateRivers():

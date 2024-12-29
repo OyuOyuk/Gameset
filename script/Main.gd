@@ -7,7 +7,7 @@ var current_screen = "main"
 @onready var camera = get_node("Player/Camera2D")  
 @onready var player = get_node("Player") 
 @onready var world = get_node("world")
-@onready var world_grid = get_node("map_trial/Grid")
+@onready var world_grid = get_node("map_trial/outline2/outline")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 

@@ -1,7 +1,6 @@
-[gd_scene load_steps=31 format=3 uid="uid://b3sn53f22sgb0"]
+[gd_scene load_steps=26 format=3 uid="uid://b3sn53f22sgb0"]
 
-[ext_resource type="Texture2D" uid="uid://bw76xf45l4k4v" path="res://assets/hextiles.png" id="1_iqo37"]
-[ext_resource type="Script" path="res://Grid.gd" id="2_j2wph"]
+[ext_resource type="Script" path="res://script/Grid.gd" id="2_j2wph"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Map.gd" id="3_ojbmr"]
 [ext_resource type="PackedScene" uid="uid://bho2fxr4u5lj8" path="res://map_popup.tscn" id="3_ouxap"]
 [ext_resource type="Texture2D" uid="uid://btcwm5blhrj34" path="res://assets/hexagonal_patterns.png" id="4_julou"]
@@ -46,14 +45,7 @@ texture_region_size = Vector2i(32, 32)
 9:0/size_in_atlas = Vector2i(3, 3)
 9:0/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_l0ctt"]
-tile_shape = 3
-tile_offset_axis = 1
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_d4brm")
-sources/1 = SubResource("TileSetAtlasSource_42x56")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wnhj4"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mm4c"]
 texture = ExtResource("8_uqmol")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -66,6 +58,7 @@ texture_region_size = Vector2i(32, 32)
 7:0/0 = 0
 8:0/0 = 0
 9:0/0 = 0
+10:0/0 = 0
 11:0/0 = 0
 12:0/0 = 0
 14:0/0 = 0
@@ -75,25 +68,46 @@ texture_region_size = Vector2i(32, 32)
 1:1/0 = 0
 2:1/0 = 0
 3:1/0 = 0
+4:1/0 = 0
 5:1/0 = 0
 6:1/0 = 0
 7:1/0 = 0
 8:1/0 = 0
 9:1/0 = 0
+10:1/0 = 0
 11:1/0 = 0
 12:1/0 = 0
 13:1/0 = 0
 14:1/0 = 0
 15:1/0 = 0
-4:1/0 = 0
-10:0/0 = 0
-10:1/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_rhohp"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d20qk"]
+texture = ExtResource("11_sa1pc")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6crnm"]
+texture = ExtResource("12_nenw6")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_l0ctt"]
 tile_shape = 3
 tile_offset_axis = 1
 tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_wnhj4")
+sources/0 = SubResource("TileSetAtlasSource_d4brm")
+sources/1 = SubResource("TileSetAtlasSource_42x56")
+sources/2 = SubResource("TileSetAtlasSource_2mm4c")
+sources/3 = SubResource("TileSetAtlasSource_d20qk")
+sources/4 = SubResource("TileSetAtlasSource_6crnm")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dcg2j"]
 shader = ExtResource("8_gy5ae")
@@ -111,69 +125,32 @@ tile_offset_axis = 1
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_dwbj6")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j2w56"]
-texture = ExtResource("11_sa1pc")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xutp0"]
-texture = ExtResource("12_nenw6")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_xsv7q"]
-tile_shape = 3
-tile_offset_axis = 1
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_j2w56")
-sources/1 = SubResource("TileSetAtlasSource_xutp0")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mhcjp"]
-texture = ExtResource("1_iqo37")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_r21ft"]
-tile_shape = 3
-tile_offset_axis = 1
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_mhcjp")
-
 [node name="map_trial" type="Node2D"]
 
 [node name="Map" type="Node2D" parent="." node_paths=PackedStringArray("tilemap", "displayTilemap")]
 script = ExtResource("3_ojbmr")
 biomeNoise = SubResource("NoiseTexture2D_5hkpk")
-tilemap = NodePath("../Grid")
+tilemap = NodePath("")
 displayTilemap = NodePath("../Display")
+
+[node name="River" type="Node2D" parent="." node_paths=PackedStringArray("riverTileMap")]
+script = ExtResource("9_8kt4k")
+riverTileMap = NodePath("../Display")
+
+[node name="Decoration" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
+script = ExtResource("12_tuorx")
+tilemap = NodePath("../Display")
 
 [node name="Display" type="TileMap" parent="."]
 texture_filter = 1
 tile_set = SubResource("TileSet_l0ctt")
 rendering_quadrant_size = 32
 format = 2
-layer_0/name = "rivers"
-layer_1/name = "map"
+layer_0/name = "map"
+layer_1/name = "rivers"
 layer_1/tile_data = PackedInt32Array()
-
-[node name="River" type="Node2D" parent="." node_paths=PackedStringArray("riverTileMap")]
-script = ExtResource("9_8kt4k")
-riverTileMap = NodePath("riverDisplay")
-
-[node name="riverDisplay" type="TileMap" parent="River"]
-tile_set = SubResource("TileSet_rhohp")
-rendering_quadrant_size = 32
-format = 2
+layer_2/name = "decorations"
+layer_2/tile_data = PackedInt32Array()
 
 [node name="outline2" type="Node2D" parent="."]
 script = ExtResource("9_kgb5s")
@@ -184,21 +161,9 @@ material = SubResource("ShaderMaterial_dcg2j")
 tile_set = SubResource("TileSet_ujwuv")
 rendering_quadrant_size = 32
 format = 2
-
-[node name="Decorations" type="TileMap" parent="."]
-texture_filter = 1
-tile_set = SubResource("TileSet_xsv7q")
-rendering_quadrant_size = 32
-format = 2
-script = ExtResource("12_tuorx")
-
-[node name="Grid" type="TileMap" parent="."]
-texture_filter = 1
-tile_set = SubResource("TileSet_r21ft")
-format = 2
 script = ExtResource("2_j2wph")
 
-[node name="mapPopup" parent="Grid" instance=ExtResource("3_ouxap")]
+[node name="mapPopup" parent="outline2/outline" instance=ExtResource("3_ouxap")]
 
 [node name="player" type="Sprite2D" parent="."]
 position = Vector2(-8, 0)

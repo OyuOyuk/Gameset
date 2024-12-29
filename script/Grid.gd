@@ -1,7 +1,6 @@
 extends TileMap
 
 # Assuming each tile is a chunk, and the chunk size is 16x16 (or whatever your tile size is)
-var hex_size = Vector2(32, 32)  # Example hex tile size, adjust accordingly
 var on_screen = false
 @onready var menu = get_node("mapPopup")
 func _ready():
