@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SaveManager="*res://script/managerScripts/saveManager.gd"
 WorldManager="*res://script/managerScripts/worldManager.gd"
+ConnectionManager="*res://script/managerScripts/ConnectionManager.gd"
 
 [input]
 

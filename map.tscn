@@ -127,10 +127,9 @@ sources/0 = SubResource("TileSetAtlasSource_dwbj6")
 
 [node name="map_trial" type="Node2D"]
 
-[node name="Map" type="Node2D" parent="." node_paths=PackedStringArray("tilemap", "displayTilemap")]
+[node name="Map" type="Node2D" parent="." node_paths=PackedStringArray("displayTilemap")]
 script = ExtResource("3_ojbmr")
 biomeNoise = SubResource("NoiseTexture2D_5hkpk")
-tilemap = NodePath("")
 displayTilemap = NodePath("../Display")
 
 [node name="River" type="Node2D" parent="." node_paths=PackedStringArray("riverTileMap")]
@@ -163,9 +162,9 @@ rendering_quadrant_size = 32
 format = 2
 script = ExtResource("2_j2wph")
 
-[node name="mapPopup" parent="outline2/outline" instance=ExtResource("3_ouxap")]
-
-[node name="player" type="Sprite2D" parent="."]
+[node name="player" type="Sprite2D" parent="outline2/outline"]
 position = Vector2(-8, 0)
 scale = Vector2(0.125, 0.125)
 texture = ExtResource("15_u8tgh")
+
+[node name="mapPopup" parent="outline2/outline" instance=ExtResource("3_ouxap")]
