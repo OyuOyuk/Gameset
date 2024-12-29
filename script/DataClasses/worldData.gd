@@ -12,4 +12,4 @@ var river_connection = [0, 0, 0, 0, 0, 0]  # River connections (hex grid: 6 side
 var road_connection = [0, 0, 0, 0, 0, 0]   # Road connections (hex grid: 6 sides)
 var river_size = 0
 var lake = false
-
+var tiles = {}

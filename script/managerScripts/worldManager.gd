@@ -1,31 +1,49 @@
 extends Node
 
-var chunks = {}  # Centralized storage for world data
-var tiles = {}
+# Centralized storage
+var chunks = {}  # Stores chunks using chunk positions as keys
 var current_chunk: Vector2i = Vector2i(0, 0)
+
+# Called when the node enters the scene
 func _ready():
+	# Example usage
 	generate_chunk(Vector2i(0, 0))
-	get_chunk(Vector2i(0,0)).biome = "FOREST"
-func generate_chunk(chunk_pos):
+	get_chunk(Vector2i(0, 0)).biome = "FOREST"
+
+# Generate a new chunk at the specified position
+func generate_chunk(chunk_pos: Vector2i) -> worldData:
 	if not chunks.has(chunk_pos):
 		var new_chunk = worldData.new()
 		chunks[chunk_pos] = new_chunk
 		return new_chunk
 	return chunks[chunk_pos]
-func get_current_chunk():
+
+# Retrieve the current chunk position
+func get_current_chunk() -> Vector2i:
 	return current_chunk
-func get_chunk(chunk_pos):
+
+# Retrieve a chunk by position
+func get_chunk(chunk_pos: Vector2i) -> worldData:
 	return chunks.get(chunk_pos, null)
-func check_chunk(chunk_pos):
-	if chunks.has(chunk_pos):
-		return true
-	else:
-		return false
-func generate_tile(tile_pos):
-	if not tiles.has(tile_pos):
-		var new_tile = chunkData.new()
-		tiles[tile_pos] = new_tile
-		return tiles
-	return tiles[tile_pos]
-func get_tile(tile_pos):
-	return tiles.get(tile_pos, null)
+
+# Check if a chunk exists at the given position
+func check_chunk(chunk_pos: Vector2i) -> bool:
+	return chunks.has(chunk_pos)
+
+# Generate a new tile within a chunk
+func generate_tile(chunk_pos: Vector2i, tile_pos: Vector2i) -> chunkData:
+	var chunk = get_chunk(chunk_pos)
+	if chunk:
+		if not chunk.tiles.has(tile_pos):
+			var new_tile = chunkData.new()
+			chunk.tiles[tile_pos] = new_tile
+			return new_tile
+		return chunk.tiles[tile_pos]
+	return null
+
+# Retrieve a tile from a chunk
+func get_tile(chunk_pos: Vector2i, tile_pos: Vector2i) -> chunkData:
+	var chunk = get_chunk(chunk_pos)
+	if chunk:
+		return chunk.tiles.get(tile_pos, null)
+	return null
