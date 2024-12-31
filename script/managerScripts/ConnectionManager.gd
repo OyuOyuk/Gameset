@@ -1,4 +1,4 @@
 extends Node
 
-signal map_popup_button(scene_name: String)
-
+signal new_map_position(scene_name: String)
+signal user_seed(scene_name:String)

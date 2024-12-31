@@ -29,30 +29,28 @@ func _ready():
 	noise = LandNoise.noise
 	water_noise = WaterNoise.noise
 	var current_chunk = WorldManager.get_current_chunk()
-	assignTiles(current_chunk)
-	generateWorld(current_chunk)
-	script_a._ready()
-	script_b._ready()
+	new_chunk(current_chunk)
+	ConnectionManager.new_map_position.connect(new_chunk)
 func new_chunk(current_chunk):
-	if WorldManager.get_tile(current_chunk, Vector2i(0, 0)) != null:
+	if WorldManager.get_tile(current_chunk, Vector2i(0, 0)) == null:
 		assignTiles(current_chunk)
 	generateWorld(current_chunk)
 	script_a._ready()
 	script_b._ready()
 func waterGen():
-	randomize()
+
 	var radius = randi() % 30 + 20
 	
-	
-		
+
 
 func assignTiles(current_chunk):
 	var min = - size.x/2
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
-
-			var terrain_noise_val = noise.get_noise_2d(x, y)
-			var water_noise_val = water_noise.get_noise_2d(x, y)
+			var random_seed = int(str(WorldManager.get_seed()).substr(0, 2))
+			
+			var terrain_noise_val = noise.get_noise_2d(x+random_seed, y+random_seed)
+			var water_noise_val = water_noise.get_noise_2d(x+random_seed, y+random_seed)
 			WorldManager.generate_tile(current_chunk,Vector2i(x,y))
 			var noise_param 
 			if terrain_noise_val >= values[WorldManager.get_chunk(current_chunk).biome]:

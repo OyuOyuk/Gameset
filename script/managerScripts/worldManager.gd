@@ -3,12 +3,25 @@ extends Node
 # Centralized storage
 var chunks = {}  # Stores chunks using chunk positions as keys
 var current_chunk: Vector2i = Vector2i(0, 0)
-
+var user_seed
 # Called when the node enters the scene
 func _ready():
 	# Example usage
 	generate_chunk(Vector2i(0, 0))
 	get_chunk(Vector2i(0, 0)).biome = "FOREST"
+	ConnectionManager.user_seed.connect(seeder)
+func seeder(seed):
+	
+	if seed.is_empty():
+		randomize()
+		user_seed = randi()
+		
+	else:
+		user_seed = hash(seed)
+	seed(user_seed)
+	print(user_seed)
+func get_seed():
+	return user_seed
 
 # Generate a new chunk at the specified position
 func generate_chunk(chunk_pos: Vector2i) -> worldData:

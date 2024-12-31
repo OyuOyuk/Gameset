@@ -59,7 +59,7 @@ func set_tile(coords : Vector2i, atlas_coords : Vector2i):
 	set_display_tile(coords)
 
 func set_display_tile(pos : Vector2i):
-	randomize()
+
 	var random_binary = randi() % 2
 	# Loop through 4 display neighbours
 	for i in range(NEIGHBOURS.size()):

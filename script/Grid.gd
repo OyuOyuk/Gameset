@@ -5,6 +5,7 @@ var on_screen = false
 @onready var menu = get_node("mapPopup")
 @onready var player = get_node("player")
 var pos : Vector2i
+
 func _ready():
 	menu.visible = false	
 	add_to_group("map")
@@ -24,3 +25,7 @@ func _input(event):
 func yes():
 	player.position = pos
 	menu.visible = false
+	WorldManager.current_chunk = pos
+	var global_clicked  = get_local_mouse_position()
+	var pos_clicked = local_to_map(to_local(global_clicked))
+	ConnectionManager.new_map_position.emit(pos_clicked)

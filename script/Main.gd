@@ -26,6 +26,7 @@ func _process(delta):
 			camera.screen = "menu"
 			player.movement = false
 		map_scene.visible = false
+		world_grid.on_screen = false
 		main_menu_scene.visible = !main_menu_scene.visible
 	if Input.is_action_just_pressed("Map"):
 		if camera.screen == "map":
