@@ -4,6 +4,6 @@ class_name chunkData
 # World properties
 var pos = Vector2i(0, 0)  
 var tileType     
-var waterPrescence = true
+var waterPrescence = false
 var object = []              
 

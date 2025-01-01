@@ -1,0 +1,174 @@
+[gd_scene load_steps=27 format=3 uid="uid://bjpi46v0ixskd"]
+
+[ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
+[ext_resource type="Script" path="res://script/worldGenerationScripts/Grids.gd" id="1_043rh"]
+[ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/example.png" id="1_lbwbn"]
+[ext_resource type="Texture2D" uid="uid://cvp7e1qtsag6q" path="res://assets/grass_dirt.png" id="2_3h775"]
+[ext_resource type="Texture2D" uid="uid://etjmcefxqwng" path="res://assets/dirt_grass.png" id="4_p2fi2"]
+[ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="5_bj60p"]
+[ext_resource type="Texture2D" uid="uid://1ayjhorc7n04" path="res://assets/water.png" id="5_cv06g"]
+[ext_resource type="Script" path="res://script/worldGenerationScripts/water.gd" id="5_mifmk"]
+[ext_resource type="Texture2D" uid="uid://dqtru40fpj6hy" path="res://assets/watertile.png" id="7_lst7v"]
+[ext_resource type="Script" path="res://script/worldGenerationScripts/worldGen.gd" id="8_p8gn7"]
+[ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="10_y6tl6"]
+[ext_resource type="PackedScene" uid="uid://bnbjftctbm0o5" path="res://mainMenu.tscn" id="11_jr1r2"]
+[ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
+frequency = 0.0205
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_a0bt4"]
+noise = SubResource("FastNoiseLite_i6rj2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l030a"]
+seed = 489
+frequency = 0.0114
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f5dxa"]
+noise = SubResource("FastNoiseLite_l030a")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mkvae"]
+texture = ExtResource("1_lbwbn")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_sk1ye"]
+tile_size = Vector2i(32, 32)
+custom_data_layer_0/name = "Terrain"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_mkvae")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehet5"]
+texture = ExtResource("4_p2fi2")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_huxi7"]
+texture = ExtResource("2_3h775")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_gj5gs"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_ehet5")
+sources/1 = SubResource("TileSetAtlasSource_huxi7")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s8a63"]
+texture = ExtResource("5_cv06g")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_18tfa"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_s8a63")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f0ijb"]
+texture = ExtResource("7_lst7v")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+0:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_0c131"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_f0ijb")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_6uaq8")
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="worldgen" type="Node2D" parent="world" node_paths=PackedStringArray("world", "water")]
+script = ExtResource("8_p8gn7")
+LandNoise = SubResource("NoiseTexture2D_a0bt4")
+WaterNoise = SubResource("NoiseTexture2D_f5dxa")
+world = NodePath("world")
+water = NodePath("water")
+
+[node name="world" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
+texture_filter = 1
+tile_set = SubResource("TileSet_sk1ye")
+rendering_quadrant_size = 32
+format = 2
+script = ExtResource("1_043rh")
+displayTilemap = NodePath("../view")
+dirtPlaceholderAtlasCoord = Vector2i(1, 0)
+
+[node name="view" type="TileMap" parent="world/worldgen"]
+texture_filter = 1
+position = Vector2(16, 16)
+tile_set = SubResource("TileSet_gj5gs")
+rendering_quadrant_size = 32
+format = 2
+
+[node name="water" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
+tile_set = SubResource("TileSet_18tfa")
+rendering_quadrant_size = 32
+format = 2
+script = ExtResource("5_mifmk")
+displayTilemap = NodePath("../water_view")
+
+[node name="water_view" type="TileMap" parent="world/worldgen"]
+texture_filter = 1
+position = Vector2(16, 16)
+tile_set = SubResource("TileSet_0c131")
+rendering_quadrant_size = 32
+format = 2
+
+[node name="Player" parent="." instance=ExtResource("5_bj60p")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+script = ExtResource("11_sn3m7")
+
+[node name="MainMenuPrototype" parent="." instance=ExtResource("11_jr1r2")]
+
+[node name="map_trial" parent="." instance=ExtResource("10_y6tl6")]

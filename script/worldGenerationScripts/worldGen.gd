@@ -11,6 +11,15 @@ enum type { GRASS, DIRT }
 var noise : Noise
 var water_noise : Noise
 var size  = Vector2i(50,100)
+var hex_neighbors = [
+	Vector2i(1, 1),    # LEFT UP
+	Vector2i(0, 1),   # UP
+	Vector2i(-1, 1),   # RIGHT UP
+	Vector2i(-1, -1),   # RIGHT DOWN
+	Vector2i(0, -1),   # DOWN
+	Vector2i(1, -1)     # LEFT DOWN
+]
+
 var values = {
 	"GRASSLANDS" : -0.2,
 	"FOREST" : -0.2,
@@ -21,28 +30,76 @@ var values_water = {
 	"FOREST" : -0.3,
 	"SAND" : -0.3
 }
-
+var radius: float = 2.0
 @onready var script_a = $world
 @onready var script_b = $water
+
 func _ready():
-	
+	print(find_hexagon_midpoints())
 	noise = LandNoise.noise
 	water_noise = WaterNoise.noise
-	var current_chunk = WorldManager.get_current_chunk()
+	var current_chunk = Vector2i(0, 0)
 	new_chunk(current_chunk)
 	ConnectionManager.new_map_position.connect(new_chunk)
 func new_chunk(current_chunk):
 	if WorldManager.get_tile(current_chunk, Vector2i(0, 0)) == null:
 		assignTiles(current_chunk)
 		print("generated ", current_chunk)
+	if WorldManager.get_chunk(current_chunk).river_connection != [0,0,0,0,0,0]:
+		set_river_flow(current_chunk )
 	generateWorld(current_chunk)
 	script_a._ready()
 	script_b._ready()
-func waterGen():
+func find_hexagon_midpoints():
+	var midpoints = []
+	var half_width = size.x / 2  + 0.5*size.y/4
+	var half_height = size.y / 2
 
-	var radius = randi() % 30 + 20
+	# Top-left (adjusted for staggered rows)
+	midpoints.append(Vector2i(-half_width, -half_height / 2))  
+
+	# Top-mid (flat edge, no adjustment needed)
+	midpoints.append(Vector2i(0, -half_height))               
+
+	# Top-right (adjusted for staggered rows)
+	midpoints.append(Vector2i(half_width, -half_height / 2))  
+
+	# Bottom-right (adjusted for staggered rows)
+	midpoints.append(Vector2i(half_width, half_height / 2))   
+
+	# Bottom-mid (flat edge, no adjustment needed)
+	midpoints.append(Vector2i(0, half_height))               
+
+	# Bottom-left (adjusted for staggered rows)
+	midpoints.append(Vector2i(-half_width, half_height / 2))  
+
+	return midpoints
+
+
+func set_river_flow(current_chunk):
+	var river_connection = WorldManager.get_chunk(current_chunk).river_connection
+	var midpoints = find_hexagon_midpoints()
+
+	for side in range(river_connection.size()):
+		if river_connection[side] == 1:
+			draw_river(midpoints[side], current_chunk)
+func draw_river(start_pos: Vector2i, current_chunk):
+	var pos = start_pos
+
+	while pos != Vector2i(0, 0):
+		var direction = Vector2i.ZERO - pos
+		direction.x = direction.x / abs(direction.x) if direction.x != 0 else 0
+		direction.y = direction.y / abs(direction.y) if direction.y != 0 else 0
+		for dx in range(-2, 2):
+			for dy in range(-2, 2):
+				if WorldManager.get_tile(current_chunk, pos +Vector2i(dx, dy)) != null:
+					WorldManager.get_tile(current_chunk, pos +Vector2i(dx, dy)).waterPrescence = true
+		
+		pos += direction
 	
-
+	# Ensure the endpoint is marked
+	if WorldManager.get_tile(current_chunk, pos) != null:
+		WorldManager.get_tile(current_chunk, pos).waterPrescence = true
 
 func assignTiles(current_chunk):
 	var min = - size.x/2
@@ -60,10 +117,10 @@ func assignTiles(current_chunk):
 			else:
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.DIRT
 
-			if water_noise_val >=values_water[WorldManager.get_chunk(current_chunk).biome]:
-				WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = false
-			elif water_noise_val < values_water[WorldManager.get_chunk(current_chunk).biome]:
-				WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = true
+			#if water_noise_val >=values_water[WorldManager.get_chunk(current_chunk).biome]:
+				#WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = false
+			#elif water_noise_val < values_water[WorldManager.get_chunk(current_chunk).biome]:
+				#WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = true
 		if y > 0:
 			min = min + 0.5
 		else:
