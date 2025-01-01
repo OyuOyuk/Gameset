@@ -89,13 +89,9 @@ sources/1 = SubResource("TileSetAtlasSource_huxi7")
 texture = ExtResource("5_cv06g")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-0:0/0/physics_layer_0/angular_velocity = 0.0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSet" id="TileSet_18tfa"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_s8a63")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f0ijb"]
@@ -164,7 +160,8 @@ tile_set = SubResource("TileSet_0c131")
 rendering_quadrant_size = 32
 format = 2
 
-[node name="Player" parent="." instance=ExtResource("5_bj60p")]
+[node name="Player" parent="." node_paths=PackedStringArray("tilemap") instance=ExtResource("5_bj60p")]
+tilemap = NodePath("../world/worldgen/water")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 script = ExtResource("11_sn3m7")

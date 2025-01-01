@@ -85,24 +85,46 @@ func set_river_flow(current_chunk):
 			draw_river(midpoints[side], current_chunk)
 func draw_river(start_pos: Vector2i, current_chunk):
 	var pos = start_pos
-
+	var radius = 3
 	while pos != Vector2i(0, 0):
 		var direction = Vector2i.ZERO - pos
 		direction.x = direction.x / abs(direction.x) if direction.x != 0 else 0
 		direction.y = direction.y / abs(direction.y) if direction.y != 0 else 0
-		for dx in range(-2, 2):
-			for dy in range(-2, 2):
+		
+		for dx in range(-radius, radius):
+			for dy in range(-radius, radius):
+			 	
 				if WorldManager.get_tile(current_chunk, pos +Vector2i(dx, dy)) != null:
 					WorldManager.get_tile(current_chunk, pos +Vector2i(dx, dy)).waterPrescence = true
-		
+				
+		if radius < 6 :
+			radius = radius + randi() % 4
+		else:
+			radius =  radius - randi() % 4
 		pos += direction
 	
 	# Ensure the endpoint is marked
 	if WorldManager.get_tile(current_chunk, pos) != null:
 		WorldManager.get_tile(current_chunk, pos).waterPrescence = true
+func generate_lake(center: Vector2i, iterations: int,current_chunk):
+	var lake_tiles = [center]
+
+	for u in range(iterations):
+		var new_tiles = []
+		for tile in lake_tiles:
+			for offset in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var neighbor = tile + offset
+				if not neighbor in lake_tiles and randf() < 0.4:  # Random chance to expand
+					new_tiles.append(neighbor)
+
+		lake_tiles += new_tiles
+
+	for tile in lake_tiles:
+		WorldManager.get_tile(current_chunk, tile).waterPrescence = true
 
 func assignTiles(current_chunk):
 	var min = - size.x/2
+	var tile_choices = []
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
 			var chunk_id = hash(str(current_chunk.x) + str(current_chunk.y))
@@ -116,7 +138,7 @@ func assignTiles(current_chunk):
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.GRASS
 			else:
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.DIRT
-
+	
 			#if water_noise_val >=values_water[WorldManager.get_chunk(current_chunk).biome]:
 				#WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = false
 			#elif water_noise_val < values_water[WorldManager.get_chunk(current_chunk).biome]:
@@ -125,6 +147,8 @@ func assignTiles(current_chunk):
 			min = min + 0.5
 		else:
 			min = min - 0.5
+	if WorldManager.get_chunk(current_chunk).lake == true:
+		generate_lake(Vector2i(0, 0),40,current_chunk)
 	
 
 func generateWorld(current_chunk):
