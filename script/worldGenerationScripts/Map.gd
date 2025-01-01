@@ -39,8 +39,9 @@ func mapGenerator():
 
 	for xs in range(-size.x/2, size.x/2):
 		for ys in range(-size.y/2, size.y/2):
+			var random_seed = int(str(WorldManager.get_seed()).substr(0, 2)) 
 			var tileData = WorldManager.get_chunk(Vector2i(xs, ys))
-			var biome_noise = noise.get_noise_2d(xs, ys)
+			var biome_noise = noise.get_noise_2d(xs+random_seed, ys-random_seed)
 			if biome_noise >=0.1:
 				tileData.biome = "FOREST"
 			if biome_noise <-0.1:

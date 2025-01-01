@@ -18,10 +18,10 @@ func mapGeneration():
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):
 			var tile = WorldManager.get_chunk(Vector2i(x,y))
-			randomize()
+
 			var random_binary = randi() % 6
 			if tile.biome == "FOREST" and random_binary == 0 and tile.river_connection == [0,0,0,0,0,0]:
-				randomize()
+
 				random_binary = randi() % 6
 				tilemap.set_cell(2, Vector2i(x,y), 3, deco[random_binary])
 			random_binary = randi() % 4

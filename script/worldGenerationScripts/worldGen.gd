@@ -34,6 +34,7 @@ func _ready():
 func new_chunk(current_chunk):
 	if WorldManager.get_tile(current_chunk, Vector2i(0, 0)) == null:
 		assignTiles(current_chunk)
+		print("generated ", current_chunk)
 	generateWorld(current_chunk)
 	script_a._ready()
 	script_b._ready()
@@ -47,7 +48,8 @@ func assignTiles(current_chunk):
 	var min = - size.x/2
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
-			var random_seed = int(str(WorldManager.get_seed()).substr(0, 2))
+			var chunk_id = hash(str(current_chunk.x) + str(current_chunk.y))
+			var random_seed = int(str(WorldManager.get_seed()).substr(0, 6)) + int(str(chunk_id).substr(3, 7)) # good enough for now
 			
 			var terrain_noise_val = noise.get_noise_2d(x+random_seed, y+random_seed)
 			var water_noise_val = water_noise.get_noise_2d(x+random_seed, y+random_seed)
