@@ -45,7 +45,7 @@ func mapGenerator():
 			if biome_noise >=0.1:
 				tileData.biome = "FOREST"
 			if biome_noise <-0.1:
-				tileData.biome = "GRASSLANDS"
+				tileData.biome = "GRASSLANDS" #fix generation to make it so that forests can be next to water and so on
 			if biome_noise < -0.3:
 				tileData.biome = "SAND"
 			if biome_noise < -0.4:

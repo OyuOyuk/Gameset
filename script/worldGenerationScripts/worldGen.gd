@@ -5,7 +5,7 @@ extends Node2D
 
 @export var world : TileMap
 @export var water : TileMap
-
+@export var objects : TileMap
 enum type { GRASS, DIRT }
 
 var noise : Noise
@@ -19,17 +19,18 @@ var hex_neighbors = [
 	Vector2i(0, -1),   # DOWN
 	Vector2i(1, -1)     # LEFT DOWN
 ]
-
+var tree_amount = {
+	"FOREST": 50,
+	"GRASSLANDS":20,
+	"SAND":0,
+	"WATER":0, 
+}
 var values = {
 	"GRASSLANDS" : -0.2,
 	"FOREST" : -0.2,
 	"SAND" : -0.2
 }
-var values_water = {
-	"GRASSLANDS" :-0.3,
-	"FOREST" : -0.3,
-	"SAND" : -0.3
-}
+
 var radius: float = 2.0
 @onready var script_a = $world
 @onready var script_b = $water
@@ -138,7 +139,7 @@ func assignTiles(current_chunk):
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.GRASS
 			else:
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.DIRT
-	
+			tile_choices.append(Vector2i(x,y))
 			#if water_noise_val >=values_water[WorldManager.get_chunk(current_chunk).biome]:
 				#WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = false
 			#elif water_noise_val < values_water[WorldManager.get_chunk(current_chunk).biome]:
@@ -147,8 +148,14 @@ func assignTiles(current_chunk):
 			min = min + 0.5
 		else:
 			min = min - 0.5
+
 	if WorldManager.get_chunk(current_chunk).lake == true:
 		generate_lake(Vector2i(0, 0),40,current_chunk)
+	var tree_coords = []
+	for time in range(tree_amount[WorldManager.get_chunk(current_chunk).biome]):
+		
+		WorldManager.get_tile(current_chunk, tile_choices.pick_random()).tree = true
+		
 	
 
 func generateWorld(current_chunk):
@@ -164,6 +171,9 @@ func generateWorld(current_chunk):
 				water.set_cell(0,Vector2i(x,y), 0, Vector2i(0, 0))
 			elif WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence == false:
 				water.set_cell(0,Vector2i(x,y), 0, Vector2i(1, 0))
+			
+			if WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree == true:
+				objects.set_cell(0,Vector2i(x,y),)
 		if y > 0:
 			min = min + 0.5
 		else:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=32 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Grids.gd" id="1_043rh"]
@@ -10,8 +10,10 @@
 [ext_resource type="Script" path="res://script/worldGenerationScripts/water.gd" id="5_mifmk"]
 [ext_resource type="Texture2D" uid="uid://dqtru40fpj6hy" path="res://assets/watertile.png" id="7_lst7v"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/worldGen.gd" id="8_p8gn7"]
+[ext_resource type="Texture2D" uid="uid://cs5hgpce1xu0g" path="res://assets/tree.png" id="10_2e876"]
 [ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="10_y6tl6"]
 [ext_resource type="PackedScene" uid="uid://bnbjftctbm0o5" path="res://mainMenu.tscn" id="11_jr1r2"]
+[ext_resource type="Texture2D" uid="uid://dc6uba1d5bbpt" path="res://assets/stumps.png" id="11_p3mux"]
 [ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
@@ -118,17 +120,79 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_f0ijb")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_233x0"]
+texture = ExtResource("10_2e876")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(3, 4)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 48)
+3:0/size_in_atlas = Vector2i(3, 4)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 48)
+9:0/size_in_atlas = Vector2i(3, 4)
+9:0/0 = 0
+9:0/0/texture_origin = Vector2i(0, 48)
+0:10/size_in_atlas = Vector2i(3, 7)
+0:10/0 = 0
+0:10/0/texture_origin = Vector2i(0, 96)
+3:10/size_in_atlas = Vector2i(3, 7)
+3:10/0 = 0
+3:10/0/texture_origin = Vector2i(0, 96)
+6:10/size_in_atlas = Vector2i(3, 7)
+6:10/0 = 0
+6:10/0/texture_origin = Vector2i(0, 96)
+9:10/size_in_atlas = Vector2i(3, 7)
+9:10/0 = 0
+9:10/0/texture_origin = Vector2i(0, 96)
+0:4/size_in_atlas = Vector2i(3, 6)
+0:4/0 = 0
+0:4/0/texture_origin = Vector2i(0, 80)
+3:4/size_in_atlas = Vector2i(3, 6)
+3:4/0 = 0
+3:4/0/texture_origin = Vector2i(0, 80)
+6:4/size_in_atlas = Vector2i(3, 6)
+6:4/0 = 0
+6:4/0/texture_origin = Vector2i(0, 80)
+6:0/size_in_atlas = Vector2i(3, 4)
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 48)
+9:4/size_in_atlas = Vector2i(3, 6)
+9:4/0 = 0
+9:4/0/texture_origin = Vector2i(0, 80)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p1qar"]
+texture = ExtResource("11_p3mux")
+texture_region_size = Vector2i(32, 32)
+0:0/size_in_atlas = Vector2i(3, 2)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 16)
+3:0/size_in_atlas = Vector2i(3, 2)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 16)
+6:0/size_in_atlas = Vector2i(3, 2)
+6:0/0 = 0
+6:0/0/texture_origin = Vector2i(0, 16)
+9:0/size_in_atlas = Vector2i(3, 2)
+9:0/0 = 0
+9:0/0/texture_origin = Vector2i(0, 16)
+
+[sub_resource type="TileSet" id="TileSet_1u6oo"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_233x0")
+sources/1 = SubResource("TileSetAtlasSource_p1qar")
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_6uaq8")
 
 [node name="world" type="Node2D" parent="."]
 
-[node name="worldgen" type="Node2D" parent="world" node_paths=PackedStringArray("world", "water")]
+[node name="worldgen" type="Node2D" parent="world" node_paths=PackedStringArray("world", "water", "objects")]
 script = ExtResource("8_p8gn7")
 LandNoise = SubResource("NoiseTexture2D_a0bt4")
 WaterNoise = SubResource("NoiseTexture2D_f5dxa")
 world = NodePath("world")
 water = NodePath("water")
+objects = NodePath("objects")
 
 [node name="world" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
 texture_filter = 1
@@ -159,6 +223,12 @@ position = Vector2(16, 16)
 tile_set = SubResource("TileSet_0c131")
 rendering_quadrant_size = 32
 format = 2
+
+[node name="objects" type="TileMap" parent="world/worldgen"]
+tile_set = SubResource("TileSet_1u6oo")
+rendering_quadrant_size = 32
+format = 2
+layer_1/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." node_paths=PackedStringArray("tilemap") instance=ExtResource("5_bj60p")]
 tilemap = NodePath("../world/worldgen/water")

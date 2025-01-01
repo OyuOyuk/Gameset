@@ -5,5 +5,5 @@ class_name chunkData
 var pos = Vector2i(0, 0)  
 var tileType     
 var waterPrescence = false
-var object = []              
+var tree = false              
 
