@@ -26,6 +26,7 @@ func _input(event):
 
 func yes():
 	player.position =  map_to_local(WorldManager.clicked_pos)
+	WorldManager.chunk_player_pos = player.position
 	menu.visible = false
 
 	

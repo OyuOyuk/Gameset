@@ -11,16 +11,9 @@ enum type { GRASS, DIRT }
 var noise : Noise
 var water_noise : Noise
 var size  = Vector2i(50,100)
-var hex_neighbors = [
-	Vector2i(1, 1),    # LEFT UP
-	Vector2i(0, 1),   # UP
-	Vector2i(-1, 1),   # RIGHT UP
-	Vector2i(-1, -1),   # RIGHT DOWN
-	Vector2i(0, -1),   # DOWN
-	Vector2i(1, -1)     # LEFT DOWN
-]
+
 var tree_amount = {
-	"FOREST": 50,
+	"FOREST": 80,
 	"GRASSLANDS":20,
 	"SAND":0,
 	"WATER":0, 
@@ -44,10 +37,11 @@ func _ready():
 	ConnectionManager.new_map_position.connect(new_chunk)
 func new_chunk(current_chunk):
 	if WorldManager.get_tile(current_chunk, Vector2i(0, 0)) == null:
+		objects.clear()
 		assignTiles(current_chunk)
-		print("generated ", current_chunk)
-	if WorldManager.get_chunk(current_chunk).river_connection != [0,0,0,0,0,0]:
-		set_river_flow(current_chunk )
+		
+		if WorldManager.get_chunk(current_chunk).river_connection != [0,0,0,0,0,0]:
+			set_river_flow(current_chunk )
 	generateWorld(current_chunk)
 	script_a._ready()
 	script_b._ready()
@@ -124,6 +118,7 @@ func generate_lake(center: Vector2i, iterations: int,current_chunk):
 		WorldManager.get_tile(current_chunk, tile).waterPrescence = true
 
 func assignTiles(current_chunk):
+	print("generated ", current_chunk)
 	var min = - size.x/2
 	var tile_choices = []
 	for y in range(-size.y/2, size.y/2):
@@ -139,11 +134,8 @@ func assignTiles(current_chunk):
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.GRASS
 			else:
 				WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType = type.DIRT
+			
 			tile_choices.append(Vector2i(x,y))
-			#if water_noise_val >=values_water[WorldManager.get_chunk(current_chunk).biome]:
-				#WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = false
-			#elif water_noise_val < values_water[WorldManager.get_chunk(current_chunk).biome]:
-				#WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence = true
 		if y > 0:
 			min = min + 0.5
 		else:
@@ -151,18 +143,41 @@ func assignTiles(current_chunk):
 
 	if WorldManager.get_chunk(current_chunk).lake == true:
 		generate_lake(Vector2i(0, 0),40,current_chunk)
-	var tree_coords = []
-	for time in range(tree_amount[WorldManager.get_chunk(current_chunk).biome]):
-		
-		WorldManager.get_tile(current_chunk, tile_choices.pick_random()).tree = true
-		
+	if WorldManager.get_chunk(current_chunk).biome != "SAND":
+		tree(current_chunk, tile_choices)
 	
+func tree(current_chunk,tile_choices):
+	#
 
+	
+	for time in range(tree_amount[WorldManager.get_chunk(current_chunk).biome]):
+		var tree_pos = tile_choices.pick_random()
+		if WorldManager.get_tile(current_chunk,tree_pos ).waterPrescence  != true:
+			var tree_data = PlantData.TreeData.new()
+			var random_number_x = randi() % 4 * 5
+			var trunk 
+			var random_number_y = randi() % 3
+			tree_data.growth_stage = random_number_y + 1
+			match random_number_y:
+				0:
+					random_number_y = 0
+					trunk = 0
+				1: 
+					random_number_y = 4
+					trunk = 3
+				2: 
+					random_number_y = 10
+					trunk = 6
+			tree_data.atlas_coords = Vector2i(random_number_x, random_number_y)
+			tree_data.root_atlas_coords = Vector2i(trunk, 0)
+			WorldManager.get_tile(current_chunk,tree_pos ).tree = tree_data
+
+		
 func generateWorld(current_chunk):
 	var min = -size.x/2
 	for y in range(-size.y/2, size.y/2):
 		for x in range(min, -min):
-
+			
 			if WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType == type.GRASS :
 				world.set_cell(0,Vector2i(x,y), 0, Vector2i(0, 0))
 			elif WorldManager.get_tile(current_chunk,Vector2i(x,y)).tileType == type.DIRT:
@@ -172,8 +187,10 @@ func generateWorld(current_chunk):
 			elif WorldManager.get_tile(current_chunk,Vector2i(x,y)).waterPrescence == false:
 				water.set_cell(0,Vector2i(x,y), 0, Vector2i(1, 0))
 			
-			if WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree == true:
-				objects.set_cell(0,Vector2i(x,y),)
+			if WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree != null:
+				objects.set_cell(1,Vector2i(x,y),0,WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree.atlas_coords)
+				objects.set_cell(0,Vector2i(x,y),1,WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree.root_atlas_coords)
+				
 		if y > 0:
 			min = min + 0.5
 		else:

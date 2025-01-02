@@ -21,9 +21,11 @@ func _process(delta):
 		if camera.screen == "menu":
 			camera.screen = "main"
 			player.movement = true
+			camera.position = player.position
 		else:
 			main_menu_scene.position = player.position - get_viewport().get_visible_rect().size/2
 			camera.screen = "menu"
+			
 			player.movement = false
 		map_scene.visible = false
 		world_grid.on_screen = false
@@ -33,8 +35,9 @@ func _process(delta):
 			camera.screen = "main"
 			player.movement = true
 			world_grid.on_screen = false
-			
+			camera.position = player.position
 		else:
+			camera.position = WorldManager.chunk_player_pos
 			camera.screen = "map"
 			player.movement = false
 			world_grid.on_screen = true

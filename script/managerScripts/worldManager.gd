@@ -5,6 +5,7 @@ var chunks = {}  # Stores chunks using chunk positions as keys
 var current_chunk: Vector2i = Vector2i(0, 0)
 var user_seed
 var clicked_pos = Vector2i(0,0)
+var chunk_player_pos = Vector2i(0,0)
 # Called when the node enters the scene
 func _ready():
 	# Example usage
