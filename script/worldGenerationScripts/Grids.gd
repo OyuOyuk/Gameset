@@ -5,7 +5,7 @@ extends TileMap
 @export var grassPlaceholderAtlasCoord : Vector2i
 @export var dirtPlaceholderAtlasCoord : Vector2i
 
-var size  = Vector2i(50,100)
+var size  = VariablesManager.chunkSize
 const NEIGHBOURS = [
 	Vector2i(-1, -1),
 	Vector2i(0, -1),
@@ -50,7 +50,7 @@ var neighboursToAtlasCoord : Dictionary = {
 
 func _ready():
 
-	var current_chunk = WorldManager.get_chunk(WorldManager.get_current_chunk())
+
 	for coord in get_used_cells(0):
 		set_display_tile(coord)
 

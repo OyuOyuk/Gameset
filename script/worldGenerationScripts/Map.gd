@@ -26,7 +26,7 @@ func _ready():
 func mapGenerator():
 	print("Generating map...")
 	var noise = biomeNoise.noise
-	var tile
+
 	var lakeOptions = []
 	for x in range(-size.x/2, size.x/2):
 		for y in range(-size.y/2, size.y/2):

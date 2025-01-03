@@ -4,18 +4,18 @@ extends Node2D
 @onready var main_menu_scene = get_node("MainMenuPrototype")
 var current_screen = "main"
 
-@onready var camera = get_node("Player/Camera2D")  
-@onready var player = get_node("Player") 
+@onready var camera = get_node("world/active/Player/Camera2D")  
+@onready var player = get_node("world/active/Player") 
 @onready var world = get_node("world")
 @onready var world_grid = get_node("map_trial/outline2/outline")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	camera.position = Vector2i(0, 0)
 	world.visible = true
 	map_scene.visible = false
 	main_menu_scene.visible = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("Menu"):
 		
 		if camera.screen == "menu":
@@ -35,7 +35,7 @@ func _process(delta):
 			camera.screen = "main"
 			player.movement = true
 			world_grid.on_screen = false
-			camera.position = player.position
+			camera.position = Vector2i(0, 0)
 		else:
 			camera.position = WorldManager.chunk_player_pos
 			camera.screen = "map"

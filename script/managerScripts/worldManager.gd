@@ -12,14 +12,14 @@ func _ready():
 	generate_chunk(Vector2i(0, 0))
 	get_chunk(Vector2i(0, 0)).biome = "FOREST"
 	ConnectionManager.user_seed.connect(seeder)
-func seeder(seed):
+func seeder(seeds):
 	
-	if seed.is_empty():
+	if seeds.is_empty():
 		randomize()
 		user_seed = randi()
 		
 	else:
-		user_seed = hash(seed)
+		user_seed = hash(seeds)
 	seed(user_seed)
 	print(user_seed)
 func get_seed():

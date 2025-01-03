@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://btcwm5blhrj34" path="res://assets/hexagonal_patterns.png" id="4_julou"]
 [ext_resource type="Texture2D" uid="uid://8xttpfy1wihg" path="res://assets/hexagonal_patterns1.png" id="5_p3e7t"]
 [ext_resource type="Texture2D" uid="uid://bdq3k6o6a2gqv" path="res://assets/outline.png" id="8_4lwdq"]
-[ext_resource type="Shader" path="res://script/mouse.gdshader" id="8_gy5ae"]
+[ext_resource type="Shader" path="res://script/shaders/mouse.gdshader" id="8_gy5ae"]
 [ext_resource type="Texture2D" uid="uid://btxyms2xmhnxg" path="res://assets/rivers.png" id="8_uqmol"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/River.gd" id="9_8kt4k"]
 [ext_resource type="Script" path="res://outline.gd" id="9_kgb5s"]

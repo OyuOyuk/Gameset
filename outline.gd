@@ -17,7 +17,7 @@ func _ready() -> void:
 	else:
 		print("TileMap or ShaderMaterial not found!")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if shader_material:
 		# Get the mouse position in global coordinates
 		var global_mouse_pos = get_viewport().get_mouse_position()

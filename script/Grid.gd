@@ -26,9 +26,10 @@ func _input(event):
 
 func yes():
 	player.position =  map_to_local(WorldManager.clicked_pos)
-	WorldManager.chunk_player_pos = player.position
+	WorldManager.chunk_player_pos = map_to_local(WorldManager.clicked_pos)
+	print("camera should center this",WorldManager.chunk_player_pos )
 	menu.visible = false
-
+	
 	
 	#var global_clicked  = get_local_mouse_position()
 	#var pos_clicked = local_to_map(to_local(global_clicked))
