@@ -149,7 +149,7 @@ func assignTiles(current_chunk):
 	if WorldManager.get_chunk(current_chunk).lake == true:
 		generate_lake(Vector2i(0, 0),40,current_chunk)
 	if WorldManager.get_chunk(current_chunk).river_connection != [0,0,0,0,0,0]:
-			set_river_flow(current_chunk )
+		set_river_flow(current_chunk )
 	if WorldManager.get_chunk(current_chunk).biome != "WATER":
 		tree(current_chunk, tile_choices)
 		grass(current_chunk, tile_choices)

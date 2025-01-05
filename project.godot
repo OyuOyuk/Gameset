@@ -21,6 +21,7 @@ SaveManager="*res://script/managerScripts/saveManager.gd"
 WorldManager="*res://script/managerScripts/worldManager.gd"
 ConnectionManager="*res://script/managerScripts/ConnectionManager.gd"
 VariablesManager="*res://script/managerScripts/variablesManager.gd"
+TimeManager="*res://script/managerScripts/timeManager.gd"
 
 [input]
 

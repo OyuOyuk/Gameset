@@ -1,14 +1,15 @@
 shader_type canvas_item;
-
-void fragment() {
-	
-	if (COLOR == vec4(0.0, 0.0, 0.0, 1.0)){
-		COLOR.rgb = vec3(0.493, 0.758, 0.9160);
-	}
-	
+uniform sampler2D overlay_tex :repeat_enable, filter_nearest;
+uniform sampler2D noise_tex : repeat_enable;
+uniform float scale = 0.01;
+varying vec2 world_position;
+void vertex(){
+	world_position = (MODEL_MATRIX *vec4(VERTEX, 0.0, 1.0)).xy;
 }
+void fragment(){
+	float mix_amount = floor(COLOR.r);
 
-//void light() {
-	// Called for every pixel for every light affecting the material.
-	// Uncomment to replace the default light processing function with this one.
-//}
+	vec4 overlay_color = texture(overlay_tex, world_position*scale);
+	COLOR = mix(COLOR, overlay_color, mix_amount);
+
+}

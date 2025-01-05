@@ -1,27 +1,24 @@
-[gd_scene load_steps=44 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=39 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Grids.gd" id="1_043rh"]
 [ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/example.png" id="1_lbwbn"]
-[ext_resource type="Texture2D" uid="uid://gjp4x58hbgpe" path="res://assets/dirt_grass.png" id="4_p2fi2"]
+[ext_resource type="Texture2D" uid="uid://cvp7e1qtsag6q" path="res://assets/grass_dirt.png" id="2_3h775"]
+[ext_resource type="Texture2D" uid="uid://etjmcefxqwng" path="res://assets/dirt_grass.png" id="4_p2fi2"]
 [ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="5_bj60p"]
 [ext_resource type="Texture2D" uid="uid://1ayjhorc7n04" path="res://assets/water.png" id="5_cv06g"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/water.gd" id="5_mifmk"]
-[ext_resource type="Shader" path="res://script/shaders/grass_dirt.gdshader" id="5_s0yml"]
-[ext_resource type="Texture2D" uid="uid://cvcr04hetfvh2" path="res://assets/dirt_tex.png" id="6_jihcm"]
 [ext_resource type="Texture2D" uid="uid://dqtru40fpj6hy" path="res://assets/watertile.png" id="7_lst7v"]
-[ext_resource type="Texture2D" uid="uid://bdsd1n3buag32" path="res://assets/grass_tex.png" id="7_t744u"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/worldGen.gd" id="8_p8gn7"]
 [ext_resource type="Shader" path="res://script/shaders/water.gdshader" id="9_p8h36"]
 [ext_resource type="Texture2D" uid="uid://cs5hgpce1xu0g" path="res://assets/tree.png" id="10_2e876"]
-[ext_resource type="Texture2D" uid="uid://ds8eiy3xa47qc" path="res://assets/sky.png" id="10_uummc"]
 [ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="10_y6tl6"]
-[ext_resource type="Script" path="res://water_view.gd" id="11_4gykk"]
 [ext_resource type="PackedScene" uid="uid://bnbjftctbm0o5" path="res://mainMenu.tscn" id="11_jr1r2"]
 [ext_resource type="Texture2D" uid="uid://dc6uba1d5bbpt" path="res://assets/stumps.png" id="11_p3mux"]
 [ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
 [ext_resource type="Shader" uid="uid://cpdndvd1xat0w" path="res://script/shaders/grass_sway.tres" id="12_4ee52"]
 [ext_resource type="Texture2D" uid="uid://dw80mbu1bw327" path="res://assets/grass.png" id="12_jfvn1"]
+[ext_resource type="Script" path="res://timer.gd" id="19_eybgy"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 frequency = 0.0205
@@ -49,52 +46,50 @@ custom_data_layer_0/name = "Terrain"
 custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_mkvae")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_waajf"]
-shader = ExtResource("5_s0yml")
-shader_parameter/scale_1 = 0.002
-shader_parameter/scale_2 = 0.002
-shader_parameter/grass_tex = ExtResource("7_t744u")
-shader_parameter/dirt_tex = ExtResource("6_jihcm")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6klj8"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehet5"]
 texture = ExtResource("4_p2fi2")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/material = SubResource("ShaderMaterial_waajf")
 1:0/0 = 0
-1:0/0/material = SubResource("ShaderMaterial_waajf")
 2:0/0 = 0
-2:0/0/material = SubResource("ShaderMaterial_waajf")
 3:0/0 = 0
-3:0/0/material = SubResource("ShaderMaterial_waajf")
 0:1/0 = 0
-0:1/0/material = SubResource("ShaderMaterial_waajf")
 1:1/0 = 0
-1:1/0/material = SubResource("ShaderMaterial_waajf")
 2:1/0 = 0
-2:1/0/material = SubResource("ShaderMaterial_waajf")
 3:1/0 = 0
-3:1/0/material = SubResource("ShaderMaterial_waajf")
 0:2/0 = 0
-0:2/0/material = SubResource("ShaderMaterial_waajf")
 1:2/0 = 0
-1:2/0/material = SubResource("ShaderMaterial_waajf")
 2:2/0 = 0
-2:2/0/material = SubResource("ShaderMaterial_waajf")
 3:2/0 = 0
-3:2/0/material = SubResource("ShaderMaterial_waajf")
 0:3/0 = 0
-0:3/0/material = SubResource("ShaderMaterial_waajf")
 1:3/0 = 0
-1:3/0/material = SubResource("ShaderMaterial_waajf")
 2:3/0 = 0
-2:3/0/material = SubResource("ShaderMaterial_waajf")
 3:3/0 = 0
-3:3/0/material = SubResource("ShaderMaterial_waajf")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_huxi7"]
+texture = ExtResource("2_3h775")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_gj5gs"]
 tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_6klj8")
+sources/0 = SubResource("TileSetAtlasSource_ehet5")
+sources/1 = SubResource("TileSetAtlasSource_huxi7")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s8a63"]
 texture = ExtResource("5_cv06g")
@@ -105,18 +100,8 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_s8a63")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_xx68q"]
-frequency = 0.0049
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3kbtm"]
-seamless = true
-noise = SubResource("FastNoiseLite_xx68q")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nmkxh"]
 shader = ExtResource("9_p8h36")
-shader_parameter/scale = 0.001
-shader_parameter/overlay_tex = ExtResource("10_uummc")
-shader_parameter/noise_tex = SubResource("NoiseTexture2D_3kbtm")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f0ijb"]
 texture = ExtResource("7_lst7v")
@@ -340,7 +325,6 @@ position = Vector2(16, 16)
 tile_set = SubResource("TileSet_0c131")
 rendering_quadrant_size = 32
 format = 2
-script = ExtResource("11_4gykk")
 
 [node name="active" type="Node2D" parent="world"]
 z_index = 1
@@ -366,14 +350,11 @@ tilemap = NodePath("../../worldgen/water")
 [node name="Camera2D" type="Camera2D" parent="world/active/Player"]
 script = ExtResource("11_sn3m7")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="world"]
-
 [node name="map_trial" parent="." instance=ExtResource("10_y6tl6")]
 
 [node name="MainMenuPrototype" parent="." instance=ExtResource("11_jr1r2")]
 
-[node name="ColorPicker" type="ColorPicker" parent="."]
-visible = false
-offset_right = 298.0
-offset_bottom = 576.0
-color = Color(0.0372346, 0.0176813, 0.235258, 1)
+[node name="time" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("19_eybgy")

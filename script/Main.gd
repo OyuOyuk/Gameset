@@ -37,7 +37,7 @@ func _process(_delta):
 			world_grid.on_screen = false
 			camera.position = Vector2i(0, 0)
 		else:
-			camera.position = WorldManager.chunk_player_pos
+			camera.position = WorldManager.chunk_player_pos -Vector2i(player.position)
 			camera.screen = "map"
 			player.movement = false
 			world_grid.on_screen = true

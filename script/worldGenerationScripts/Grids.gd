@@ -60,11 +60,11 @@ func set_tile(coords : Vector2i, atlas_coords : Vector2i):
 
 func set_display_tile(pos : Vector2i):
 
-	var random_binary = randi() % 2
+
 	# Loop through 4 display neighbours
 	for i in range(NEIGHBOURS.size()):
 		var new_pos = pos + NEIGHBOURS[i]
-		displayTilemap.set_cell(0, new_pos, random_binary, calculate_display_tile(new_pos)) #this shit
+		displayTilemap.set_cell(0, new_pos, 0, calculate_display_tile(new_pos)) #this shit
 
 func calculate_display_tile(coords: Vector2i) -> Vector2i:
 	# Get 4 world tile neighbors
