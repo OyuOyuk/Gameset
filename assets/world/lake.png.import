@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw80mbu1bw327"
-path="res://.godot/imported/grass.png-a207bda4a53e32c7645a41ec6d1c234e.ctex"
+uid="uid://brfhpfa3mvi5t"
+path="res://.godot/imported/lake.png-b0e7a42949b04b7e8059a03e7cd345fc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/grass.png"
-dest_files=["res://.godot/imported/grass.png-a207bda4a53e32c7645a41ec6d1c234e.ctex"]
+source_file="res://assets/world/lake.png"
+dest_files=["res://.godot/imported/lake.png-b0e7a42949b04b7e8059a03e7cd345fc.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgg1pqo1rkln5"
-path="res://.godot/imported/fogOfWar.png-6aa8b8183d7a772cd87d309fa8113797.ctex"
+uid="uid://dqtru40fpj6hy"
+path="res://.godot/imported/watertile.png-76c71440cddc00aff514c8aa8328e799.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/fogOfWar.png"
-dest_files=["res://.godot/imported/fogOfWar.png-6aa8b8183d7a772cd87d309fa8113797.ctex"]
+source_file="res://assets/world/watertile.png"
+dest_files=["res://.godot/imported/watertile.png-76c71440cddc00aff514c8aa8328e799.ctex"]
 
 [params]
 

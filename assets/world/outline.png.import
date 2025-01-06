@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btcwm5blhrj34"
-path="res://.godot/imported/hexagonal_patterns.png-e5ce47a7396de91c080629615fae83c5.ctex"
+uid="uid://bdq3k6o6a2gqv"
+path="res://.godot/imported/outline.png-17426b4d42b83ccdf8d83d1479464366.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/hexagonal_patterns.png"
-dest_files=["res://.godot/imported/hexagonal_patterns.png-e5ce47a7396de91c080629615fae83c5.ctex"]
+source_file="res://assets/world/outline.png"
+dest_files=["res://.godot/imported/outline.png-17426b4d42b83ccdf8d83d1479464366.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds8eiy3xa47qc"
-path="res://.godot/imported/sky.png-5f245714f6a8ddd8d2d452ade02334b8.ctex"
+uid="uid://8xttpfy1wihg"
+path="res://.godot/imported/hexagonal_patterns1.png-6b6cd4490421c4f0d18213e3e229acb7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sky.png"
-dest_files=["res://.godot/imported/sky.png-5f245714f6a8ddd8d2d452ade02334b8.ctex"]
+source_file="res://assets/world/hexagonal_patterns1.png"
+dest_files=["res://.godot/imported/hexagonal_patterns1.png-6b6cd4490421c4f0d18213e3e229acb7.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8xttpfy1wihg"
-path="res://.godot/imported/hexagonal_patterns1.png-9e64addb5ebf72ecef377cba2583c179.ctex"
+uid="uid://cs5hgpce1xu0g"
+path="res://.godot/imported/tree.png-f1419b6cf24a3d85d9ef39c4049460b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/hexagonal_patterns1.png"
-dest_files=["res://.godot/imported/hexagonal_patterns1.png-9e64addb5ebf72ecef377cba2583c179.ctex"]
+source_file="res://assets/world/tree.png"
+dest_files=["res://.godot/imported/tree.png-f1419b6cf24a3d85d9ef39c4049460b1.ctex"]
 
 [params]
 

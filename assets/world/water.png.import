@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqtru40fpj6hy"
-path="res://.godot/imported/watertile.png-41579991ed7f0e1c4ba21c3c1020cd95.ctex"
+uid="uid://1ayjhorc7n04"
+path="res://.godot/imported/water.png-8ccecbf065ff02786ab1d8b4a624072f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/watertile.png"
-dest_files=["res://.godot/imported/watertile.png-41579991ed7f0e1c4ba21c3c1020cd95.ctex"]
+source_file="res://assets/world/water.png"
+dest_files=["res://.godot/imported/water.png-8ccecbf065ff02786ab1d8b4a624072f.ctex"]
 
 [params]
 

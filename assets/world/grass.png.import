@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0tt0l7ob4pii"
-path="res://.godot/imported/hexagonal_patterns2.png-c3d831cd839c9434d4cc001f185b98fe.ctex"
+uid="uid://dw80mbu1bw327"
+path="res://.godot/imported/grass.png-8626bfc7c27c4aa612a694f18ecd707f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/hexagonal_patterns2.png"
-dest_files=["res://.godot/imported/hexagonal_patterns2.png-c3d831cd839c9434d4cc001f185b98fe.ctex"]
+source_file="res://assets/world/grass.png"
+dest_files=["res://.godot/imported/grass.png-8626bfc7c27c4aa612a694f18ecd707f.ctex"]
 
 [params]
 

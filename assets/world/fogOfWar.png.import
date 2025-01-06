@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1gnm5gbamujw"
-path="res://.godot/imported/desert_placeholder.png-a8a4a7b768591bbb8e2dcf658ea7b8af.ctex"
+uid="uid://bgg1pqo1rkln5"
+path="res://.godot/imported/fogOfWar.png-68086a4a6c7c9aefd03a821376c9cfd6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/desert_placeholder.png"
-dest_files=["res://.godot/imported/desert_placeholder.png-a8a4a7b768591bbb8e2dcf658ea7b8af.ctex"]
+source_file="res://assets/world/fogOfWar.png"
+dest_files=["res://.godot/imported/fogOfWar.png-68086a4a6c7c9aefd03a821376c9cfd6.ctex"]
 
 [params]
 
