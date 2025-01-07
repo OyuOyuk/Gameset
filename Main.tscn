@@ -1,10 +1,9 @@
-[gd_scene load_steps=44 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=46 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Grids.gd" id="1_043rh"]
 [ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/world/example.png" id="1_lbwbn"]
 [ext_resource type="Texture2D" uid="uid://gjp4x58hbgpe" path="res://assets/world/dirt_grass.png" id="4_p2fi2"]
-[ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="5_bj60p"]
 [ext_resource type="Texture2D" uid="uid://1ayjhorc7n04" path="res://assets/world/water.png" id="5_cv06g"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/water.gd" id="5_mifmk"]
 [ext_resource type="Shader" path="res://script/shaders/grass_dirt.gdshader" id="5_s0yml"]
@@ -15,13 +14,16 @@
 [ext_resource type="Shader" path="res://script/shaders/water.gdshader" id="9_p8h36"]
 [ext_resource type="Texture2D" uid="uid://cs5hgpce1xu0g" path="res://assets/world/tree.png" id="10_2e876"]
 [ext_resource type="Texture2D" uid="uid://ds8eiy3xa47qc" path="res://assets/world/sky.png" id="10_uummc"]
-[ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="10_y6tl6"]
 [ext_resource type="Script" path="res://water_view.gd" id="11_4gykk"]
-[ext_resource type="PackedScene" uid="uid://bnbjftctbm0o5" path="res://mainMenu.tscn" id="11_jr1r2"]
 [ext_resource type="Texture2D" uid="uid://dc6uba1d5bbpt" path="res://assets/world/stumps.png" id="11_p3mux"]
 [ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
 [ext_resource type="Shader" uid="uid://cpdndvd1xat0w" path="res://script/shaders/grass_sway.tres" id="12_4ee52"]
 [ext_resource type="Texture2D" uid="uid://dw80mbu1bw327" path="res://assets/world/grass.png" id="12_jfvn1"]
+[ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="19_nqj67"]
+[ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="21_1bkmf"]
+[ext_resource type="PackedScene" uid="uid://c4847byhv4pa7" path="res://inventory/inventory_ui.tscn" id="22_ajm5g"]
+[ext_resource type="PackedScene" uid="uid://ca52k2ttgodtk" path="res://inventory/hotbar.tscn" id="23_7eryv"]
+[ext_resource type="PackedScene" uid="uid://cwtk3r7dify0o" path="res://collectable.tscn" id="23_rljum"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 frequency = 0.0205
@@ -359,7 +361,7 @@ layer_1/y_sort_enabled = true
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
 
-[node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap") instance=ExtResource("5_bj60p")]
+[node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap") instance=ExtResource("19_nqj67")]
 y_sort_enabled = false
 tilemap = NodePath("../../worldgen/water")
 
@@ -368,12 +370,30 @@ script = ExtResource("11_sn3m7")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="world"]
 
-[node name="map_trial" parent="." instance=ExtResource("10_y6tl6")]
+[node name="map_trial" parent="." instance=ExtResource("21_1bkmf")]
 
-[node name="MainMenuPrototype" parent="." instance=ExtResource("11_jr1r2")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Inventory_Ui" parent="CanvasLayer" instance=ExtResource("22_ajm5g")]
+offset_left = 319.0
+offset_top = 132.0
+offset_right = -318.0
+offset_bottom = -188.0
+
+[node name="hotbar" parent="CanvasLayer" instance=ExtResource("23_7eryv")]
+offset_left = 413.0
+offset_top = 582.0
+offset_right = 413.0
+offset_bottom = 582.0
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
 visible = false
 offset_right = 298.0
 offset_bottom = 576.0
 color = Color(0.0372346, 0.0176813, 0.235258, 1)
+
+[node name="collectable2" parent="." instance=ExtResource("23_rljum")]
+position = Vector2(-100, 122)
+
+[node name="collectable" parent="." instance=ExtResource("23_rljum")]
+position = Vector2(-167, -21)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwtk3r7dify0o"]
+
+[ext_resource type="Script" path="res://collectable.gd" id="1_dnqua"]
+[ext_resource type="Resource" uid="uid://bwthx5ma6k5uy" path="res://inventory/items/shard.tres" id="2_6rnkp"]
+[ext_resource type="Texture2D" uid="uid://d1gj44k17vqc1" path="res://assets/gem.png" id="2_86c11"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dd4oo"]
+
+[node name="collectable" type="StaticBody2D"]
+script = ExtResource("1_dnqua")
+item = ExtResource("2_6rnkp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_86c11")
+
+[node name="interactable_area" type="Area2D" parent="."]
+scale = Vector2(2.15351, 1.97849)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactable_area"]
+shape = SubResource("CircleShape2D_dd4oo")
+
+[connection signal="body_entered" from="interactable_area" to="." method="_on_interactable_area_body_entered"]
+[connection signal="body_exited" from="interactable_area" to="." method="_on_interactable_area_body_exited"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bho2fxr4u5lj8"]
 
-[ext_resource type="Script" path="res://Yes.gd" id="1_joxs7"]
-[ext_resource type="Texture2D" uid="uid://cd47jbhhftgci" path="res://assets/background.png" id="1_ld05r"]
+[ext_resource type="Texture2D" uid="uid://cd47jbhhftgci" path="res://assets/background.png" id="1_am5rj"]
+[ext_resource type="Script" path="res://Yes.gd" id="2_jvdn3"]
 
 [node name="mapPopup" type="Control"]
 layout_mode = 3
@@ -16,7 +16,7 @@ texture_filter = 1
 layout_mode = 0
 offset_right = 376.0
 offset_bottom = 120.0
-texture = ExtResource("1_ld05r")
+texture = ExtResource("1_am5rj")
 
 [node name="MoveHere" type="Label" parent="."]
 modulate = Color(0.254902, 0.152941, 0.0784314, 1)
@@ -36,7 +36,7 @@ offset_right = 128.0
 offset_bottom = 88.0
 text = "Yes
 "
-script = ExtResource("1_joxs7")
+script = ExtResource("2_jvdn3")
 
 [node name="knownInfo" type="Label" parent="."]
 modulate = Color(0.254734, 0.152712, 0.0798448, 1)

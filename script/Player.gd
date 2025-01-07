@@ -5,11 +5,14 @@ var speed = {
 }
 @export var tilemap : TileMap
 @onready var animation = get_node("AnimationPlayer")
-
+@export var inventory : Inventory
+@export var hotbar : Inventory
 var in_water = "land"
 var last_direction = Vector2.ZERO
 
 var movement = true
+func _ready():
+	animation.play("idle_front")
 func _physics_process(_delta):
 	var tile_pos = tilemap.local_to_map(global_position)
 
@@ -18,7 +21,7 @@ func _physics_process(_delta):
 		in_water = "water"
 	else:
 		in_water = "land"
-
+	#if WorldManager.get_tile(WorldManager.get_current_chunk(),)
 	# Get input direction
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
@@ -54,12 +57,11 @@ func _physics_process(_delta):
 	velocity = input_direction * speed[in_water]
 
 	# Move the character if there is input
-	if input_direction != Vector2.ZERO:
-		movement = true
+	if input_direction != Vector2.ZERO and movement == true:
 		move_and_slide()
-	else:
-		movement = false
 
+func collect(item):
+	inventory.insert(item)
 #func update_lower_body_animation():
 	#var direction = Vector2.ZERO
 	#direction.x = Input.get_axis("ui_left", "ui_right")

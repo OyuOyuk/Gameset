@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var map_scene = get_node("map_trial")
-@onready var main_menu_scene = get_node("MainMenuPrototype")
+
 var current_screen = "main"
 
 @onready var camera = get_node("world/active/Player/Camera2D")  
@@ -13,23 +13,10 @@ func _ready():
 	camera.position = Vector2i(0, 0)
 	world.visible = true
 	map_scene.visible = false
-	main_menu_scene.visible = false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if Input.is_action_just_pressed("Menu"):
-		
-		if camera.screen == "menu":
-			camera.screen = "main"
-			player.movement = true
-			camera.position = player.position
-		else:
-			main_menu_scene.position = player.position - get_viewport().get_visible_rect().size/2
-			camera.screen = "menu"
-			
-			player.movement = false
-		map_scene.visible = false
-		world_grid.on_screen = false
-		main_menu_scene.visible = !main_menu_scene.visible
+
 	if Input.is_action_just_pressed("Map"):
 		if camera.screen == "map":
 			camera.screen = "main"
@@ -37,11 +24,10 @@ func _process(_delta):
 			world_grid.on_screen = false
 			camera.position = Vector2i(0, 0)
 		else:
-			camera.position = WorldManager.chunk_player_pos -Vector2i(player.position)
+			camera.position = Vector2i(WorldManager.chunk_player_pos) - Vector2i(player.position)
 			camera.screen = "map"
 			player.movement = false
 			world_grid.on_screen = true
 		world.visible = !world.visible
-		main_menu_scene.visible = false
 		map_scene.visible = !map_scene.visible
 		
