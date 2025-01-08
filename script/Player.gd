@@ -62,6 +62,7 @@ func _physics_process(_delta):
 
 func collect(item):
 	inventory.insert(item)
+
 #func update_lower_body_animation():
 	#var direction = Vector2.ZERO
 	#direction.x = Input.get_axis("ui_left", "ui_right")

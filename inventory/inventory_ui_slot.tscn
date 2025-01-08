@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://v2f0ddfdi264"]
+[gd_scene load_steps=4 format=3 uid="uid://v2f0ddfdi264"]
 
 [ext_resource type="Texture2D" uid="uid://ml1wv1kyui8q" path="res://assets/slot.png" id="1_0epvl"]
 [ext_resource type="Script" path="res://inventory/inventory_ui_slot.gd" id="1_cyqwe"]
+[ext_resource type="Resource" uid="uid://6ckehqpw8bn4" path="res://inventory/player_inventory.tres" id="2_falv8"]
 
 [node name="inventory_ui_slot" type="Panel"]
 self_modulate = Color(1, 1, 1, 0)
@@ -9,6 +10,7 @@ custom_minimum_size = Vector2(48, 48)
 offset_right = 48.0
 offset_bottom = 48.0
 script = ExtResource("1_cyqwe")
+inventory = ExtResource("2_falv8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -36,6 +38,3 @@ offset_right = 20.0
 offset_bottom = 24.0
 text = "99"
 horizontal_alignment = 2
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
