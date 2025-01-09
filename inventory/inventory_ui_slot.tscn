@@ -38,3 +38,5 @@ offset_right = 20.0
 offset_bottom = 24.0
 text = "99"
 horizontal_alignment = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

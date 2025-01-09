@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7r4ofr7eb85v"]
+
+[ext_resource type="Texture2D" uid="uid://cygk4owq2nbtr" path="res://assets/time_Ui.png" id="1_0l6hb"]
+[ext_resource type="Script" path="res://time_ui.gd" id="1_0mfgc"]
+[ext_resource type="Texture2D" uid="uid://bni5wwdf8ppr0" path="res://assets/minute_hand.png" id="2_ib1mn"]
+[ext_resource type="Texture2D" uid="uid://bp6stpf4h1m0j" path="res://assets/hour_hand.png" id="3_vokok"]
+[ext_resource type="FontFile" uid="uid://c0cbf5uw0rbn7" path="res://assets/fonts/PlaywriteAUSA-VariableFont_wght.ttf" id="4_1j85j"]
+
+[node name="time_Ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0mfgc")
+
+[node name="pocket_watch" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2, 1.994)
+texture = ExtResource("1_0l6hb")
+
+[node name="minute" type="Sprite2D" parent="pocket_watch"]
+position = Vector2(40.5, 40.6219)
+texture = ExtResource("2_ib1mn")
+offset = Vector2(0, -16)
+
+[node name="hour" type="Sprite2D" parent="pocket_watch"]
+position = Vector2(40.5, 40.6219)
+texture = ExtResource("3_vokok")
+offset = Vector2(0, -16)
+
+[node name="text" type="Label" parent="pocket_watch"]
+modulate = Color(0.317504, 0.168744, 0.070937, 1)
+layout_mode = 0
+offset_left = 80.0
+offset_top = 23.5707
+offset_right = 182.0
+offset_bottom = 54.5707
+scale = Vector2(0.4, 0.4)
+theme_override_fonts/font = ExtResource("4_1j85j")
+text = "Today'sDate"
+
+[node name="date" type="Label" parent="pocket_watch"]
+modulate = Color(0.167814, 0.0843125, 0.0166643, 1)
+layout_mode = 0
+offset_left = 81.0
+offset_top = 40.1204
+offset_right = 210.0
+offset_bottom = 71.1204
+scale = Vector2(0.3, 0.3)
+theme_override_fonts/font = ExtResource("4_1j85j")
+text = "day month year"
+horizontal_alignment = 1

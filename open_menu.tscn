@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://tktea150caql"]
 
-[ext_resource type="Script" path="res://START.gd" id="1_dbgu2"]
+[ext_resource type="Script" path="res://script/START.gd" id="1_dbgu2"]
 
 [node name="openMenu" type="Control"]
 layout_mode = 3

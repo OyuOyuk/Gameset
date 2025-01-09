@@ -4,6 +4,8 @@ class_name Inventory
 signal update
 
 @export var slots: Array[inventory_slot]
+func update_everything():
+	emit_signal("update")
 
 # In Inventory.gd
 func insert(item: Inventory_Item, amount: int = 1, target_slot_index: int = -1):

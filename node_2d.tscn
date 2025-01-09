@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://clgm68p0piut7"]
 
 [ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/world/example.png" id="1_ehf74"]
-[ext_resource type="Script" path="res://TileMap.gd" id="2_f7ulh"]
+[ext_resource type="Script" path="res://script/TileMap.gd" id="2_f7ulh"]
 [ext_resource type="Texture2D" uid="uid://gjp4x58hbgpe" path="res://assets/world/dirt_grass.png" id="3_r8o0w"]
 [ext_resource type="Texture2D" path="res://assets/grass_dirt.png" id="4_i8be8"]
 

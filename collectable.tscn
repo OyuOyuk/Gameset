@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cwtk3r7dify0o"]
 
-[ext_resource type="Script" path="res://collectable.gd" id="1_dnqua"]
+[ext_resource type="Script" path="res://script/collectable.gd" id="1_dnqua"]
 [ext_resource type="Resource" uid="uid://bwthx5ma6k5uy" path="res://inventory/items/shard.tres" id="2_6rnkp"]
 [ext_resource type="Texture2D" uid="uid://d1gj44k17vqc1" path="res://assets/gem.png" id="2_86c11"]
 

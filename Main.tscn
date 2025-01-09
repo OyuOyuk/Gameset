@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=47 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Grids.gd" id="1_043rh"]
@@ -14,7 +14,7 @@
 [ext_resource type="Shader" path="res://script/shaders/water.gdshader" id="9_p8h36"]
 [ext_resource type="Texture2D" uid="uid://cs5hgpce1xu0g" path="res://assets/world/tree.png" id="10_2e876"]
 [ext_resource type="Texture2D" uid="uid://ds8eiy3xa47qc" path="res://assets/world/sky.png" id="10_uummc"]
-[ext_resource type="Script" path="res://water_view.gd" id="11_4gykk"]
+[ext_resource type="Script" path="res://script/water_view.gd" id="11_4gykk"]
 [ext_resource type="Texture2D" uid="uid://dc6uba1d5bbpt" path="res://assets/world/stumps.png" id="11_p3mux"]
 [ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
 [ext_resource type="Shader" uid="uid://cpdndvd1xat0w" path="res://script/shaders/grass_sway.tres" id="12_4ee52"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="19_nqj67"]
 [ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="21_1bkmf"]
 [ext_resource type="PackedScene" uid="uid://c4847byhv4pa7" path="res://inventory/inventory_ui.tscn" id="22_ajm5g"]
+[ext_resource type="PackedScene" uid="uid://b7r4ofr7eb85v" path="res://time_ui.tscn" id="22_jrju3"]
 [ext_resource type="PackedScene" uid="uid://ca52k2ttgodtk" path="res://inventory/hotbar.tscn" id="23_7eryv"]
 [ext_resource type="PackedScene" uid="uid://cwtk3r7dify0o" path="res://collectable.tscn" id="23_rljum"]
 
@@ -374,6 +375,8 @@ script = ExtResource("11_sn3m7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="time_Ui" parent="CanvasLayer" instance=ExtResource("22_jrju3")]
+
 [node name="Inventory_Ui" parent="CanvasLayer" instance=ExtResource("22_ajm5g")]
 offset_left = 319.0
 offset_top = 132.0
@@ -381,10 +384,10 @@ offset_right = -318.0
 offset_bottom = -188.0
 
 [node name="hotbar" parent="CanvasLayer" instance=ExtResource("23_7eryv")]
-offset_left = 413.0
-offset_top = 582.0
-offset_right = 413.0
-offset_bottom = 582.0
+offset_left = 408.0
+offset_top = 586.0
+offset_right = 408.0
+offset_bottom = 586.0
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
 visible = false

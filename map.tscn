@@ -1,6 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://b3sn53f22sgb0"]
 
 [ext_resource type="Script" path="res://script/Grid.gd" id="2_j2wph"]
+[ext_resource type="Script" path="res://script/Decorations.gd" id="3_1w7hi"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Map.gd" id="3_ojbmr"]
 [ext_resource type="PackedScene" uid="uid://bho2fxr4u5lj8" path="res://map_popup.tscn" id="3_ouxap"]
 [ext_resource type="Texture2D" uid="uid://btcwm5blhrj34" path="res://assets/world/hexagonal_patterns.png" id="4_julou"]
@@ -9,10 +10,9 @@
 [ext_resource type="Shader" path="res://script/shaders/mouse.gdshader" id="8_gy5ae"]
 [ext_resource type="Texture2D" uid="uid://btxyms2xmhnxg" path="res://assets/world/rivers.png" id="8_uqmol"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/River.gd" id="9_8kt4k"]
-[ext_resource type="Script" path="res://outline.gd" id="9_kgb5s"]
+[ext_resource type="Script" path="res://script/outline.gd" id="9_kgb5s"]
 [ext_resource type="Texture2D" uid="uid://ci4nidounco0e" path="res://assets/world/trees.png" id="11_sa1pc"]
 [ext_resource type="Texture2D" uid="uid://brfhpfa3mvi5t" path="res://assets/world/lake.png" id="12_nenw6"]
-[ext_resource type="Script" path="res://Decorations.gd" id="12_tuorx"]
 [ext_resource type="Texture2D" uid="uid://co1mxx4spne5j" path="res://icon.svg" id="15_u8tgh"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kcx5n"]
@@ -137,7 +137,7 @@ script = ExtResource("9_8kt4k")
 riverTileMap = NodePath("../Display")
 
 [node name="Decoration" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
-script = ExtResource("12_tuorx")
+script = ExtResource("3_1w7hi")
 tilemap = NodePath("../Display")
 
 [node name="Display" type="TileMap" parent="."]

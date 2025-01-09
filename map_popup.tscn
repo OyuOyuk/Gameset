@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bho2fxr4u5lj8"]
 
 [ext_resource type="Texture2D" uid="uid://cd47jbhhftgci" path="res://assets/background.png" id="1_am5rj"]
-[ext_resource type="Script" path="res://Yes.gd" id="2_jvdn3"]
+[ext_resource type="Script" path="res://script/Yes.gd" id="2_jvdn3"]
 
 [node name="mapPopup" type="Control"]
 layout_mode = 3

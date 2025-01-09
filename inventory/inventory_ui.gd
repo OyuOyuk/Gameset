@@ -2,15 +2,69 @@ extends Control
 @onready var inventory : Inventory = preload("res://inventory/player_inventory.tres")
 @onready var inventory_slots : Array = $TextureRect/GridContainer.get_children()
 @onready var hotbar_slots : Array = $TextureRect/HotbarGridContainer.get_children()
-@onready var held_item = $held_item
+@onready var held_item = $held
+var held_item_data = {
+
+}
 var is_open = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	held_item.get_node("amount").visible = false
+	held_item_data["item"] = null
+	held_item_data["amount"] = null
 	inventory.update.connect(update_slots)
+	ConnectionManager.connect("right_click_split", split )
+	ConnectionManager.connect("left_click_drag", drag)
 	 # Connect signals for hotbar slots
-
+	held_item.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	update_slots()
 	close()
+func split(slot_index):
+	if held_item_data["item"] == null:
+		var taken_item =floor(inventory.slots[slot_index].amount / 2)
+		held_item_data["item"] = inventory.slots[slot_index].item
+		held_item_data["amount"] = taken_item
+		held_item.get_node("item_display").texture =  inventory.slots[slot_index].item.texture
+		held_item.get_node("amount").text = str(taken_item)
+		inventory.slots[slot_index].amount = inventory.slots[slot_index].amount - taken_item
+		if held_item_data["amount"] == 1:
+			held_item.get_node("amount").visible = false
+		else:
+			held_item.get_node("amount").visible = true
+	else:
+		if inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"]:
+			var given_item = floor(held_item_data["amount"] / 2 )
+			inventory.slots[slot_index].item = held_item_data["item"]
+			inventory.slots[slot_index].amount = inventory.slots[slot_index].amount + given_item
+			held_item_data["amount"] = held_item_data["amount"] - given_item 
+			held_item.get_node("amount").text = str( held_item_data["amount"])
+	inventory.update_everything()
+func drag(slot_index):
+	if held_item_data["item"] == null:
+		
+
+		held_item_data["item"] = inventory.slots[slot_index].item
+		held_item_data["amount"] = inventory.slots[slot_index].amount
+		held_item.get_node("item_display").texture =  inventory.slots[slot_index].item.texture
+		held_item.get_node("amount").text = str(inventory.slots[slot_index].amount)
+		inventory.slots[slot_index].item = null
+		inventory.slots[slot_index].amount = 0
+		
+		if held_item_data["amount"] == 1:
+			held_item.get_node("amount").visible = false
+		else:
+			held_item.get_node("amount").visible = true
+	else:
+		if inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"]:
+			
+			inventory.slots[slot_index].item = held_item_data["item"]
+			inventory.slots[slot_index].amount = inventory.slots[slot_index].amount + held_item_data["amount"] 
+			held_item_data["item"] = null
+			held_item_data["amount"] = 0 
+			held_item.get_node("item_display").texture = null
+			held_item.get_node("amount").visible = false
+			held_item.get_node("amount").text = str(0)
+	inventory.update_everything()
 func update_slots():
 	# Ensure slots are not combined by correctly splitting them
 	# Update hotbar slots (first 6 slots of the inventory)
@@ -44,4 +98,5 @@ func _process(delta):
 			close()
 		else :
 			open()
+	held_item.position = get_local_mouse_position() - Vector2(16,16)
 
