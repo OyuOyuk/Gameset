@@ -1,11 +1,11 @@
-[gd_scene load_steps=56 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=48 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
-[ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/Grids.gd" id="1_043rh"]
+[ext_resource type="Script" path="res://script/worldGenerationScripts/Grids.gd" id="1_043rh"]
 [ext_resource type="Texture2D" uid="uid://1jhh3rbcddmt" path="res://assets/world/example.png" id="1_lbwbn"]
 [ext_resource type="Texture2D" uid="uid://gjp4x58hbgpe" path="res://assets/world/dirt_grass.png" id="4_p2fi2"]
 [ext_resource type="Texture2D" uid="uid://1ayjhorc7n04" path="res://assets/world/water.png" id="5_cv06g"]
-[ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/water.gd" id="5_mifmk"]
+[ext_resource type="Script" path="res://script/worldGenerationScripts/water.gd" id="5_mifmk"]
 [ext_resource type="Shader" path="res://script/shaders/grass_dirt.gdshader" id="5_s0yml"]
 [ext_resource type="Texture2D" uid="uid://cvcr04hetfvh2" path="res://assets/world/dirt_tex.png" id="6_jihcm"]
 [ext_resource type="Texture2D" uid="uid://dqtru40fpj6hy" path="res://assets/world/watertile.png" id="7_lst7v"]
@@ -19,9 +19,6 @@
 [ext_resource type="Script" path="res://script/Camera.gd" id="11_sn3m7"]
 [ext_resource type="Shader" uid="uid://cpdndvd1xat0w" path="res://script/shaders/grass_sway.tres" id="12_4ee52"]
 [ext_resource type="Texture2D" uid="uid://dw80mbu1bw327" path="res://assets/world/grass.png" id="12_jfvn1"]
-[ext_resource type="Texture2D" uid="uid://ce1uu1sw7nkx5" path="res://assets/ui/place_holder_path.png" id="15_f30wh"]
-[ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/brick_path.gd" id="16_dq5ch"]
-[ext_resource type="Texture2D" uid="uid://ducvi8rdfdsnv" path="res://assets/world/path.png" id="17_y3nm5"]
 [ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="19_nqj67"]
 [ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="21_1bkmf"]
 [ext_resource type="Script" path="res://CanvasModulate.gd" id="21_vtvjt"]
@@ -29,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://b7r4ofr7eb85v" path="res://time_ui.tscn" id="22_jrju3"]
 [ext_resource type="PackedScene" uid="uid://ca52k2ttgodtk" path="res://inventory/hotbar.tscn" id="23_7eryv"]
 [ext_resource type="PackedScene" uid="uid://cwtk3r7dify0o" path="res://collectable.tscn" id="23_rljum"]
-[ext_resource type="PackedScene" uid="uid://bvhtxe5q0470c" path="res://status_bars.tscn" id="25_sclnd"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 frequency = 0.0205
@@ -164,38 +160,6 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_0c131"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_f0ijb")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kvgdr"]
-texture = ExtResource("15_f30wh")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_vg4o7"]
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_kvgdr")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_656ul"]
-texture = ExtResource("17_y3nm5")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_31epg"]
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_656ul")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_233x0"]
 texture = ExtResource("10_2e876")
@@ -382,18 +346,6 @@ rendering_quadrant_size = 32
 format = 2
 script = ExtResource("11_4gykk")
 
-[node name="brick_path" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
-tile_set = SubResource("TileSet_vg4o7")
-rendering_quadrant_size = 32
-format = 2
-script = ExtResource("16_dq5ch")
-displayTilemap = NodePath("../brick_path_view")
-
-[node name="brick_path_view" type="TileMap" parent="world/worldgen"]
-position = Vector2(16, 16)
-tile_set = SubResource("TileSet_31epg")
-format = 2
-
 [node name="active" type="Node2D" parent="world"]
 z_index = 1
 y_sort_enabled = true
@@ -427,53 +379,22 @@ script = ExtResource("21_vtvjt")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="time_Ui" parent="CanvasLayer" instance=ExtResource("22_jrju3")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_bottom = 0.0
-grow_horizontal = 0
-grow_vertical = 1
-size_flags_horizontal = 4
+offset_left = 885.0
+offset_top = -1.0
+offset_right = 885.0
+offset_bottom = -1.0
 
-[node name="status_bars" parent="CanvasLayer" instance=ExtResource("25_sclnd")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
+[node name="Inventory_Ui" parent="CanvasLayer" instance=ExtResource("22_ajm5g")]
+offset_left = 319.0
+offset_top = 132.0
+offset_right = -318.0
+offset_bottom = -188.0
 
 [node name="hotbar" parent="CanvasLayer" instance=ExtResource("23_7eryv")]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-grow_vertical = 0
-
-[node name="ui" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Inventory_Ui" parent="CanvasLayer/ui" instance=ExtResource("22_ajm5g")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -192.0
-offset_right = -248.0
-offset_bottom = -192.0
-size_flags_horizontal = 4
+offset_left = 408.0
+offset_top = 586.0
+offset_right = 408.0
+offset_bottom = 586.0
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
 visible = false

@@ -4,6 +4,7 @@ var speed = {
 	"land":400
 }
 @export var tilemap : TileMap
+@onready var animationTree = get_node("AnimationTree")
 @onready var animation = get_node("AnimationPlayer")
 @export var inventory : Inventory
 @export var hotbar : Inventory
@@ -12,7 +13,10 @@ var last_direction = Vector2.ZERO
 
 var movement = true
 func _ready():
-	animation.play("idle_front")
+	#animation.play("idle_front")
+	animationTree.active = true
+func _process(delta):
+	update_animation_parameters()
 func _physics_process(_delta):
 	var tile_pos = tilemap.local_to_map(global_position)
 
@@ -28,30 +32,30 @@ func _physics_process(_delta):
 	# Update last direction only when moving
 	if input_direction != Vector2.ZERO:
 		last_direction = input_direction
-
-	# Play animations based on input direction
-	if input_direction != Vector2.ZERO:
-		# Prioritize side-walking animations
-		if abs(input_direction.x) >= abs(input_direction.y):
-			if input_direction.x < 0 and animation.current_animation != "run_left":
-				animation.play("run_left")
-			elif input_direction.x > 0 and animation.current_animation != "run_right":
-				animation.play("run_right")
-		else:
-			if input_direction.y < 0 and animation.current_animation != "run_back":
-				animation.play("run_back")
-			elif input_direction.y > 0 and animation.current_animation != "run_front":
-				animation.play("run_front")
-	else:
-		# If no movement, play idle animation based on last direction
-		if last_direction.x < 0 and animation.current_animation != "idle_left":
-			animation.play("idle_left")
-		elif last_direction.x > 0 and animation.current_animation != "idle_right":
-			animation.play("idle_right")
-		elif last_direction.y < 0 and animation.current_animation != "idle_back":
-			animation.play("idle_back")
-		elif last_direction.y > 0 and animation.current_animation != "idle_front":
-			animation.play("idle_front")
+#
+	## Play animations based on input direction
+	#if input_direction != Vector2.ZERO:
+		## Prioritize side-walking animations
+		#if abs(input_direction.x) >= abs(input_direction.y):
+			#if input_direction.x < 0 and animation.current_animation != "run_left":
+				#animation.play("run_left")
+			#elif input_direction.x > 0 and animation.current_animation != "run_right":
+				#animation.play("run_right")
+		#else:
+			#if input_direction.y < 0 and animation.current_animation != "run_back":
+				#animation.play("run_back")
+			#elif input_direction.y > 0 and animation.current_animation != "run_front":
+				#animation.play("run_front")
+	#else:
+		## If no movement, play idle animation based on last direction
+		#if last_direction.x < 0 and animation.current_animation != "idle_left":
+			#animation.play("idle_left")
+		#elif last_direction.x > 0 and animation.current_animation != "idle_right":
+			#animation.play("idle_right")
+		#elif last_direction.y < 0 and animation.current_animation != "idle_back":
+			#animation.play("idle_back")
+		#elif last_direction.y > 0 and animation.current_animation != "idle_front":
+			#animation.play("idle_front")
 
 	# Set velocity based on input direction and speed
 	velocity = input_direction * speed[in_water]
@@ -62,52 +66,18 @@ func _physics_process(_delta):
 
 func collect(item):
 	inventory.insert(item)
-
-#func update_lower_body_animation():
-	#var direction = Vector2.ZERO
-	#direction.x = Input.get_axis("ui_left", "ui_right")
-	#direction.y = Input.get_axis("ui_up", "ui_down")
-	#
-	## store the last direction
-	#if direction != last_direction && Input.is_anything_pressed() != false:
-		#last_direction = direction
-		#
-	## update direction and velocity
-	#if direction.x != 0:
-		#velocity.x = direction.x * speed
-		#if direction.x < 0:
-			#animation_player.play_backwards("walk_left")
-			#
-		#else:
-			#animation_player.play("walk_right")
-	#else: 
-		#velocity.x = 0
-		#
-	#if direction.y != 0:
-		#velocity.y = direction.y * speed
-		#if velocity.y != velocity.x && -velocity.y != velocity.x:
-			#if direction.y < 0:
-				#animation_player.play("walk_up")
-			#else:
-				#animation_player.play("walk_down")
-		#else:
-			#if direction.x < 0:
-				#animation_player.play_backwards("walk_left")
-			#
-			#else:
-				#animation_player.play("walk_right")
-		#
-	#else: 
-		##move_toward(velocity.y, 0, speed * delta)
-		#velocity.y = 0
-	##idle animation 
-	#if direction == Vector2.ZERO:
-		#if last_direction.x < 0:
-			#animation_player.play("Idle_left")
-		#if last_direction.x > 0:
-			#animation_player.play("Idle_right")
-		#if last_direction.y < 0:
-			#animation_player.play("Idle_up")
-		#if last_direction.y > 0:
-			#animation_player.play("Idle_down")
-		#
+func update_animation_parameters():
+	if velocity == Vector2.ZERO:
+		animationTree["parameters/conditions/idle"] = true
+		animationTree["parameters/conditions/is_moving"] = false
+	else:
+		animationTree["parameters/conditions/idle"] = false
+		animationTree["parameters/conditions/is_moving"] = true
+	if Input.is_action_just_pressed("Left_Click"):
+		animationTree["parameters/conditions/swing"] = true
+	else:
+		animationTree["parameters/conditions/swing"] = false
+	animationTree["parameters/idle/blend_position"] = last_direction
+	animationTree["parameters/run/blend_position"] = last_direction
+	animationTree["parameters/swing/blend_position"] = last_direction
+		

@@ -11,7 +11,11 @@ enum type { GRASS, DIRT }
 var noise : Noise
 var water_noise : Noise
 var size  = VariablesManager.chunkSize
-
+var rule = {
+	"road" : ["road", "house_plot", "park"],
+	"house_plot": ["road"],
+	"park" : ["park", "road"]
+}	
 var tree_amount = {
 	"FOREST": 150,
 	"GRASSLANDS":20,
@@ -83,6 +87,7 @@ func set_river_flow(current_chunk):
 	for side in range(river_connection.size()):
 		if river_connection[side] == 1:
 			draw_river(midpoints[side], current_chunk)
+			
 func draw_river(start_pos: Vector2i, current_chunk):
 	var pos = start_pos
 	var radius = 3
@@ -225,3 +230,17 @@ func generateWorld(current_chunk):
 			minx = minx + 0.5
 		else:
 			minx = minx - 0.5
+func city_generation(current_chunk, start, size):
+	var size_x = randi() % 11 + 2
+	var size_y = randi() % 11 + 2
+	for house in size:
+		
+		size_x = randi() % 11 + 2
+		size_y = randi() % 11 + 2
+		for x in range(start.x - size_x, start.x + size_x):
+			for y in range(start.y - size_y, start.y + size_y):
+				WorldManager.get_tile(current_chunk,Vector2i(x,y)).structure_type = "house_plot"
+		
+		
+	
+

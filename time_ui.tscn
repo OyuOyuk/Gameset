@@ -17,8 +17,10 @@ script = ExtResource("1_0mfgc")
 
 [node name="pocket_watch" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -267.0
+offset_top = 1.0
+offset_right = -139.0
+offset_bottom = 129.0
 scale = Vector2(2, 1.994)
 texture = ExtResource("1_0l6hb")
 

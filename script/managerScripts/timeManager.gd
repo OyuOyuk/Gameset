@@ -9,10 +9,10 @@ var current_year = 1
 var current_season = "Spring"  # Just an example, you'll probably want to change this dynamically
 
 # Time progression settings
-var real_seconds_per_in_game_minute = 1.0
+var real_seconds_per_in_game_minute = 0.1
 var in_game_minutes_per_real_second = 1 / real_seconds_per_in_game_minute
 var time_passed = 0.0
-
+var day_time_change = [5, 10, 17, 21]
 # Seasonal data (example)
 var seasons = ["Spring", "Summer", "Autumn", "Winter"]
 var days_in_season = 28  # Just an example, adjust for your game
@@ -30,7 +30,10 @@ func _process(delta):
 		time_passed = fmod(time_passed, 1.0)
 
 func advance_time(minutes):
+	if current_hour in day_time_change and current_minute == 0:
+		ConnectionManager.emit_signal("daytime_change",current_hour)
 	current_minute += minutes
+	
 	if current_minute >= 60:
 		current_hour += current_minute / 60
 		current_minute %= 60
@@ -44,6 +47,7 @@ func advance_time(minutes):
 				current_year += 1
 				current_month = 1
 			update_season()
+	
 
 func update_season():
 	var season_index = int((current_month - 1) / 3)  # Assuming 3 months per season

@@ -30,4 +30,5 @@ func _process(_delta):
 			world_grid.on_screen = true
 		world.visible = !world.visible
 		map_scene.visible = !map_scene.visible
-		
+	if Input.is_action_just_pressed("tester"):
+		StatsManager.update_health(-5.0)

@@ -15,8 +15,10 @@ script = ExtResource("1_1mrwn")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_right = 325.0
-offset_bottom = 59.0
+offset_left = -163.0
+offset_top = -54.0
+offset_right = 162.0
+offset_bottom = 5.0
 texture = ExtResource("1_b4u22")
 patch_margin_left = 2
 patch_margin_top = 2

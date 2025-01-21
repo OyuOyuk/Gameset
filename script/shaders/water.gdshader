@@ -8,8 +8,10 @@ void vertex(){
 }
 void fragment(){
 	float mix_amount = floor(COLOR.r);
-
-	vec4 overlay_color = texture(overlay_tex, world_position*scale);
+	
+	vec4 overlay_color = texture(noise_tex, world_position*scale);
+	overlay_color.r = 0.1;
+	overlay_color.g = 0.1;
 	COLOR = mix(COLOR, overlay_color, mix_amount);
 
 }

@@ -1,0 +1,81 @@
+[gd_scene load_steps=13 format=3 uid="uid://bvhtxe5q0470c"]
+
+[ext_resource type="Shader" path="res://script/shaders/status/health_bar.gdshader" id="1_6b0qm"]
+[ext_resource type="Texture2D" uid="uid://c0pubddtstohb" path="res://assets/ui/vials.png" id="1_cocpj"]
+[ext_resource type="Script" path="res://status.gd" id="1_ik6mq"]
+[ext_resource type="Texture2D" uid="uid://clp462nqi7sfs" path="res://assets/ui/liquid_texture/health_text.png" id="2_w6ow6"]
+[ext_resource type="Shader" path="res://script/shaders/status/hunger_bar.gdshader" id="3_pk2cc"]
+[ext_resource type="Texture2D" uid="uid://csbvri7fc5ua0" path="res://assets/ui/liquid_texture/hunger_text.png" id="5_ds7uq"]
+[ext_resource type="Shader" path="res://script/shaders/status/thirst_bar.gdshader" id="5_lmbe4"]
+[ext_resource type="Texture2D" uid="uid://cih0ujy474rpd" path="res://assets/ui/liquid.png" id="6_xif0h"]
+[ext_resource type="Texture2D" uid="uid://dy2rgi03f6dy" path="res://assets/ui/liquid_texture/thirst_text.png" id="7_3mwjj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgxss"]
+shader = ExtResource("1_6b0qm")
+shader_parameter/scale = 0.006
+shader_parameter/health_tex = ExtResource("2_w6ow6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lw2si"]
+shader = ExtResource("3_pk2cc")
+shader_parameter/scale = 0.01
+shader_parameter/hunger_tex = ExtResource("5_ds7uq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x5l5w"]
+shader = ExtResource("5_lmbe4")
+shader_parameter/scale = 0.01
+shader_parameter/thirst_tex = ExtResource("7_3mwjj")
+
+[node name="status_bars" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 12.0
+offset_right = 68.0
+offset_bottom = 52.0
+scale = Vector2(3.41125, 3.02546)
+color = Color(0.151255, 0.0618511, 0.00171117, 1)
+
+[node name="status" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 12.0
+offset_right = 68.0
+offset_bottom = 52.0
+script = ExtResource("1_ik6mq")
+
+[node name="health" type="Sprite2D" parent="status"]
+material = SubResource("ShaderMaterial_tgxss")
+position = Vector2(26, 120)
+scale = Vector2(0.343, 0.8)
+texture = ExtResource("6_xif0h")
+offset = Vector2(0, -64)
+
+[node name="hunger" type="Sprite2D" parent="status"]
+material = SubResource("ShaderMaterial_lw2si")
+position = Vector2(68, 116)
+scale = Vector2(0.343, 0.8)
+texture = ExtResource("6_xif0h")
+offset = Vector2(0, -64)
+
+[node name="thirst" type="Sprite2D" parent="status"]
+material = SubResource("ShaderMaterial_x5l5w")
+position = Vector2(111, 120)
+scale = Vector2(0.343, 0.8)
+texture = ExtResource("6_xif0h")
+offset = Vector2(0, -64)
+
+[node name="vials" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -1.0
+offset_right = 102.0
+offset_bottom = 127.0
+scale = Vector2(2, 2)
+texture = ExtResource("1_cocpj")

@@ -8,3 +8,4 @@ var waterPrescence = false
 var tree : PlantData   = null 
 var plant : PlantData = null        
 
+var structure_type = null
