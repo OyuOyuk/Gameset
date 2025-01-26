@@ -6,6 +6,7 @@ var current_chunk: Vector2i = Vector2i(0, 0)
 var user_seed
 var clicked_pos = Vector2i(0,0)
 var chunk_player_pos = Vector2i(0,0)
+var selected_slot = 0
 # Called when the node enters the scene
 func _ready():
 	# Example usage
@@ -44,7 +45,15 @@ func get_chunk(chunk_pos: Vector2i) -> worldData:
 # Check if a chunk exists at the given position
 func check_chunk(chunk_pos: Vector2i) -> bool:
 	return chunks.has(chunk_pos)
-
+func get_tiles_area(chunk_pos, top_left_corner, bottom_right_corner):
+	var chunk = get_chunk(chunk_pos)
+	var tiles = chunk.tiles
+	var found_tiles = {}
+	for tile_pos in tiles.keys():
+		if tile_pos.x >= top_left_corner.x and tile_pos.x <= bottom_right_corner.x and \
+			tile_pos.y >= top_left_corner.y and tile_pos.y <= bottom_right_corner.y:
+			found_tiles[tile_pos] = tiles[tile_pos]
+	return found_tiles
 # Generate a new tile within a chunk
 func generate_tile(chunk_pos: Vector2i, tile_pos: Vector2i) -> chunkData:
 	var chunk = get_chunk(chunk_pos)

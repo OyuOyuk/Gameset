@@ -4,66 +4,109 @@ var speed = {
 	"land":400
 }
 @export var tilemap : TileMap
+@export var crosshair : Node2D
+@onready var plant_tilemaps = get_tree().get_nodes_in_group("plant_tilemaps")
 @onready var animationTree = get_node("AnimationTree")
-@onready var animation = get_node("AnimationPlayer")
+@onready var animation = get_node("animationPlayer")
+@onready var state_machine =animationTree.get("parameters/playback")
+@onready var tool_collision = get_node("skeleton/tool_collision")
 @export var inventory : Inventory
-@export var hotbar : Inventory
-var in_water = "land"
+var local_trees 
+var forageTilemaps = {
+	
+}
+var selected_tile
+var state = "land"
 var last_direction = Vector2.ZERO
+var locked_direction = Vector2.ZERO
 
+var mouse_lock = false
 var movement = true
+var animationstate = "idle"
 func _ready():
 	#animation.play("idle_front")
+	for plant_tilemap in plant_tilemaps:
+		forageTilemaps[plant_tilemap.name] = plant_tilemap
+	print(forageTilemaps)
+	local_trees = forageTilemaps["trees"]
 	animationTree.active = true
+	crosshair.visible = false
+	
+	#for pos in touched_tiles:
+		#print("Tile at ", pos, " is ", touched_tiles[pos])
 func _process(delta):
 	update_animation_parameters()
+
+
+
+	animationstate = state_machine.get_current_node()
+
+	if state_machine.get_current_node() != "swing":
+		#mouse_lock = false
+		movement = true
+
+	var player_pos = local_trees.local_to_map(local_trees.to_local(position))
+
+	var area_top_left = player_pos - Vector2i(2,2)  # Example start position
+	var area_bottom_right = player_pos + Vector2i(2,2)    # Example end position
+	var mouse_position = get_global_mouse_position()
+	var tiled_mouse_position = local_trees.local_to_map(local_trees.to_local(mouse_position))
+	if inventory.slots[WorldManager.selected_slot].item != null:
+		if inventory.slots[WorldManager.selected_slot].item.name == "axe":
+			if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
+			
+				if WorldManager.get_tile(WorldManager.get_current_chunk(), tiled_mouse_position).tree != null:
+					crosshair.position =local_trees.map_to_local(tiled_mouse_position)
+					crosshair.visible = true
+					selected_tile = tiled_mouse_position
+				else:
+					crosshair.visible = false
+					selected_tile = null
+			else:
+				crosshair.visible = false
+				selected_tile = null
+		else:
+			crosshair.visible = false
+			selected_tile = null
+func is_within_bounds(pos: Vector2i, top_left: Vector2i, bottom_right: Vector2i) -> bool:
+	return (top_left.x <= pos.x and pos.x <= bottom_right.x) and \
+		   (top_left.y <= pos.y and pos.y <= bottom_right.y)
+
 func _physics_process(_delta):
 	var tile_pos = tilemap.local_to_map(global_position)
 
 	# Determine if the player is in water or land
 	if tilemap.get_cell_atlas_coords(0, Vector2i(tile_pos.x, tile_pos.y)) == Vector2i(0, 0):
-		in_water = "water"
+		state = "water"
 	else:
-		in_water = "land"
+		state = "land"
 	#if WorldManager.get_tile(WorldManager.get_current_chunk(),)
 	# Get input direction
+
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
 	# Update last direction only when moving
 	if input_direction != Vector2.ZERO:
+		
 		last_direction = input_direction
-#
-	## Play animations based on input direction
-	#if input_direction != Vector2.ZERO:
-		## Prioritize side-walking animations
-		#if abs(input_direction.x) >= abs(input_direction.y):
-			#if input_direction.x < 0 and animation.current_animation != "run_left":
-				#animation.play("run_left")
-			#elif input_direction.x > 0 and animation.current_animation != "run_right":
-				#animation.play("run_right")
-		#else:
-			#if input_direction.y < 0 and animation.current_animation != "run_back":
-				#animation.play("run_back")
-			#elif input_direction.y > 0 and animation.current_animation != "run_front":
-				#animation.play("run_front")
-	#else:
-		## If no movement, play idle animation based on last direction
-		#if last_direction.x < 0 and animation.current_animation != "idle_left":
-			#animation.play("idle_left")
-		#elif last_direction.x > 0 and animation.current_animation != "idle_right":
-			#animation.play("idle_right")
-		#elif last_direction.y < 0 and animation.current_animation != "idle_back":
-			#animation.play("idle_back")
-		#elif last_direction.y > 0 and animation.current_animation != "idle_front":
-			#animation.play("idle_front")
+		if abs(input_direction.x) == abs(input_direction.y):
+			last_direction.x = 1 if last_direction.x > 0 else -1
+			last_direction.y = 0
+
+		#tool_collision.position = last_direction * 28
+
 
 	# Set velocity based on input direction and speed
-	velocity = input_direction * speed[in_water]
-
+	velocity = input_direction * speed[state]
+	
 	# Move the character if there is input
 	if input_direction != Vector2.ZERO and movement == true:
 		move_and_slide()
 
+func _input(event):
+	if Input.is_action_just_pressed("Left_Click") and selected_tile != null:
+		print("delete " , selected_tile)
+		forageTilemaps["trees"].erase_cell(1, selected_tile)
 func collect(item):
 	inventory.insert(item)
 func update_animation_parameters():
@@ -73,11 +116,21 @@ func update_animation_parameters():
 	else:
 		animationTree["parameters/conditions/idle"] = false
 		animationTree["parameters/conditions/is_moving"] = true
-	if Input.is_action_just_pressed("Left_Click"):
+	if Input.is_action_pressed("Left_Click"):
 		animationTree["parameters/conditions/swing"] = true
+		
+		movement = false
+		#mouse_lock = true
+		#print(mouse_direction)
 	else:
 		animationTree["parameters/conditions/swing"] = false
+
 	animationTree["parameters/idle/blend_position"] = last_direction
 	animationTree["parameters/run/blend_position"] = last_direction
 	animationTree["parameters/swing/blend_position"] = last_direction
-		
+	
+	
+
+func check():
+	var touched_tiles = []
+	

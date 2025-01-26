@@ -7,10 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://caypy67s8y8xh" path="res://assets/player/tools/trial_axe.png" id="5_45rvq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mpoj3"]
-size = Vector2(128, 128)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wafx6"]
-radius = 15.0333
+radius = 11.0454
 
 [sub_resource type="Animation" id="Animation_qint8"]
 length = 0.001
@@ -762,9 +761,11 @@ blend_point_0/pos = Vector2(-1, 0)
 blend_point_1/node = SubResource("AnimationNodeAnimation_q8hfa")
 blend_point_1/pos = Vector2(1, 0)
 blend_point_2/node = SubResource("AnimationNodeAnimation_sm13t")
-blend_point_2/pos = Vector2(0, 1)
+blend_point_2/pos = Vector2(0, 1.1)
 blend_point_3/node = SubResource("AnimationNodeAnimation_eufqk")
-blend_point_3/pos = Vector2(0, -1)
+blend_point_3/pos = Vector2(0, -1.1)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t671f"]
 animation = &"swing_left"
@@ -843,7 +844,6 @@ scale = Vector2(0.21875, 0.429688)
 texture = ExtResource("1_r5fdf")
 
 [node name="skeleton" type="Node2D" parent="."]
-position = Vector2(0, -12)
 
 [node name="base" type="Sprite2D" parent="skeleton"]
 z_index = 1
@@ -868,21 +868,18 @@ scale = Vector2(-1, 1)
 texture = ExtResource("5_45rvq")
 
 [node name="tool_collision" type="Area2D" parent="skeleton"]
-collision_layer = 2
-collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="skeleton/tool_collision"]
 position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_mpoj3")
 
 [node name="ColorRect" type="ColorRect" parent="skeleton/tool_collision"]
-visible = false
-offset_left = -64.0
-offset_top = -52.0
-offset_right = 64.0
-offset_bottom = 76.0
+offset_left = -11.0
+offset_right = 11.0
+offset_bottom = 23.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
 shape = SubResource("CircleShape2D_wafx6")
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
@@ -900,5 +897,4 @@ parameters/idle/blend_position = Vector2(0, 0)
 parameters/run/blend_position = Vector2(0, 0)
 parameters/swing/blend_position = Vector2(0, 0)
 
-[connection signal="area_entered" from="skeleton/tool_collision" to="." method="_on_tool_collision_area_entered"]
-[connection signal="area_exited" from="skeleton/tool_collision" to="." method="_on_tool_collision_area_exited"]
+[connection signal="body_entered" from="skeleton/tool_collision" to="." method="_on_tool_collision_body_entered"]

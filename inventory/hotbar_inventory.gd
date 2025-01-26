@@ -42,10 +42,20 @@ func _process(delta):
 func scroll_left():
 	if selected_slot > 0:
 		selected_slot -= 1
+		WorldManager.selected_slot = selected_slot
+		update_slots()
+	else:
+		selected_slot = 5
+		WorldManager.selected_slot = selected_slot
 		update_slots()
 
 # Handle scrolling right (to go through inventory)
 func scroll_right():
 	if selected_slot < hotbar_slots.size() - 1:
 		selected_slot += 1
+		WorldManager.selected_slot = selected_slot
+		update_slots()
+	else:
+		selected_slot = 0
+		WorldManager.selected_slot = selected_slot
 		update_slots()
