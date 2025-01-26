@@ -3,6 +3,7 @@ extends Control
 @onready var inventory_slots : Array = $TextureRect/GridContainer.get_children()
 @onready var hotbar_slots : Array = $TextureRect/HotbarGridContainer.get_children()
 @onready var held_item = $held
+
 var held_item_data = {
 
 }
@@ -20,7 +21,7 @@ func _ready():
 	update_slots()
 	close()
 func split(slot_index):
-	if held_item_data["item"] == null:
+	if held_item_data["item"] == null and is_open == true:
 		var taken_item =floor(inventory.slots[slot_index].amount / 2)
 		held_item_data["item"] = inventory.slots[slot_index].item
 		held_item_data["amount"] = taken_item
@@ -40,7 +41,7 @@ func split(slot_index):
 			held_item.get_node("amount").text = str( held_item_data["amount"])
 	inventory.update_everything()
 func drag(slot_index):
-	if held_item_data["item"] == null:
+	if held_item_data["item"] == null and is_open == true:
 		
 
 		held_item_data["item"] = inventory.slots[slot_index].item
@@ -90,6 +91,7 @@ func close():
 func open():
 	visible = true
 	is_open = true
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

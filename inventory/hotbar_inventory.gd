@@ -9,6 +9,8 @@ var is_open = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	inventory.update.connect(update_slots)
+	for hotbar_slot in hotbar_slots:
+		hotbar_slot.draggable = false
 	update_slots()
 
 func update_slots():

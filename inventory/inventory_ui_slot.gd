@@ -2,6 +2,7 @@ extends Panel
 
 @onready var item_visual : Sprite2D = $CenterContainer/Panel/item_display
 @onready var amount_text : Label = $CenterContainer/Panel/Label
+var draggable = true
 var slot_data = {}
 var slot_index = -1
 @export var inventory : Inventory
@@ -60,11 +61,11 @@ func update(slot: inventory_slot):
 
 
 func _on_gui_input(event):
-	if Input.is_action_just_pressed("Right_Click"):
+	if Input.is_action_just_pressed("Right_Click") and draggable == true:
 		if slot_data["amount"] > 1:
 			ConnectionManager.emit_signal("right_click_split", slot_index)
 		else:
 			ConnectionManager.emit_signal("left_click_drag", slot_index)
-	elif Input.is_action_just_pressed("Left_Click"):
+	elif Input.is_action_just_pressed("Left_Click") and draggable == true:
 		ConnectionManager.emit_signal("left_click_drag", slot_index)
 

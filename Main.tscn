@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=61 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/Grids.gd" id="1_043rh"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://ce1uu1sw7nkx5" path="res://assets/ui/place_holder_path.png" id="15_f30wh"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/brick_path.gd" id="16_dq5ch"]
 [ext_resource type="Texture2D" uid="uid://ducvi8rdfdsnv" path="res://assets/world/path.png" id="17_y3nm5"]
+[ext_resource type="Script" path="res://script/sprite_trees.gd" id="18_1vv8t"]
 [ext_resource type="PackedScene" uid="uid://1607ii5kvv0y" path="res://Player.tscn" id="19_nqj67"]
 [ext_resource type="PackedScene" uid="uid://b3sn53f22sgb0" path="res://map.tscn" id="21_1bkmf"]
 [ext_resource type="Script" path="res://CanvasModulate.gd" id="21_vtvjt"]
@@ -480,6 +481,11 @@ layer_0/z_index = 1
 layer_1/y_sort_enabled = true
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
+
+[node name="sprite_trees" type="Node2D" parent="world/active"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("18_1vv8t")
 
 [node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap", "crosshair") instance=ExtResource("19_nqj67")]
 y_sort_enabled = false

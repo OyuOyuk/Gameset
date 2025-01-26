@@ -104,9 +104,15 @@ func _physics_process(_delta):
 		move_and_slide()
 
 func _input(event):
-	if Input.is_action_just_pressed("Left_Click") and selected_tile != null:
+	if Input.is_action_just_pressed("Left_Click") and selected_tile != null and WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.turned_sprite == false:
 		print("delete " , selected_tile)
+		var atlas_coord = forageTilemaps["trees"].get_cell_atlas_coords(1, selected_tile)
 		forageTilemaps["trees"].erase_cell(1, selected_tile)
+		WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.turned_sprite = true
+		var non_tile_coord = forageTilemaps["trees"].map_to_local(selected_tile)
+		ConnectionManager.emit_signal("change_to_sprites", non_tile_coord, atlas_coord)
+	elif Input.is_action_just_pressed("Left_Click") and selected_tile != null and WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.turned_sprite == true:
+		WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.health
 func collect(item):
 	inventory.insert(item)
 func update_animation_parameters():
