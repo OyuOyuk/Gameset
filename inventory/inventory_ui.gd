@@ -98,6 +98,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("inventory"):
 		if is_open:
 			close()
+			if  held_item_data["item"] != null:
+				pass
 		else :
 			open()
 	held_item.position = get_local_mouse_position() - Vector2(16,16)

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="master_drop_table" load_steps=3 format=3 uid="uid://b55qc21g85vp6"]
+
+[ext_resource type="Resource" uid="uid://c1h7v18jys6pi" path="res://inventory/item_drops/tree/tree_drop_table.tres" id="1_oe552"]
+[ext_resource type="Script" path="res://inventory/master_drop_table.gd" id="2_s1elx"]
+
+[resource]
+script = ExtResource("2_s1elx")
+object_drops = Array[Resource("res://inventory/item_drops/Drop_Table.gd")]([ExtResource("1_oe552")])
+animal_drops = Array[Resource("res://inventory/item_drops/Drop_Table.gd")]([])
+monster_drops = Array[Resource("res://inventory/item_drops/Drop_Table.gd")]([])

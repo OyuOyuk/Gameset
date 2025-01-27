@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Inventory" load_steps=28 format=3 uid="uid://6ckehqpw8bn4"]
 
 [ext_resource type="Script" path="res://inventory/inventory.gd" id="1_mm2hi"]
-[ext_resource type="Script" path="res://inventory/inventory_slot.gd" id="2_as3cs"]
+[ext_resource type="Script" path="res://inventory/items/inventory_slot.gd" id="2_as3cs"]
 [ext_resource type="Resource" uid="uid://bwthx5ma6k5uy" path="res://inventory/items/shard.tres" id="3_agai1"]
 
 [sub_resource type="Resource" id="Resource_7gbql"]

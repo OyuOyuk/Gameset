@@ -36,7 +36,7 @@ var atlas_texture = preload("res://assets/world/tree.png")  # Preload the atlas 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ConnectionManager.connect("change_to_sprites", change)
-
+	ConnectionManager.connect("chopped_tree", delete)
 # Define regions manually based on sprite positions in the sheet
 func set_sprite_by_index(index: int, sprite : Sprite2D):
 	if index >= 0 and index < sprite_regions.size():
@@ -49,8 +49,26 @@ func set_sprite_by_index(index: int, sprite : Sprite2D):
 		sprite.y_sort_enabled = true
 	else:
 		print("Invalid index!")
+func delete(selected_tile, player_coord):
+	var del = get_node_or_null(str(selected_tile))
+	var rotate = -90
+	if del:
+		if del.position.x >= player_coord.x:
+			rotate = 90
+		else:
+			rotate = -90
+		var tween = del.create_tween()
+		tween.tween_interval(0.5)
+		# Rotate the tree to simulate falling
+		tween.tween_property(del, "rotation_degrees", rotate, 1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		
+		# Move the tree slightly to simulate it hitting the ground
+		tween.tween_property(del, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-func change(selected_tile, atlas_coord):
+		# After animation ends, delete the node
+		tween.finished.connect(del.queue_free)
+
+func change(selected_coord, atlas_coord, selected_tile):
 	var sprite2d = Sprite2D.new() 
 	var offset_y = 0
 	if atlas_coord.y == 0:
@@ -61,8 +79,9 @@ func change(selected_tile, atlas_coord):
 	elif atlas_coord.y == 10:
 		offset_y = 96
 		
-	sprite2d.position = selected_tile
-	sprite2d.offset =   Vector2(0, -offset_y )
+	sprite2d.position = selected_coord
+	sprite2d.offset =   Vector2(0, - offset_y )
+	sprite2d.name = str(selected_tile)
 
 
 	set_sprite_by_index(dict[atlas_coord], sprite2d)

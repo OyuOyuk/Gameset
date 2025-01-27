@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 @export var item : Inventory_Item
+@export var amount : int
 @onready var sprite : Sprite2D = $Sprite2D
 var player = null
 var interactable = false
@@ -20,10 +21,12 @@ func _on_interactable_area_body_exited(body):
 		print("leave")
 		player = null
 func _input(event):
-	if Input.is_action_just_pressed("interact") and interactable == true:
+	if interactable == true:
 		if player and player.has_method("collect"):
-			player.collect(item)
+			player.collect(item, amount)
+			interactable = false
 			queue_free()
+			
 		
 		
 

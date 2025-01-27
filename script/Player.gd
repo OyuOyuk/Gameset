@@ -10,6 +10,7 @@ var speed = {
 @onready var animation = get_node("animationPlayer")
 @onready var state_machine =animationTree.get("parameters/playback")
 @onready var tool_collision = get_node("skeleton/tool_collision")
+@onready var interactionHandler = get_node("InteractionHandler")
 @export var inventory : Inventory
 var local_trees 
 var forageTilemaps = {
@@ -17,9 +18,10 @@ var forageTilemaps = {
 }
 var selected_tile
 var state = "land"
+var timer = 0
 var last_direction = Vector2.ZERO
 var locked_direction = Vector2.ZERO
-
+var current_chunk = WorldManager.get_current_chunk()
 var mouse_lock = false
 var movement = true
 var animationstate = "idle"
@@ -31,7 +33,7 @@ func _ready():
 	local_trees = forageTilemaps["trees"]
 	animationTree.active = true
 	crosshair.visible = false
-	
+
 	#for pos in touched_tiles:
 		#print("Tile at ", pos, " is ", touched_tiles[pos])
 func _process(delta):
@@ -44,18 +46,29 @@ func _process(delta):
 	if state_machine.get_current_node() != "swing":
 		#mouse_lock = false
 		movement = true
-
+		timer = 0
+	if Input.is_action_pressed("Left_Click") and selected_tile != null and timer == 0 :
+		print("delete " , selected_tile)
+		#interactionHandler.chop(selected_tile, forageTilemaps["trees"])
+		if inventory.slots[WorldManager.selected_slot].item != null:
+			if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+				interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps["trees"])
 	var player_pos = local_trees.local_to_map(local_trees.to_local(position))
 
 	var area_top_left = player_pos - Vector2i(2,2)  # Example start position
 	var area_bottom_right = player_pos + Vector2i(2,2)    # Example end position
 	var mouse_position = get_global_mouse_position()
 	var tiled_mouse_position = local_trees.local_to_map(local_trees.to_local(mouse_position))
-	if inventory.slots[WorldManager.selected_slot].item != null:
-		if inventory.slots[WorldManager.selected_slot].item.name == "axe":
-			if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
+	if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+		
+		if WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object != null:
+			var tool_type = inventory.slots[WorldManager.selected_slot].item.property.tool_type
+			var object = WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object
+			var breakable = VariablesManager.breakable[tool_type]
+			if object in breakable:
+				if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
 			
-				if WorldManager.get_tile(WorldManager.get_current_chunk(), tiled_mouse_position).tree != null:
+					
 					crosshair.position =local_trees.map_to_local(tiled_mouse_position)
 					crosshair.visible = true
 					selected_tile = tiled_mouse_position
@@ -103,18 +116,16 @@ func _physics_process(_delta):
 	if input_direction != Vector2.ZERO and movement == true:
 		move_and_slide()
 
-func _input(event):
-	if Input.is_action_just_pressed("Left_Click") and selected_tile != null and WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.turned_sprite == false:
-		print("delete " , selected_tile)
-		var atlas_coord = forageTilemaps["trees"].get_cell_atlas_coords(1, selected_tile)
-		forageTilemaps["trees"].erase_cell(1, selected_tile)
-		WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.turned_sprite = true
-		var non_tile_coord = forageTilemaps["trees"].map_to_local(selected_tile)
-		ConnectionManager.emit_signal("change_to_sprites", non_tile_coord, atlas_coord)
-	elif Input.is_action_just_pressed("Left_Click") and selected_tile != null and WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.turned_sprite == true:
-		WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile).tree.health
-func collect(item):
-	inventory.insert(item)
+#func _input(event):
+	#if Input.is_action_pressed("Left_Click") and selected_tile != null and timer == 0 :
+		#print("delete " , selected_tile)
+		##interactionHandler.chop(selected_tile, forageTilemaps["trees"])
+		#if inventory.slots[WorldManager.selected_slot].item != null:
+			#if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+				#interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps["trees"])
+
+func collect(item, amount):
+	inventory.insert(item, amount)
 func update_animation_parameters():
 	if velocity == Vector2.ZERO:
 		animationTree["parameters/conditions/idle"] = true
@@ -122,10 +133,11 @@ func update_animation_parameters():
 	else:
 		animationTree["parameters/conditions/idle"] = false
 		animationTree["parameters/conditions/is_moving"] = true
-	if Input.is_action_pressed("Left_Click"):
-		animationTree["parameters/conditions/swing"] = true
-		
-		movement = false
+	if Input.is_action_pressed("Left_Click") and inventory.slots[WorldManager.selected_slot].item != null:
+		if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+			animationTree["parameters/conditions/swing"] = true
+			timer = 0.7
+			movement = false
 		#mouse_lock = true
 		#print(mouse_direction)
 	else:
@@ -134,9 +146,3 @@ func update_animation_parameters():
 	animationTree["parameters/idle/blend_position"] = last_direction
 	animationTree["parameters/run/blend_position"] = last_direction
 	animationTree["parameters/swing/blend_position"] = last_direction
-	
-	
-
-func check():
-	var touched_tiles = []
-	
