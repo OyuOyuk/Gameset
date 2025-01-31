@@ -1,6 +1,6 @@
 extends Node2D
 
-var size = Vector2i(100, 100)
+var size = VariablesManager.worldSize
 @export var riverTileMap : TileMap
 var riverStartCount = 5
 var riverTileSet = {

@@ -189,6 +189,7 @@ func tree(current_chunk,tile_choices):
 			var tree_data = PlantData.TreeData.new()
 			var random_number_x = randi() % 4 * 5
 			var trunk 
+			var trunk_y = 0
 			var random_number_y = randi() % 3
 			tree_data.growth_stage = random_number_y + 1
 			match random_number_y:
@@ -204,8 +205,10 @@ func tree(current_chunk,tile_choices):
 					random_number_y = 10
 					trunk = 6
 					tree_data.growth_stage = 3
+			if random_number_x < 8:
+				trunk_y = 2
 			tree_data.atlas_coords = Vector2i(random_number_x, random_number_y)
-			tree_data.root_atlas_coords = Vector2i(trunk, 0)
+			tree_data.root_atlas_coords = Vector2i(trunk, trunk_y)
 			WorldManager.get_tile(current_chunk,tree_pos ).tree = tree_data
 			WorldManager.get_tile(current_chunk,tree_pos ).breakable_object = "tree"
 			spawned_tree_positions.append(tree_pos)

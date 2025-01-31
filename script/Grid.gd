@@ -4,6 +4,7 @@ extends TileMap
 var on_screen = false
 @onready var menu = get_node("mapPopup")
 @onready var player = get_node("player")
+@onready var info = get_node("mapPopup/info")
 var pos : Vector2i
 
 func _ready():
@@ -15,8 +16,10 @@ func _input(event):
 			
 		if  Input.is_action_just_pressed("Right_Click"):  # Left mouse button click
 			var global_clicked  = get_local_mouse_position()
+			
 			var pos_clicked = local_to_map(to_local(global_clicked))
 			WorldManager.clicked_pos = pos_clicked
+			info.text = str(WorldManager.get_chunk(pos_clicked).temperature)
 			pos = map_to_local(pos_clicked)
 			menu.position = get_local_mouse_position()
 			menu.visible = !menu.visible

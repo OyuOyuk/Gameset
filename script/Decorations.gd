@@ -1,6 +1,6 @@
 extends Node2D
 @export var tilemap : TileMap
-var size = Vector2i(100, 100)
+var size = VariablesManager.worldSize
 var deco = {
 	0 : Vector2i(0,0),
 	1 : Vector2i(1,0),

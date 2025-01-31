@@ -39,7 +39,7 @@ func _ready():
 func _process(delta):
 	update_animation_parameters()
 
-
+	VariablesManager.player_position = position
 
 	animationstate = state_machine.get_current_node()
 
@@ -60,24 +60,24 @@ func _process(delta):
 	var mouse_position = get_global_mouse_position()
 	var tiled_mouse_position = local_trees.local_to_map(local_trees.to_local(mouse_position))
 	if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property.type == 0:
-		
-		if WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object != null:
-			var tool_type = inventory.slots[WorldManager.selected_slot].item.property.tool_type
-			var object = WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object
-			var breakable = VariablesManager.breakable[tool_type]
-			if object in breakable:
-				if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
-			
-					
-					crosshair.position =local_trees.map_to_local(tiled_mouse_position)
-					crosshair.visible = true
-					selected_tile = tiled_mouse_position
+		if WorldManager.get_tile(current_chunk, tiled_mouse_position) != null:
+			if WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object != null:
+				var tool_type = inventory.slots[WorldManager.selected_slot].item.property.tool_type
+				var object = WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object
+				var breakable = VariablesManager.breakable[tool_type]
+				if object in breakable:
+					if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
+				
+						
+						crosshair.position =local_trees.map_to_local(tiled_mouse_position)
+						crosshair.visible = true
+						selected_tile = tiled_mouse_position
+					else:
+						crosshair.visible = false
+						selected_tile = null
 				else:
 					crosshair.visible = false
 					selected_tile = null
-			else:
-				crosshair.visible = false
-				selected_tile = null
 		else:
 			crosshair.visible = false
 			selected_tile = null

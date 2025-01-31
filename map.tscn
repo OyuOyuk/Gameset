@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://b3sn53f22sgb0"]
+[gd_scene load_steps=29 format=3 uid="uid://b3sn53f22sgb0"]
 
 [ext_resource type="Script" path="res://script/Grid.gd" id="2_j2wph"]
 [ext_resource type="Script" path="res://script/Decorations.gd" id="3_1w7hi"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/Map.gd" id="3_ojbmr"]
 [ext_resource type="PackedScene" uid="uid://bho2fxr4u5lj8" path="res://map_popup.tscn" id="3_ouxap"]
 [ext_resource type="Texture2D" uid="uid://btcwm5blhrj34" path="res://assets/world/hexagonal_patterns.png" id="4_julou"]
+[ext_resource type="Script" path="res://script/worldGenerationScripts/Temperature.gd" id="4_ooe16"]
 [ext_resource type="Texture2D" uid="uid://8xttpfy1wihg" path="res://assets/world/hexagonal_patterns1.png" id="5_p3e7t"]
 [ext_resource type="Texture2D" uid="uid://bdq3k6o6a2gqv" path="res://assets/world/outline.png" id="8_4lwdq"]
 [ext_resource type="Shader" path="res://script/shaders/mouse.gdshader" id="8_gy5ae"]
@@ -20,6 +21,11 @@ frequency = 0.0169
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5hkpk"]
 noise = SubResource("FastNoiseLite_kcx5n")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6pf88"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eeqmf"]
+noise = SubResource("FastNoiseLite_6pf88")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d4brm"]
 texture = ExtResource("4_julou")
@@ -139,6 +145,10 @@ riverTileMap = NodePath("../Display")
 [node name="Decoration" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
 script = ExtResource("3_1w7hi")
 tilemap = NodePath("../Display")
+
+[node name="Temperature" type="Node2D" parent="."]
+script = ExtResource("4_ooe16")
+temperature_noise_tex = SubResource("NoiseTexture2D_eeqmf")
 
 [node name="Display" type="TileMap" parent="."]
 texture_filter = 1

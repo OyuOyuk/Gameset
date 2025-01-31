@@ -14,7 +14,7 @@ grow_vertical = 2
 [node name="Background" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_right = 376.0
+offset_right = 296.0
 offset_bottom = 120.0
 texture = ExtResource("1_am5rj")
 
@@ -38,46 +38,21 @@ text = "Yes
 "
 script = ExtResource("2_jvdn3")
 
-[node name="knownInfo" type="Label" parent="."]
-modulate = Color(0.254734, 0.152712, 0.0798448, 1)
-layout_mode = 0
-offset_left = 192.0
-offset_top = 16.0
-offset_right = 343.0
-offset_bottom = 39.0
-text = "Known Information"
-
-[node name="Biome" type="Label" parent="."]
+[node name="Temperature" type="Label" parent="."]
 modulate = Color(0.254902, 0.152941, 0.0784314, 1)
 layout_mode = 0
-offset_left = 200.0
-offset_top = 48.0
-offset_right = 254.0
-offset_bottom = 71.0
-text = "Biome:
-"
-
-[node name="Structures" type="Label" parent="."]
-modulate = Color(0.254902, 0.152941, 0.0784314, 1)
-layout_mode = 0
-offset_left = 200.0
-offset_top = 72.0
-offset_right = 285.0
-offset_bottom = 95.0
-text = "Structures:"
+offset_left = 152.0
+offset_top = 24.0
+offset_right = 258.0
+offset_bottom = 47.0
+text = "Temperature:"
 
 [node name="info" type="Label" parent="."]
+modulate = Color(0.442137, 0.208638, 0.120268, 1)
 layout_mode = 0
-offset_left = 304.0
-offset_top = 48.0
-offset_right = 344.0
-offset_bottom = 71.0
-
-[node name="info2" type="Label" parent="."]
-layout_mode = 0
-offset_left = 304.0
-offset_top = 72.0
-offset_right = 344.0
-offset_bottom = 95.0
+offset_left = 160.0
+offset_top = 56.0
+offset_right = 200.0
+offset_bottom = 79.0
 
 [connection signal="pressed" from="Yes" to="Yes" method="_on_pressed"]

@@ -3,7 +3,7 @@ extends Node2D
 @export var tilemap : TileMap
 @export var displayTilemap : TileMap
 
-var size = Vector2i(100, 100)
+var size = VariablesManager.worldSize
 # Define the terrain mapping
 var lakeCount = 8
 var terrain = {

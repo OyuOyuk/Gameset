@@ -3,7 +3,7 @@ extends Control
 @onready var inventory_slots : Array = $TextureRect/GridContainer.get_children()
 @onready var hotbar_slots : Array = $TextureRect/HotbarGridContainer.get_children()
 @onready var held_item = $held
-
+@onready var inventory_rect = get_node("inventory_rect")
 var held_item_data = {
 
 }
@@ -20,8 +20,15 @@ func _ready():
 	held_item.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	update_slots()
 	close()
+
+func mouse_in_inventory():
+	# Replace `inventory_rect` with your inventory UI's Rect2
+	var mouse_position = get_viewport().get_mouse_position()
+	var rect = inventory_rect.get_global_rect()
+
+	return not rect.has_point(mouse_position)
 func split(slot_index):
-	if held_item_data["item"] == null and is_open == true:
+	if held_item_data["item"] == null and is_open == true and  inventory.slots[slot_index].item != null:
 		var taken_item =floor(inventory.slots[slot_index].amount / 2)
 		held_item_data["item"] = inventory.slots[slot_index].item
 		held_item_data["amount"] = taken_item
@@ -33,7 +40,7 @@ func split(slot_index):
 		else:
 			held_item.get_node("amount").visible = true
 	else:
-		if inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"]:
+		if( inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"])and held_item_data["item"] != null:
 			var given_item = floor(held_item_data["amount"] / 2 )
 			inventory.slots[slot_index].item = held_item_data["item"]
 			inventory.slots[slot_index].amount = inventory.slots[slot_index].amount + given_item
@@ -41,12 +48,12 @@ func split(slot_index):
 			held_item.get_node("amount").text = str( held_item_data["amount"])
 	inventory.update_everything()
 func drag(slot_index):
-	if held_item_data["item"] == null and is_open == true:
+	if held_item_data["item"] == null and is_open == true and inventory.slots[slot_index].item != null:
 		
 
 		held_item_data["item"] = inventory.slots[slot_index].item
 		held_item_data["amount"] = inventory.slots[slot_index].amount
-		held_item.get_node("item_display").texture =  inventory.slots[slot_index].item.texture
+		held_item.get_node("item_display").texture  =  inventory.slots[slot_index].item.texture
 		held_item.get_node("amount").text = str(inventory.slots[slot_index].amount)
 		inventory.slots[slot_index].item = null
 		inventory.slots[slot_index].amount = 0
@@ -56,7 +63,8 @@ func drag(slot_index):
 		else:
 			held_item.get_node("amount").visible = true
 	else:
-		if inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"]:
+		
+		if 	(inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"]) and held_item_data["item"] != null:
 			
 			inventory.slots[slot_index].item = held_item_data["item"]
 			inventory.slots[slot_index].amount = inventory.slots[slot_index].amount + held_item_data["amount"] 
@@ -92,6 +100,22 @@ func open():
 	visible = true
 	is_open = true
 	
+func _input(event):
+	if Input.is_action_just_pressed("Right_Click") and mouse_in_inventory():
+		if held_item_data["item"] != null:
+			ConnectionManager.emit_signal("direct_item_drops", held_item_data["item"], floor(held_item_data["amount"]/2))
+			var given_item = floor(held_item_data["amount"] / 2 )
+			held_item_data["amount"] = held_item_data["amount"] - given_item 
+			held_item.get_node("amount").text = str( held_item_data["amount"])
+	if Input.is_action_just_pressed("Left_Click") and  mouse_in_inventory():
+		if held_item_data["item"] != null:
+			
+			ConnectionManager.emit_signal("direct_item_drops", held_item_data["item"], held_item_data["amount"])
+			held_item_data["item"] = null
+			held_item_data["amount"] = 0 
+			held_item.get_node("item_display").texture = null
+			held_item.get_node("amount").visible = false
+			held_item.get_node("amount").text = str(0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -103,4 +127,4 @@ func _process(delta):
 		else :
 			open()
 	held_item.position = get_local_mouse_position() - Vector2(16,16)
-
+	mouse_in_inventory()

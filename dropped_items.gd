@@ -11,12 +11,29 @@ func _ready():
 		drop_dict[drop.name] = drop.drops
 	ConnectionManager.connect("broken_object_drops", drop_broken)
 	ConnectionManager.connect("direct_item_drops", drop_direct)
-func drop_direct(item, amount, player_coord):
-	pass
+func drop_direct(item, amount):
+	# Instantiate the collectable item
+	var collectable = collectable_item.instantiate()
+	collectable.item = item
+	collectable.amount = amount
+	
+	# Set the position to the player's current position
+	collectable.position = VariablesManager.player_position
+	
+	# Calculate the direction to the mouse
+	var mouse_position = get_viewport().get_mouse_position()
+	var direction = (mouse_position - collectable.position).normalized()
+  # Apply a velocity in the direction of the mouse
+	collectable.linear_velocity = direction * 100  # Adjust multiplier for speed
+	collectable.grace_period = 2
+	# Add the collectable to the scene
+	add_child(collectable)
+
 func drop_broken(selected_tile, coord):
 	var tile = WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile)
 	var object = tile.breakable_object
 	drops = drop_dict[object]
+	
 	if tile.tree != null :
 		
 		multiplier = VariablesManager.tree_growth_stage_multipier[tile.tree.growth_stage]
