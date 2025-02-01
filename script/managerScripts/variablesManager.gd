@@ -13,3 +13,8 @@ var tree_growth_stage_multipier= {
 	3 : 1
 }
 var player_position
+var plant_types = ["berry_bush", "bush"]
+var plant_coords = {
+	"berry_bush" : 0,
+	"bush" : 1,
+}

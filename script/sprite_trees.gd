@@ -1,17 +1,17 @@
 extends Node2D
 var sprite_regions = [
-	Rect2(0, 0, 160, 128),   # First sprite
-	Rect2(160, 0, 160, 128), # Second sprite (different height)
-	Rect2(320, 0, 160, 128), # Third sprite
-	Rect2(480, 0, 160, 128),
-	Rect2(0, 128, 160, 192),   # First sprite
-	Rect2(160, 128, 160, 192), # Second sprite (different height)
-	Rect2(320, 128, 160, 192),
-	Rect2(480, 128, 160, 192),
-	Rect2(0, 320, 160, 224),   # First sprite
-	Rect2(160, 320, 160, 224), # Second sprite (different height)
-	Rect2(320, 320, 160, 224),
-	Rect2(480, 320, 160, 224),
+	Rect2(0, 0, 160, 160),   # First sprite
+	Rect2(160, 0, 160, 160), # Second sprite (different height)
+	Rect2(320, 0, 160, 160), # Third sprite
+	Rect2(480, 0, 160, 160),
+	Rect2(0, 160, 160, 224),   # First sprite
+	Rect2(160, 160, 160,224), # Second sprite (different height)
+	Rect2(320, 160, 160, 224),
+	Rect2(480, 160, 160, 224),
+	Rect2(0, 384, 160, 256),   # First sprite
+	Rect2(160, 384, 160, 256), # Second sprite (different height)
+	Rect2(320, 384, 160, 256),
+	Rect2(480, 384, 160, 256),
 	# Add more as needed
 ]
 
@@ -20,14 +20,14 @@ var dict = {
 	Vector2i(5, 0) : 1,
 	Vector2i(10, 0) : 2,
 	Vector2i(15, 0) : 3,
-	Vector2i(0, 4) : 4,
-	Vector2i(5, 4) : 5,
-	Vector2i(10, 4) : 6,
-	Vector2i(15, 4) : 7,
-	Vector2i(0, 10) : 8,
-	Vector2i(5, 10) : 9,
-	Vector2i(10, 10) : 10,
-	Vector2i(15, 10) : 11,
+	Vector2i(0, 5) : 4,
+	Vector2i(5, 5) : 5,
+	Vector2i(10, 5) : 6,
+	Vector2i(15, 5) : 7,
+	Vector2i(0, 12) : 8,
+	Vector2i(5, 12) : 9,
+	Vector2i(10, 12) : 10,
+	Vector2i(15, 12) : 11,
 }
 
 var atlas_texture = preload("res://assets/world/tree.png")  # Preload the atlas texture
@@ -72,12 +72,12 @@ func change(selected_coord, atlas_coord, selected_tile):
 	var sprite2d = Sprite2D.new() 
 	var offset_y = 0
 	if atlas_coord.y == 0:
-		offset_y = 48
-	elif atlas_coord.y == 4:
-		offset_y = 80
-
-	elif atlas_coord.y == 10:
+		offset_y = 64
+	elif atlas_coord.y == 5:
 		offset_y = 96
+
+	elif atlas_coord.y == 12:
+		offset_y = 112
 		
 	sprite2d.position = selected_coord
 	sprite2d.offset =   Vector2(0, - offset_y )

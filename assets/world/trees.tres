@@ -1,6 +1,7 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://comcfu556rid6"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fqc7t"]
+[ext_resource type="Texture2D" uid="uid://cs5hgpce1xu0g" path="res://assets/world/tree.png" id="1_c2u17"]
 
 [resource]
-atlas = SubResource("AtlasTexture_fqc7t")
+atlas = ExtResource("1_c2u17")
+region = Rect2(0, 384, 160, 256)

@@ -28,6 +28,12 @@ var grass_amount = {
 	"SAND":0,
 	"WATER":0, 
 }
+var plant_amount = {
+	"FOREST": 400,
+	"GRASSLANDS":500,
+	"SAND":0,
+	"WATER":0, 
+}
 var values = {
 	"GRASSLANDS" : -0.3,
 	"FOREST" : -0.1,
@@ -157,14 +163,32 @@ func assignTiles(current_chunk):
 		set_river_flow(current_chunk )
 	if WorldManager.get_chunk(current_chunk).biome != "WATER":
 		tree(current_chunk, tile_choices)
+		plants(current_chunk, tile_choices)
 		grass(current_chunk, tile_choices)
+func plants(current_chunk, tile_choices):
+	for time in range(plant_amount[WorldManager.get_chunk(current_chunk).biome]):
+		var plant_pos = tile_choices.pick_random()
+		if WorldManager.get_tile(current_chunk, plant_pos ).waterPrescence == false and WorldManager.get_tile(current_chunk, plant_pos ).tree == null:
+			var plant_data = PlantData.new()
+			var random = randi() % 2
+			var plant_type = VariablesManager.plant_types[random]
+			var y = VariablesManager.plant_coords[plant_type]
+			var x = randi() % 4
+			plant_data.name = plant_type
+			plant_data.growth_stage = x
+			plant_data.health = 20
+			plant_data.atlas_coords = Vector2i(x*2, y*2)
+			WorldManager.get_tile(current_chunk, plant_pos ).plant =plant_data
 func grass(current_chunk, tile_choices):
+
 	for time in range(grass_amount[WorldManager.get_chunk(current_chunk).biome]):
 		var grass_pos = tile_choices.pick_random()
-		if WorldManager.get_tile(current_chunk,grass_pos ).waterPrescence == false and WorldManager.get_tile(current_chunk,grass_pos ).tree == null :
+		if WorldManager.get_tile(current_chunk,grass_pos ).waterPrescence == false and WorldManager.get_tile(current_chunk,grass_pos ).tree == null and WorldManager.get_tile(current_chunk, grass_pos).plant == null :
 			var grass_data = PlantData.new()
 			var random_number_x = randi() % 2 * 2
 			WorldManager.get_tile(current_chunk,grass_pos).breakable_object = "grass"
+			grass_data.name = "grass"
+			grass_data.health = 1
 			grass_data.atlas_coords = Vector2i(random_number_x, 0)
 			WorldManager.get_tile(current_chunk,grass_pos ).plant = grass_data
 
@@ -198,11 +222,11 @@ func tree(current_chunk,tile_choices):
 					trunk = 0
 					tree_data.growth_stage = 1
 				1: 
-					random_number_y = 4
+					random_number_y = 5
 					trunk = 3
 					tree_data.growth_stage = 2
 				2: 
-					random_number_y = 10
+					random_number_y = 12
 					trunk = 6
 					tree_data.growth_stage = 3
 			if random_number_x < 8:
@@ -231,7 +255,10 @@ func generateWorld(current_chunk):
 				objects.set_cell(1,Vector2i(x,y),0,WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree.atlas_coords)
 				objects.set_cell(0,Vector2i(x,y),1,WorldManager.get_tile(current_chunk, Vector2i(x,y)).tree.root_atlas_coords)
 			elif WorldManager.get_tile(current_chunk, Vector2i(x,y)).plant != null:
-				objects.set_cell(1,Vector2i(x,y),2,WorldManager.get_tile(current_chunk, Vector2i(x,y)).plant.atlas_coords)
+				if WorldManager.get_tile(current_chunk, Vector2i(x,y)).plant.name == "grass":
+					objects.set_cell(1,Vector2i(x,y),2,WorldManager.get_tile(current_chunk, Vector2i(x,y)).plant.atlas_coords)
+				else:
+					objects.set_cell(1,Vector2i(x,y),3,WorldManager.get_tile(current_chunk, Vector2i(x,y)).plant.atlas_coords)
 				
 		if y > 0:
 			minx = minx + 0.5

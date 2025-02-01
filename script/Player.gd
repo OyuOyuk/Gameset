@@ -1,7 +1,7 @@
 extends CharacterBody2D
 var speed = {
 	"water":200,
-	"land":400
+	"land":300
 }
 @export var tilemap : TileMap
 @export var crosshair : Node2D
