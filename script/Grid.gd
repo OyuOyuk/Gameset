@@ -37,5 +37,6 @@ func yes():
 	#var global_clicked  = get_local_mouse_position()
 	#var pos_clicked = local_to_map(to_local(global_clicked))
 	WorldManager.current_chunk = WorldManager.clicked_pos
+	ConnectionManager.emit_signal("new_chunk_entered", WorldManager.current_chunk)
 	print(WorldManager.clicked_pos)
 	ConnectionManager.new_map_position.emit(WorldManager.clicked_pos)

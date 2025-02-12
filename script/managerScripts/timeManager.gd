@@ -7,9 +7,10 @@ var current_day = 1
 var current_month = 1
 var current_year = 1
 var current_season = "Spring"  # Just an example, you'll probably want to change this dynamically
-
+# time elapsed
+var total_days = 0
 # Time progression settings
-var real_seconds_per_in_game_minute = 0.1
+var real_seconds_per_in_game_minute = 0.01
 var in_game_minutes_per_real_second = 1 / real_seconds_per_in_game_minute
 var time_passed = 0.0
 var day_time_change = [5, 10, 17, 21]
@@ -39,6 +40,8 @@ func advance_time(minutes):
 		current_minute %= 60
 	if current_hour >= 24:
 		current_day += current_hour / 24
+		total_days =  total_days + 1
+		ConnectionManager.emit_signal("day_change")
 		current_hour %= 24
 		if current_day > days_in_season:
 			current_month += 1
