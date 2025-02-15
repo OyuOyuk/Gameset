@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item_Drop" load_steps=3 format=3 uid="uid://kwr4caqemdq"]
+
+[ext_resource type="Resource" uid="uid://ddpnmd3lh48a2" path="res://inventory/items/pale_wildflowers.tres" id="1_4rkmm"]
+[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="2_tg4gh"]
+
+[resource]
+script = ExtResource("2_tg4gh")
+item = ExtResource("1_4rkmm")
+item_chance = 1.0
+min_amount = 1
+max_amount = 3

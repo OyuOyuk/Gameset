@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item_Drop" load_steps=3 format=3 uid="uid://bag6ox5p4fgbk"]
+
+[ext_resource type="Resource" uid="uid://dn21wyamm6jn6" path="res://inventory/items/fiber.tres" id="1_av8ga"]
+[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="2_u3gcg"]
+
+[resource]
+script = ExtResource("2_u3gcg")
+item = ExtResource("1_av8ga")
+item_chance = 1.0
+min_amount = 2
+max_amount = 3

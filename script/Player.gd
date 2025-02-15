@@ -4,6 +4,7 @@ var speed = {
 	"land":300
 }
 @export var tilemap : TileMap
+
 @export var crosshair : Node2D
 @onready var plant_tilemaps = get_tree().get_nodes_in_group("plant_tilemaps")
 @onready var animationTree = get_node("AnimationTree")
@@ -11,6 +12,7 @@ var speed = {
 @onready var state_machine =animationTree.get("parameters/playback")
 @onready var tool_collision = get_node("skeleton/tool_collision")
 @onready var interactionHandler = get_node("InteractionHandler")
+@onready var equipped_tool = get_node("skeleton/equiped_item/equipped_tool")
 @export var inventory : Inventory
 var local_trees 
 var forageTilemaps = {
@@ -33,9 +35,13 @@ func _ready():
 	local_trees = forageTilemaps["trees"]
 	animationTree.active = true
 	crosshair.visible = false
-
+	ConnectionManager.connect("new_chunk_entered", new_chunk_handler)
+	ConnectionManager.connect("player_collect", collect)
+	
 	#for pos in touched_tiles:
 		#print("Tile at ", pos, " is ", touched_tiles[pos])
+func new_chunk_handler(new_chunk):
+	current_chunk = WorldManager.get_current_chunk()
 func _process(delta):
 	update_animation_parameters()
 
@@ -53,19 +59,27 @@ func _process(delta):
 		if inventory.slots[WorldManager.selected_slot].item != null:
 			if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
 				interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps["trees"])
+	if Input.is_action_just_pressed("interact") and selected_tile != null :
+		if WorldManager.get_tile(current_chunk, selected_tile).object.plant.plant_type == "flower":
+			interactionHandler.interact(selected_tile, forageTilemaps["flowers"])
+		else:
+			interactionHandler.interact(selected_tile, forageTilemaps["trees"])
 	var player_pos = local_trees.local_to_map(local_trees.to_local(position))
 
 	var area_top_left = player_pos - Vector2i(2,2)  # Example start position
 	var area_bottom_right = player_pos + Vector2i(2,2)    # Example end position
 	var mouse_position = get_global_mouse_position()
 	var tiled_mouse_position = local_trees.local_to_map(local_trees.to_local(mouse_position))
-	if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property.type == 0:
-		if WorldManager.get_tile(current_chunk, tiled_mouse_position) != null:
-			if WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object != null:
+	
+	var mouse_tile = WorldManager.get_tile(current_chunk, tiled_mouse_position)
+	if mouse_tile != null:
+		if mouse_tile.object != null:
+			if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property.type == 0:
 				var tool_type = inventory.slots[WorldManager.selected_slot].item.property.tool_type
-				var object = WorldManager.get_tile(current_chunk, tiled_mouse_position).breakable_object
+				var object = mouse_tile.object
 				var breakable = VariablesManager.breakable[tool_type]
-				if object in breakable:
+				equipped_tool.texture = inventory.slots[WorldManager.selected_slot].item.texture
+				if object.object_id in breakable:
 					if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
 				
 						
@@ -75,12 +89,29 @@ func _process(delta):
 					else:
 						crosshair.visible = false
 						selected_tile = null
+				
 				else:
 					crosshair.visible = false
 					selected_tile = null
+		
+			if mouse_tile.object.interactable == true:
+
+				if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
+				
+						
+					crosshair.position =local_trees.map_to_local(tiled_mouse_position)
+					crosshair.visible = true
+					selected_tile = tiled_mouse_position
+				else:
+					crosshair.visible = false
+					selected_tile = null
+			#else:
+				#crosshair.visible = false
+				#selected_tile = null
 		else:
 			crosshair.visible = false
 			selected_tile = null
+
 func is_within_bounds(pos: Vector2i, top_left: Vector2i, bottom_right: Vector2i) -> bool:
 	return (top_left.x <= pos.x and pos.x <= bottom_right.x) and \
 		   (top_left.y <= pos.y and pos.y <= bottom_right.y)
@@ -99,7 +130,7 @@ func _physics_process(_delta):
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
 	# Update last direction only when moving
-	if input_direction != Vector2.ZERO:
+	if input_direction != Vector2.ZERO and movement == true:
 		
 		last_direction = input_direction
 		if abs(input_direction.x) == abs(input_direction.y):

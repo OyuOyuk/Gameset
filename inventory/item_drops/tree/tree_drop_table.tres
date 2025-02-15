@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Drop_Table" load_steps=3 format=3 uid="uid://c1h7v18jys6pi"]
-
-[ext_resource type="Resource" uid="uid://dbox3scnf430s" path="res://inventory/item_drops/tree/wood_drop.tres" id="1_o1pkt"]
-[ext_resource type="Script" path="res://inventory/item_drops/Drop_Table.gd" id="2_lrbfk"]
-
-[resource]
-script = ExtResource("2_lrbfk")
-name = "tree"
-drops = Array[Resource("res://inventory/item_drops/Item_Drops.gd")]([ExtResource("1_o1pkt")])

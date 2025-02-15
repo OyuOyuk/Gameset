@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=4 format=3 uid="uid://cecgshbl1cgvy"]
+
+[ext_resource type="Resource" uid="uid://dkmh51nhe5plp" path="res://inventory/items/item_properties/stone_axe.tres" id="1_lyvxj"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_l1ib6"]
+[ext_resource type="Texture2D" uid="uid://cftd3g4p5nv37" path="res://assets/player/tools/stone_axe.png" id="3_tctod"]
+
+[resource]
+script = ExtResource("2_l1ib6")
+name = "stone axe"
+texture = ExtResource("3_tctod")
+desc = "a crude stone axe"
+property = ExtResource("1_lyvxj")

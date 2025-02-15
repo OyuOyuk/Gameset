@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Material_Properties" load_steps=2 format=3 uid="uid://btyggl6n1jult"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/material_properties.gd" id="1_gtlfw"]
+
+[resource]
+script = ExtResource("1_gtlfw")
+burnable = true
+Material_type = "Botanicals"
+type = 2

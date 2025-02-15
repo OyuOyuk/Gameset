@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Material_Properties" load_steps=2 format=3 uid="uid://b5qila7ty0rpa"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/material_properties.gd" id="1_gxlls"]
+
+[resource]
+script = ExtResource("1_gxlls")
+burnable = true
+Material_type = "scrap_material"
+type = 2

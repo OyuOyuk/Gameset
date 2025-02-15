@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item_Drop" load_steps=3 format=3 uid="uid://bk8aniq3l75h"]
+
+[ext_resource type="Resource" uid="uid://dj1nld8lx8l8c" path="res://inventory/items/berry.tres" id="1_efmyu"]
+[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="2_bkixl"]
+
+[resource]
+script = ExtResource("2_bkixl")
+item = ExtResource("1_efmyu")
+item_chance = 1.0
+min_amount = 1
+max_amount = 3

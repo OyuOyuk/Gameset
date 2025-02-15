@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Food_Properties" load_steps=2 format=3 uid="uid://dd2hfu8xo7np6"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/food_properties.gd" id="1_falk4"]
+
+[resource]
+script = ExtResource("1_falk4")
+food_value = 10
+hydration_value = 10
+spoil_time = 2
+food_effect = ""
+type = 1

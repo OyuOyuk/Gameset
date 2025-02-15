@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Inventory_Item" load_steps=4 format=3 uid="uid://bwthx5ma6k5uy"]
 
-[ext_resource type="Resource" uid="uid://2f80tsaw8wu5" path="res://inventory/item_properties/material.tres" id="1_hs5lj"]
 [ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="1_ug7f4"]
+[ext_resource type="Resource" uid="uid://5xawrhrnddi8" path="res://inventory/items/item_properties/gem.tres" id="1_ymq4i"]
 [ext_resource type="Texture2D" uid="uid://d1gj44k17vqc1" path="res://assets/item/gem.png" id="2_0kt55"]
 
 [resource]
@@ -9,4 +9,4 @@ script = ExtResource("1_ug7f4")
 name = "Shard"
 texture = ExtResource("2_0kt55")
 desc = ""
-property = ExtResource("1_hs5lj")
+property = ExtResource("1_ymq4i")

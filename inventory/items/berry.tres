@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=4 format=3 uid="uid://dj1nld8lx8l8c"]
+
+[ext_resource type="Resource" uid="uid://dd2hfu8xo7np6" path="res://inventory/items/item_properties/berry.tres" id="1_r6jl3"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_uorx7"]
+[ext_resource type="Texture2D" uid="uid://ta6bklks0d3q" path="res://assets/item/berry.png" id="3_dl7qa"]
+
+[resource]
+script = ExtResource("2_uorx7")
+name = "berry"
+texture = ExtResource("3_dl7qa")
+desc = "a simple berry"
+property = ExtResource("1_r6jl3")

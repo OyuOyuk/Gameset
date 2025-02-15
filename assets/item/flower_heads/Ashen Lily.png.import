@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0fexiav5o7q7"
-path="res://.godot/imported/flowers.png-a86ae50646fb4e5390818c18dea84a61.ctex"
+uid="uid://ch4ay4farbcwl"
+path="res://.godot/imported/Ashen Lily.png-707516f5f71bdad3cde5a24811d69279.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world/flowers.png"
-dest_files=["res://.godot/imported/flowers.png-a86ae50646fb4e5390818c18dea84a61.ctex"]
+source_file="res://assets/item/flower_heads/Ashen Lily.png"
+dest_files=["res://.godot/imported/Ashen Lily.png-707516f5f71bdad3cde5a24811d69279.ctex"]
 
 [params]
 

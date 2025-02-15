@@ -2,6 +2,7 @@ extends Node
 class_name PlantData
 var plant_name = "default plant"
 var plant_type = null
+var sprite_variant = 0
 var health = 100
 var rot = 0
 var days_elapsed = 0

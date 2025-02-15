@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=4 format=3 uid="uid://b78uwd0qr4qq6"]
+
+[ext_resource type="Resource" uid="uid://btyggl6n1jult" path="res://inventory/items/item_properties/botanical_material.tres" id="1_j4vmv"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_emgyp"]
+[ext_resource type="Texture2D" uid="uid://yljn603crmaq" path="res://assets/item/flower_heads/Ember Petals.png" id="3_18a26"]
+
+[resource]
+script = ExtResource("2_emgyp")
+name = "Ember Petals"
+texture = ExtResource("3_18a26")
+desc = "a warm flowerwarm flowers"
+property = ExtResource("1_j4vmv")

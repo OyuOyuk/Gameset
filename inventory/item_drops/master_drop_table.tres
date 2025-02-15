@@ -1,10 +1,16 @@
-[gd_resource type="Resource" script_class="master_drop_table" load_steps=3 format=3 uid="uid://b55qc21g85vp6"]
+[gd_resource type="Resource" script_class="master_drop_table" load_steps=9 format=3 uid="uid://diijycsowq38s"]
 
-[ext_resource type="Resource" uid="uid://c1h7v18jys6pi" path="res://inventory/item_drops/tree/tree_drop_table.tres" id="1_oe552"]
-[ext_resource type="Script" path="res://inventory/master_drop_table.gd" id="2_s1elx"]
+[ext_resource type="Resource" uid="uid://ur4dknkkyoly" path="res://inventory/item_drops/drop_tables/generic_plant.tres" id="1_kyfrd"]
+[ext_resource type="Resource" uid="uid://dg54kv66w2l0b" path="res://inventory/item_drops/drop_tables/tree.tres" id="2_bhphi"]
+[ext_resource type="Script" path="res://inventory/item_drops/master_drop_table.gd" id="2_s1elx"]
+[ext_resource type="Resource" uid="uid://c1ywdvt7t5x4m" path="res://inventory/item_drops/drop_tables/berry_bush.tres" id="3_ahllo"]
+[ext_resource type="Resource" uid="uid://b0m0lxrpvq8ar" path="res://inventory/item_drops/drop_tables/ashen_lily.tres" id="4_u3ngf"]
+[ext_resource type="Resource" uid="uid://pu7ukirvf6o3" path="res://inventory/item_drops/drop_tables/Pale WildFlowers.tres" id="5_3rasv"]
+[ext_resource type="Resource" uid="uid://cmwoa1me4csiq" path="res://inventory/item_drops/drop_tables/Ember Petals.tres" id="6_knjhp"]
+[ext_resource type="Resource" uid="uid://jf3b4jvbxh5o" path="res://inventory/item_drops/drop_tables/flower.tres" id="7_1e1qf"]
 
 [resource]
 script = ExtResource("2_s1elx")
-object_drops = Array[Resource("res://inventory/item_drops/Drop_Table.gd")]([ExtResource("1_oe552")])
-animal_drops = Array[Resource("res://inventory/item_drops/Drop_Table.gd")]([])
-monster_drops = Array[Resource("res://inventory/item_drops/Drop_Table.gd")]([])
+object_drops = Array[Resource("res://inventory/item_drops/drop_tables/Drop_Table.gd")]([ExtResource("1_kyfrd"), ExtResource("2_bhphi"), ExtResource("3_ahllo"), ExtResource("4_u3ngf"), ExtResource("5_3rasv"), ExtResource("6_knjhp"), ExtResource("7_1e1qf")])
+animal_drops = Array[Resource("res://inventory/item_drops/drop_tables/Drop_Table.gd")]([])
+monster_drops = Array[Resource("res://inventory/item_drops/drop_tables/Drop_Table.gd")]([])

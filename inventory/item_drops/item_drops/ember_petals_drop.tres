@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item_Drop" load_steps=3 format=3 uid="uid://bk1ff3wjcnywv"]
+
+[ext_resource type="Resource" uid="uid://b78uwd0qr4qq6" path="res://inventory/items/ember_petals.tres" id="1_r7e8q"]
+[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="2_ace6x"]
+
+[resource]
+script = ExtResource("2_ace6x")
+item = ExtResource("1_r7e8q")
+item_chance = 1.0
+min_amount = 1
+max_amount = 1

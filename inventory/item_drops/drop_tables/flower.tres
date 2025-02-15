@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Drop_Table" load_steps=4 format=3 uid="uid://jf3b4jvbxh5o"]
+
+[ext_resource type="Resource" uid="uid://cnjfxge7anu1o" path="res://inventory/item_drops/item_drops/flower_drop.tres" id="1_wr4d4"]
+[ext_resource type="Resource" uid="uid://bag6ox5p4fgbk" path="res://inventory/item_drops/item_drops/fiber_drops.tres" id="2_vo4e5"]
+[ext_resource type="Script" path="res://inventory/item_drops/drop_tables/Drop_Table.gd" id="3_lmp34"]
+
+[resource]
+script = ExtResource("3_lmp34")
+name = "flower"
+drops = Array[Resource("res://inventory/item_drops/item_drops/Item_Drops.gd")]([ExtResource("1_wr4d4"), ExtResource("2_vo4e5")])
