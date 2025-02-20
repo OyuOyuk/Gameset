@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://1607ii5kvv0y"]
+[gd_scene load_steps=51 format=3 uid="uid://1607ii5kvv0y"]
 
 [ext_resource type="Script" path="res://script/Player.gd" id="1_qauco"]
 [ext_resource type="Texture2D" uid="uid://co1mxx4spne5j" path="res://icon.svg" id="1_r5fdf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://76q8jw543hg5" path="res://assets/player/base_trial.png" id="3_0540s"]
 [ext_resource type="Texture2D" uid="uid://caypy67s8y8xh" path="res://assets/player/tools/trial_axe.png" id="5_45rvq"]
 [ext_resource type="Script" path="res://script/Handlers/InteractionHandler.gd" id="6_ycd4q"]
+[ext_resource type="Script" path="res://script/Handlers/StatHandler.gd" id="7_kwy1e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mpoj3"]
 size = Vector2(128, 128)
@@ -903,6 +904,9 @@ parameters/swing/blend_position = Vector2(0, 0)
 
 [node name="InteractionHandler" type="Node2D" parent="."]
 script = ExtResource("6_ycd4q")
+
+[node name="StatHandler" type="Node2D" parent="."]
+script = ExtResource("7_kwy1e")
 
 [connection signal="area_entered" from="skeleton/tool_collision" to="." method="_on_tool_collision_area_entered"]
 [connection signal="area_exited" from="skeleton/tool_collision" to="." method="_on_tool_collision_area_exited"]

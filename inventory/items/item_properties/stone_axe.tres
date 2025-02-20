@@ -8,3 +8,4 @@ durability = 50
 tool_type = "axe"
 tool_material = "stone"
 type = 0
+useble = false

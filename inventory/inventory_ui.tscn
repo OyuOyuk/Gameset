@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4847byhv4pa7"]
+[gd_scene load_steps=6 format=3 uid="uid://c4847byhv4pa7"]
 
 [ext_resource type="Script" path="res://inventory/inventory_ui.gd" id="1_6esjt"]
 [ext_resource type="Texture2D" uid="uid://6xahhf30m7xk" path="res://assets/inventory_back.png" id="2_mgdg5"]
 [ext_resource type="PackedScene" uid="uid://v2f0ddfdi264" path="res://inventory/inventory_ui_slot.tscn" id="3_5ix6v"]
+[ext_resource type="Texture2D" uid="uid://b642c05el0inm" path="res://assets/sketch_human.png" id="4_bbmn6"]
+[ext_resource type="Texture2D" uid="uid://ml1wv1kyui8q" path="res://assets/slot.png" id="5_p25mq"]
 
 [node name="Inventory_Ui" type="Control"]
 layout_mode = 3
@@ -33,92 +35,201 @@ offset_right = 541.0
 offset_bottom = 387.0
 texture = ExtResource("2_mgdg5")
 
-[node name="GridContainer" type="GridContainer" parent="TextureRect"]
+[node name="inventory_1" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GridContainer" type="GridContainer" parent="inventory_1"]
 layout_mode = 0
-offset_left = 94.0
-offset_top = 36.0
-offset_right = 298.0
-offset_bottom = 344.0
+offset_left = 48.0
+offset_top = 3.0
+offset_right = 252.0
+offset_bottom = 311.0
 columns = 3
 
-[node name="inventory_ui_slot7" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot7" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot8" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot8" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot9" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot9" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot10" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot10" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot11" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot11" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot12" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot12" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot13" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot13" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot14" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot14" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot15" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot15" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot16" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot16" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot17" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot17" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot18" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot18" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot19" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot19" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot20" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot20" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot21" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot21" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot22" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot22" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot23" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot23" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot24" parent="TextureRect/GridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot24" parent="inventory_1/GridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="HotbarGridContainer" type="GridContainer" parent="TextureRect"]
+[node name="HotbarGridContainer" type="GridContainer" parent="inventory_1"]
 layout_mode = 0
-offset_left = 43.0
-offset_top = 36.0
-offset_right = 91.0
-offset_bottom = 344.0
+offset_left = -3.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 311.0
 
-[node name="inventory_ui_slot" parent="TextureRect/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot" parent="inventory_1/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot2" parent="TextureRect/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot2" parent="inventory_1/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot3" parent="TextureRect/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot3" parent="inventory_1/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot4" parent="TextureRect/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot4" parent="inventory_1/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot5" parent="TextureRect/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot5" parent="inventory_1/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
 
-[node name="inventory_ui_slot6" parent="TextureRect/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
+[node name="inventory_ui_slot6" parent="inventory_1/HotbarGridContainer" instance=ExtResource("3_5ix6v")]
 layout_mode = 2
+
+[node name="equipment" type="Control" parent="inventory_1"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="sketch" type="TextureRect" parent="inventory_1/equipment"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -27.0
+offset_right = 511.0
+offset_bottom = 373.0
+texture = ExtResource("4_bbmn6")
+
+[node name="head" type="Panel" parent="inventory_1/equipment"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 284.0
+offset_top = 40.0
+offset_right = 324.0
+offset_bottom = 80.0
+
+[node name="background" type="Sprite2D" parent="inventory_1/equipment/head"]
+position = Vector2(-4, -5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_p25mq")
+centered = false
+
+[node name="item_display" type="Sprite2D" parent="inventory_1/equipment/head"]
+
+[node name="body" type="Panel" parent="inventory_1/equipment"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 445.0
+offset_top = 83.0
+offset_right = 485.0
+offset_bottom = 123.0
+
+[node name="background" type="Sprite2D" parent="inventory_1/equipment/body"]
+position = Vector2(-4, -5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_p25mq")
+centered = false
+
+[node name="item_display" type="Sprite2D" parent="inventory_1/equipment/body"]
+
+[node name="hands" type="Panel" parent="inventory_1/equipment"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 286.0
+offset_top = 112.0
+offset_right = 326.0
+offset_bottom = 152.0
+
+[node name="background" type="Sprite2D" parent="inventory_1/equipment/hands"]
+position = Vector2(-4, -5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_p25mq")
+centered = false
+
+[node name="item_display" type="Sprite2D" parent="inventory_1/equipment/hands"]
+
+[node name="legs" type="Panel" parent="inventory_1/equipment"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 447.0
+offset_top = 201.0
+offset_right = 487.0
+offset_bottom = 241.0
+
+[node name="background" type="Sprite2D" parent="inventory_1/equipment/legs"]
+position = Vector2(-4, -5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_p25mq")
+centered = false
+
+[node name="item_display" type="Sprite2D" parent="inventory_1/equipment/legs"]
+
+[node name="feet" type="Panel" parent="inventory_1/equipment"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 447.0
+offset_top = 260.0
+offset_right = 487.0
+offset_bottom = 300.0
+
+[node name="background" type="Sprite2D" parent="inventory_1/equipment/feet"]
+position = Vector2(-4, -5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_p25mq")
+centered = false
+
+[node name="item_display" type="Sprite2D" parent="inventory_1/equipment/feet"]
+
+[node name="accessory" type="Panel" parent="inventory_1/equipment"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 444.0
+offset_top = 26.0
+offset_right = 484.0
+offset_bottom = 66.0
+
+[node name="background" type="Sprite2D" parent="inventory_1/equipment/accessory"]
+position = Vector2(-4, -5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_p25mq")
+centered = false
+
+[node name="item_display" type="Sprite2D" parent="inventory_1/equipment/accessory"]
 
 [node name="held" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)

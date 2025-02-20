@@ -1,7 +1,7 @@
 extends Control
 @onready var inventory : Inventory = preload("res://inventory/player_inventory.tres")
-@onready var inventory_slots : Array = $TextureRect/GridContainer.get_children()
-@onready var hotbar_slots : Array = $TextureRect/HotbarGridContainer.get_children()
+@onready var inventory_slots : Array = $inventory_1/GridContainer.get_children()
+@onready var hotbar_slots : Array = $inventory_1/HotbarGridContainer.get_children()
 @onready var held_item = $held
 @onready var inventory_rect = get_node("inventory_rect")
 var held_item_data = {

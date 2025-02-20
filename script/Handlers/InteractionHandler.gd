@@ -1,6 +1,6 @@
 extends Node2D
 @onready var master_drop = load("res://inventory/item_drops/master_drop_table.tres")
-
+var inventory 
 var current_chunk = WorldManager.get_current_chunk()
 var drop_dict = {}
 var drops = []
@@ -68,6 +68,19 @@ func interact(selected_tile, tilemap):
 	print("interact")
 	if WorldManager.get_tile(current_chunk, selected_tile).object.plant != null:
 		pick(selected_tile, tilemap)
+func use(held_item, slot_index):
+	print(held_item.name)
+	if held_item.property is Food_Properties:
+		consume(held_item)
+	if held_item.property.consumable == true:
+		inventory.slots[slot_index].amount = inventory.slots[slot_index].amount - 1
+		if inventory.slots[slot_index].amount == 0:
+				inventory.slots[slot_index].item = null
+		inventory.update_everything()
+func consume(held_item):
+	var hunger_value = held_item.property.food_value
+	StatsManager.update_hunger(hunger_value)
+	print(held_item.name)
 func pick(selected_tile, tilemap):
 	var non_tile_coord = tilemap.map_to_local(selected_tile)
 	var tile = WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile)

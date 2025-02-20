@@ -8,7 +8,8 @@ signal right_click_split(scene_name:String)
 signal left_click_drag(scene_name:String)     
 signal daytime_change(scene_name:String)
  
-signal health_change(scene_name:String)    
+signal health_change(scene_name:String)
+signal hunger_change(scene_name:String)    
 signal player_collect(scene_name:String)    
  
 signal change_to_sprites(scene_name:String)    

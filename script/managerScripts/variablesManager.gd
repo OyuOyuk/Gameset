@@ -60,6 +60,12 @@ var spread_chance = {
 	"Pale WildFlowers" : 0.2
 
 }
+var flower_circle_size = {
+	"Ashen Lily" : [3, 4],
+	"flower" : [4, 8],
+	"Ember Petals" : [2, 4],
+	"Pale WildFlowers" : [4, 12]
+}
 var wither_time = {
 	"berry_bush" : 5,
 	"bush" : 5,

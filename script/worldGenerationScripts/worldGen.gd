@@ -207,9 +207,12 @@ func plants(current_chunk, tile_choices):
 func flowers(current_chunk, tile_choices):
 	for time in range(plant_amount[WorldManager.get_chunk(current_chunk).biome]/100):
 		var plant_pos = tile_choices.pick_random()
-		var size = randi() % 6 + 1
+		
+		
+
 		var random = randi() %  VariablesManager.flower_types.size()
 		var plant_type = VariablesManager.flower_types[random]
+		var size = randi_range(VariablesManager.flower_circle_size[plant_type][0], VariablesManager.flower_circle_size[plant_type][1]) 
 		flowers_circle(plant_pos, size, current_chunk, plant_type)
 func flowers_circle(center_position, size, current_chunk, plant_type):
 	var flower_tiles = [center_position]

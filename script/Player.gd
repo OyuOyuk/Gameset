@@ -29,6 +29,7 @@ var movement = true
 var animationstate = "idle"
 func _ready():
 	#animation.play("idle_front")
+	interactionHandler.inventory = inventory
 	for plant_tilemap in plant_tilemaps:
 		forageTilemaps[plant_tilemap.name] = plant_tilemap
 	print(forageTilemaps)
@@ -53,6 +54,10 @@ func _process(delta):
 		#mouse_lock = false
 		movement = true
 		timer = 0
+	if inventory.slots[WorldManager.selected_slot].item != null:
+		if Input.is_action_just_pressed("Left_Click") and inventory.slots[WorldManager.selected_slot].item.property.usable == true:
+			interactionHandler.use(inventory.slots[WorldManager.selected_slot].item, WorldManager.selected_slot)
+		
 	if Input.is_action_pressed("Left_Click") and selected_tile != null and timer == 0 :
 		print("delete " , selected_tile)
 		#interactionHandler.chop(selected_tile, forageTilemaps["trees"])
