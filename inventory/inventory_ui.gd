@@ -1,5 +1,6 @@
 extends Control
 @onready var inventory : Inventory = preload("res://inventory/player_inventory.tres")
+@onready var equipment_inventory : Equipment_Inventory = preload("res://inventory/player_equipments.tres")
 @onready var inventory_slots : Array = $inventory_1/GridContainer.get_children()
 @onready var hotbar_slots : Array = $inventory_1/HotbarGridContainer.get_children()
 @onready var held_item = $held
@@ -16,11 +17,38 @@ func _ready():
 	inventory.update.connect(update_slots)
 	ConnectionManager.connect("right_click_split", split )
 	ConnectionManager.connect("left_click_drag", drag)
+	ConnectionManager.connect("right_equipment", right_equipment )
+	ConnectionManager.connect("left_equipment", left_equipment)
 	 # Connect signals for hotbar slots
 	held_item.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	update_slots()
 	close()
+func right_equipment(eq_slot):
 
+	pass
+func left_equipment(eq_slot):
+	var item = equipment_inventory.get(eq_slot)
+	if item != null:
+		if held_item_data["item"] == null:
+			held_item_data["item"] = item
+			held_item_data["amount"] = 1
+			held_item.get_node("item_display").texture = item.texture
+			held_item.get_node("amount").visible = false
+			equipment_inventory.set(eq_slot, null)
+			ConnectionManager.emit_signal("update_equipment_slots")
+		else:
+			pass
+	else:#its null
+		if held_item_data["item"] != null and  held_item_data["item"].property.type == 3 and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
+			equipment_inventory.set(eq_slot, held_item_data["item"])
+			
+			held_item_data["item"] = null
+			held_item_data["amount"] = 0 
+			held_item.get_node("item_display").texture = null
+			held_item.get_node("amount").visible = false
+			ConnectionManager.emit_signal("update_equipment_slots")
+
+	
 func mouse_in_inventory():
 	# Replace `inventory_rect` with your inventory UI's Rect2
 	var mouse_position = get_viewport().get_mouse_position()
@@ -128,3 +156,4 @@ func _process(delta):
 			open()
 	held_item.position = get_local_mouse_position() - Vector2(16,16)
 	mouse_in_inventory()
+

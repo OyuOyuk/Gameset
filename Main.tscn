@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=74 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/Grids.gd" id="1_043rh"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://bvhtxe5q0470c" path="res://status_bars.tscn" id="25_sclnd"]
 [ext_resource type="PackedScene" uid="uid://clgiv7d05w4w8" path="res://collectable.tscn" id="34_poptd"]
 [ext_resource type="Resource" uid="uid://cecgshbl1cgvy" path="res://inventory/items/stone_axe.tres" id="38_i1qgh"]
+[ext_resource type="Resource" uid="uid://cxoos82fxrats" path="res://inventory/items/leather_gloves.tres" id="40_871gg"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 frequency = 0.0205
@@ -1262,3 +1263,7 @@ color = Color(0.2, 0.2, 0.5, 1)
 [node name="collectable" parent="." instance=ExtResource("34_poptd")]
 position = Vector2(-319, -37)
 item = ExtResource("38_i1qgh")
+
+[node name="collectable2" parent="." instance=ExtResource("34_poptd")]
+position = Vector2(-319, -37)
+item = ExtResource("40_871gg")

@@ -21,3 +21,8 @@ signal day_change(scene_name:String)
 signal new_chunk_entered(scene_name:String)                                                                                                                                                        
 
 signal change_season(scene_name:String)
+
+signal update_equipment_slots
+
+signal right_equipment(scene_name:String)
+signal left_equipment(scene_name:String)
