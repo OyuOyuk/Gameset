@@ -153,6 +153,7 @@ func try_spread(plant_name, pos, current_chunk):
 				VariablesManager.plant_tiles[current_chunk].append(new_pos)
 			plant_data.atlas_coords = Vector2i(0, y*2)
 			object.plant = plant_data
+			object.broken_by = ["axe"]
 			WorldManager.get_tile(current_chunk, new_pos ).object = object
 			break
 func tilemap_updater(current_chunk):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=77 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/Grids.gd" id="1_043rh"]
@@ -37,9 +37,12 @@
 [ext_resource type="Texture2D" uid="uid://dl11n3hrl6b3d" path="res://assets/world/rocks.png" id="24_ia1sx"]
 [ext_resource type="Texture2D" uid="uid://cwjvw34sic0wm" path="res://assets/world/flowers/flowers_1.png" id="25_4oukl"]
 [ext_resource type="PackedScene" uid="uid://bvhtxe5q0470c" path="res://status_bars.tscn" id="25_sclnd"]
+[ext_resource type="Script" path="res://script/playerScripts/bow_cursor.gd" id="31_afogd"]
+[ext_resource type="Texture2D" uid="uid://b3sfkjvn1fbpo" path="res://assets/item/weapons/bow_cursor.png" id="32_4lby6"]
 [ext_resource type="PackedScene" uid="uid://clgiv7d05w4w8" path="res://collectable.tscn" id="34_poptd"]
 [ext_resource type="Resource" uid="uid://cecgshbl1cgvy" path="res://inventory/items/stone_axe.tres" id="38_i1qgh"]
 [ext_resource type="Resource" uid="uid://cxoos82fxrats" path="res://inventory/items/leather_gloves.tres" id="40_871gg"]
+[ext_resource type="Resource" uid="uid://www2ijw4rput" path="res://inventory/items/simple_bow.tres" id="41_16bot"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 frequency = 0.0205
@@ -1184,13 +1187,20 @@ script = ExtResource("18_1vv8t")
 script = ExtResource("23_12btu")
 collectable_item = ExtResource("34_poptd")
 
+[node name="bow_cursor" type="Sprite2D" parent="world/active" node_paths=PackedStringArray("player")]
+visible = false
+texture = ExtResource("32_4lby6")
+script = ExtResource("31_afogd")
+player = NodePath("../Player")
+
 [node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap", "crosshair") instance=ExtResource("19_nqj67")]
 y_sort_enabled = false
 tilemap = NodePath("../../worldgen/water")
 crosshair = NodePath("../crosshair")
 
-[node name="Camera2D" type="Camera2D" parent="world/active/Player"]
+[node name="Camera2D" type="Camera2D" parent="world/active/Player" node_paths=PackedStringArray("bow_cursor")]
 script = ExtResource("11_sn3m7")
+bow_cursor = NodePath("../../bow_cursor")
 
 [node name="crosshair" type="Sprite2D" parent="world/active"]
 texture = ExtResource("24_f74iv")
@@ -1271,3 +1281,7 @@ item = ExtResource("40_871gg")
 [node name="collectable3" parent="." instance=ExtResource("34_poptd")]
 position = Vector2(-315, 29)
 item = ExtResource("40_871gg")
+
+[node name="collectable4" parent="." instance=ExtResource("34_poptd")]
+position = Vector2(-315, 29)
+item = ExtResource("41_16bot")

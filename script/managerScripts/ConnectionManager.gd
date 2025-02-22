@@ -24,5 +24,9 @@ signal change_season(scene_name:String)
 
 signal update_equipment_slots
 
+signal camera_changer(scene_name:String)
+
+signal shoot_bow(scene_name:String)
+
 signal right_equipment(scene_name:String)
 signal left_equipment(scene_name:String)

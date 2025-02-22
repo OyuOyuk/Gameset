@@ -55,15 +55,20 @@ func _process(delta):
 		movement = true
 		timer = 0
 	if inventory.slots[WorldManager.selected_slot].item != null:
-		if Input.is_action_just_pressed("Left_Click") and inventory.slots[WorldManager.selected_slot].item.property.usable == true:
-			interactionHandler.use(inventory.slots[WorldManager.selected_slot].item, WorldManager.selected_slot)
+
+			
 		
-	if Input.is_action_pressed("Left_Click") and selected_tile != null and timer == 0 :
-		print("delete " , selected_tile)
-		#interactionHandler.chop(selected_tile, forageTilemaps["trees"])
-		if inventory.slots[WorldManager.selected_slot].item != null:
-			if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
-				interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps)
+		if Input.is_action_pressed("Left_Click"):
+			if inventory.slots[WorldManager.selected_slot].item != null:
+				if inventory.slots[WorldManager.selected_slot].item.property.usable == true:
+					interactionHandler.use(inventory.slots[WorldManager.selected_slot].item, WorldManager.selected_slot)
+				if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
+					if selected_tile != null and timer == 0 :
+						interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps)
+				
+
+				
+					
 	if Input.is_action_just_pressed("interact") and selected_tile != null :
 		if WorldManager.get_tile(current_chunk, selected_tile).object.plant.plant_type == "flower":
 			interactionHandler.interact(selected_tile, forageTilemaps["flowers"])
@@ -82,9 +87,9 @@ func _process(delta):
 			if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
 				var tool_type = inventory.slots[WorldManager.selected_slot].item.property.tool_type
 				var object = mouse_tile.object
-				var breakable = VariablesManager.breakable[tool_type]
+				#var breakable = VariablesManager.breakable[tool_type]
 				equipped_tool.texture = inventory.slots[WorldManager.selected_slot].item.texture
-				if object.object_id in breakable:
+				if tool_type in object.broken_by:
 					if is_within_bounds(tiled_mouse_position, area_top_left, area_bottom_right):
 				
 						

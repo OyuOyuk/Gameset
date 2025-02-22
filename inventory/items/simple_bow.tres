@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=5 format=3 uid="uid://www2ijw4rput"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/weapon_properties.gd" id="1_7t4hg"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_4s4ic"]
+[ext_resource type="Texture2D" uid="uid://c5pnu5s102l5i" path="res://assets/item/weapons/bow.png" id="3_cnbhj"]
+
+[sub_resource type="Resource" id="Resource_tfvgy"]
+script = ExtResource("1_7t4hg")
+durability = 100
+weapon_type = "bow"
+weapon_material = "wood"
+damage = 10
+usable = true
+consumable = false
+stackable = true
+
+[resource]
+script = ExtResource("2_4s4ic")
+name = "Simple bow"
+texture = ExtResource("3_cnbhj")
+desc = "a simple wooden bow"
+property = SubResource("Resource_tfvgy")

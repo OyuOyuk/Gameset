@@ -30,7 +30,7 @@ func right_equipment(eq_slot):
 		equipment_inventory.set(eq_slot, null)
 		ConnectionManager.emit_signal("update_equipment_slots")
 	else:
-		if held_item_data["item"] != null and  held_item_data["item"].property.type == 3 and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
+		if held_item_data["item"] != null and  held_item_data["item"].property is Equipment_Properties and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
 			equipment_inventory.set(eq_slot, held_item_data["item"])
 			
 			held_item_data["item"] = null
@@ -57,7 +57,7 @@ func left_equipment(eq_slot):
 			held_item.get_node("amount").visible = false
 			ConnectionManager.emit_signal("update_equipment_slots")
 	else:#its null
-		if held_item_data["item"] != null and  held_item_data["item"].property.type == 3 and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
+		if held_item_data["item"] != null and  held_item_data["item"].property is Equipment_Properties and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
 			equipment_inventory.set(eq_slot, held_item_data["item"])
 			
 			held_item_data["item"] = null

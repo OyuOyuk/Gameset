@@ -1,9 +1,9 @@
 extends Node
 var chunkSize = Vector2i(50, 100)
 var worldSize = Vector2i(100, 100)
-var breakable = {
-	"axe" : ["tree", "bush", "berry_bush", "Ashen Lily"]
-}
+#var breakable = {
+	#"axe" : ["tree", "bush", "berry_bush", "Ashen Lily"]
+#}
 var tool_material_damage = {
 	"test" : 20,
 	"stone" : 20,

@@ -1,5 +1,7 @@
 extends Node2D
 @onready var master_drop = load("res://inventory/item_drops/master_drop_table.tres")
+
+var bow_shooting = false
 var inventory 
 var current_chunk = WorldManager.get_current_chunk()
 var drop_dict = {}
@@ -85,11 +87,28 @@ func use(held_item, slot_index):
 	print(held_item.name)
 	if held_item.property is Food_Properties:
 		consume(held_item)
+	elif held_item.property is Weapon_Properties:
+		weapon_type(held_item)
 	if held_item.property.consumable == true:
 		inventory.slots[slot_index].amount = inventory.slots[slot_index].amount - 1
 		if inventory.slots[slot_index].amount == 0:
 				inventory.slots[slot_index].item = null
 		inventory.update_everything()
+func weapon_type(held_item):
+	
+	match held_item.property.weapon_type:
+		"bow":
+			handle_bow_use(held_item)
+		"sword":
+			handle_sword_use(held_item)
+func handle_bow_use(held_item):
+	if bow_shooting == false:
+		ConnectionManager.emit_signal("camera_changer", "bow")
+		bow_shooting = true
+	else:
+		ConnectionManager.emit_signal("shoot_bow", get_parent().position, held_item)
+func handle_sword_use(held_item):
+	pass
 func consume(held_item):
 	var hunger_value = held_item.property.food_value
 	StatsManager.update_hunger(hunger_value)

@@ -199,6 +199,7 @@ func plants(current_chunk, tile_choices):
 			plant_data.atlas_coords = Vector2i(x*2, y*2)
 			var tile = WorldManager.get_tile(current_chunk, plant_pos)
 			tile.breakable_object = plant_type
+			object.broken_by = ["axe"]
 			object.plant = plant_data
 			object.object_id = plant_type
 			tile.object = object
@@ -245,7 +246,7 @@ func flowers_circle(center_position, size, current_chunk, plant_type):
 				plant_data.atlas_coords = Vector2i(x*2, y*2)
 				plant_data.sprite_variant = randi() % 2
 				tile_data.breakable_object = plant_type
-
+				object.broken_by = ["axe"]
 				object.plant = plant_data
 				object.object_id = plant_type
 				tile_data.object = object
@@ -266,6 +267,7 @@ func grass(current_chunk, tile_choices):
 			grass_data.plant_type = "grass"
 			grass_data.health = 1
 			grass_data.atlas_coords = Vector2i(random_number_x, 0)
+			object.broken_by = ["axe"]
 			object.plant = grass_data
 			object.object_id = grass_data.name
 			tile_data.object= object
@@ -328,6 +330,7 @@ func tree(current_chunk,tile_choices):
 			tree_data.root_atlas_coords = Vector2i(trunk, trunk_y)
 			object.tree = tree_data
 			object.object_id = "tree"
+			object.broken_by = ["axe"]
 			tile.object = object 
 			
 			#tile.tree = tree_data #old
