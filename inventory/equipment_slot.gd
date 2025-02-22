@@ -7,11 +7,10 @@ var slot_index = -1
 @onready var item_icon = $item_display  # Adjust to your actual node path
 
 func update_slot(item: Inventory_Item):
-
+	print("activated")
 	if item != null:
 		item_icon.texture = item.texture  # Assuming Inventory_Item has an `icon` property
 		item_icon.visible = true
-		StatsManager.equipments[slot_type] = item
 	else:
 		item_icon.texture = null
 		item_icon.visible = false

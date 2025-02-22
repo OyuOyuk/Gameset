@@ -9,17 +9,9 @@ var map_size
 @export var bow_cursor :Sprite2D
 var camera_ver = "normal"
 var dead_zone_size := Vector2(800, 400) 	
-func _ready():
-	ConnectionManager.connect("camera_changer", camera_changer)
-	
-func camera_changer(type):
-	camera_ver =  type
+
 func _process(delta):
-	if camera_ver == "bow":
-		bow_cursor.visible = true
-		follow_cursor(delta)
-	else:
-		position = Vector2(0, -)
+	pass
 func _input(event):
 
 	if screen == "map" and event.is_action("drag"):

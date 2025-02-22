@@ -17,7 +17,7 @@ func _ready():
 func new_chunk_handler(new_chunk):
 	current_chunk = WorldManager.get_current_chunk()
 func replace_chop_tree(selected_tile, tool, tilemap):
-	var atlas_coord =tilemap.get_cell_atlas_coords(1, selected_tile)
+	var atlas_coord = tilemap.get_cell_atlas_coords(1, selected_tile)
 	tilemap.erase_cell(1, selected_tile)
 	print("worked")
 	var tile = WorldManager.get_tile( current_chunk, selected_tile)
@@ -41,30 +41,26 @@ func chop_tree(selected_tile, tool, tilemap):
 		#ConnectionManager.emit_signal("broken_object_drops", selected_tile, non_tile_coord )
 		WorldManager.get_tile( current_chunk, selected_tile).object = null
 		tilemap.erase_cell(0, selected_tile)
-func right_tool(selected_tile, tool, tilemaps):
-	var tilemap
-	var object = WorldManager.get_tile(current_chunk, selected_tile).object
-	#if  WorldManager.get_tile(current_chunk, selected_tile).object.plant != null:
-		#tilemap = tilemaps["plants"]
-	if  object.plant != null:
-		if object.plant.plant_type == "flower" :
-			tilemap = tilemaps["flowers"]
-		elif  object.plant.plant_type == "plant":
-			tilemap = tilemaps["trees"]
-		else:
-			tilemap = tilemaps["trees"]
-	elif object.tree != null:
-		tilemap = tilemaps["trees"]
+func right_tool(selected_tile, tool, tilemap):
+
 	if tool.property.tool_type == "axe":
 		if WorldManager.get_tile( current_chunk, selected_tile).object.tree != null:
 			if WorldManager.get_tile( current_chunk, selected_tile).object.tree.turned_sprite == false:
 				print("choping")
-				replace_chop_tree(selected_tile, tool , tilemap)
+				replace_chop_tree(selected_tile, tool , tilemap["trees"])
 			else:
 				
-				chop_tree(selected_tile, tool, tilemap)
+				chop_tree(selected_tile, tool, tilemap["trees"])
 		elif WorldManager.get_tile( current_chunk, selected_tile).object.plant != null:
-			chop(selected_tile, tool, tilemap)
+			var tile_map
+			match WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type :
+				"flower":
+					tile_map = tilemap["flowers"]
+				"plant":
+					tile_map = tilemap["trees"]
+				"grass":
+					tile_map = tilemap["trees"]
+			chop(selected_tile, tool, tile_map)
 func chop(selected_tile, tool, tilemap):
 	var tile = WorldManager.get_tile( current_chunk, selected_tile)
 	var non_tile_coord = tilemap.map_to_local(selected_tile)
@@ -74,7 +70,6 @@ func chop(selected_tile, tool, tilemap):
 		item_handler(selected_tile, non_tile_coord)
 		if WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type == "flower":
 			VariablesManager.flower_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
-			
 		elif WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type == "plant":
 			VariablesManager.plant_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
 		WorldManager.get_tile( current_chunk, selected_tile).object = null
@@ -85,28 +80,30 @@ func interact(selected_tile, tilemap):
 		pick(selected_tile, tilemap)
 func use(held_item, slot_index):
 	print(held_item.name)
-	if held_item.property is Food_Properties:
-		consume(held_item)
-	elif held_item.property is Weapon_Properties:
-		weapon_type(held_item)
 	if held_item.property.consumable == true:
 		inventory.slots[slot_index].amount = inventory.slots[slot_index].amount - 1
 		if inventory.slots[slot_index].amount == 0:
 				inventory.slots[slot_index].item = null
 		inventory.update_everything()
-func weapon_type(held_item):
-	
-	match held_item.property.weapon_type:
-		"bow":
-			handle_bow_use(held_item)
-		"sword":
-			handle_sword_use(held_item)
-func handle_bow_use(held_item):
-	if bow_shooting == false:
-		ConnectionManager.emit_signal("camera_changer", "bow")
-		bow_shooting = true
-	else:
-		ConnectionManager.emit_signal("shoot_bow", get_parent().position, held_item)
+	if held_item.property is Food_Properties:
+		consume(held_item)
+	elif held_item.property is Weapon_Properties:
+		#weapon_type(held_item)
+		pass
+
+#func weapon_type(held_item):
+	#
+	#match held_item.property.weapon_type:
+		#"bow":
+			#handle_bow_use(held_item)
+		#"sword":
+			#handle_sword_use(held_item)
+#func handle_bow_use(held_item):
+	#if bow_shooting == false:
+		#ConnectionManager.emit_signal("camera_changer", "bow")
+		#bow_shooting = true
+	#else:
+		#ConnectionManager.emit_signal("shoot_bow", get_parent().position, held_item)
 func handle_sword_use(held_item):
 	pass
 func consume(held_item):

@@ -59,13 +59,14 @@ func _process(delta):
 			
 		
 		if Input.is_action_pressed("Left_Click"):
-			if inventory.slots[WorldManager.selected_slot].item != null:
-				if inventory.slots[WorldManager.selected_slot].item.property.usable == true:
-					interactionHandler.use(inventory.slots[WorldManager.selected_slot].item, WorldManager.selected_slot)
-				if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
-					if selected_tile != null and timer == 0 :
-						interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps)
-				
+			
+			if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
+				if selected_tile != null and timer == 0 :
+					interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps)
+		if Input.is_action_just_pressed("Left_Click"):				
+
+			if inventory.slots[WorldManager.selected_slot].item.property.usable == true:
+				interactionHandler.use(inventory.slots[WorldManager.selected_slot].item, WorldManager.selected_slot)
 
 				
 					
@@ -175,7 +176,7 @@ func update_animation_parameters():
 		animationTree["parameters/conditions/idle"] = false
 		animationTree["parameters/conditions/is_moving"] = true
 	if Input.is_action_pressed("Left_Click") and inventory.slots[WorldManager.selected_slot].item != null:
-		if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
+		if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
 			animationTree["parameters/conditions/swing"] = true
 			timer = 0.7
 			movement = false

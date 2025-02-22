@@ -116,7 +116,7 @@ func wither(pos, type, current_chunk):
 	if tile.plant_type == "flower":
 
 		VariablesManager.flower_tiles[current_chunk].erase(pos)
-		forageTilemaps["flowers"].erase_cell(1, pos)
+		tile_map.erase_cell(1, pos)
 	if tile.plant_type == "plant":
 
 		VariablesManager.plant_tiles[current_chunk].erase(pos)

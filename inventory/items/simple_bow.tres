@@ -10,9 +10,9 @@ durability = 100
 weapon_type = "bow"
 weapon_material = "wood"
 damage = 10
+type = 0
 usable = true
 consumable = false
-stackable = true
 
 [resource]
 script = ExtResource("2_4s4ic")

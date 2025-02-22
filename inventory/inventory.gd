@@ -18,16 +18,15 @@ func insert(item: Inventory_Item, amount: int = 1, target_slot_index: int = -1):
 		if slot.item == null:  # If the target slot is empty
 			slot.item = item
 			slot.amount = amount  # Set amount when first inserted
-		elif slot.item == item and slot.item.property.stackable == true:  # If the target slot has the same item
+		elif slot.item == item:  # If the target slot has the same item
 			slot.amount += amount  # Increase the amount in the existing slot
-
 		else:
 			print("Target slot already contains a different item.")
 			return
 	else:
 		# Check if the item already exists in the inventory
 		var item_slots = slots.filter(func(slot): return slot.item == item)
-		if item_slots.size() > 0 and item.property.stackable == true:  # If the item already exists in any slot
+		if item_slots.size() > 0:  # If the item already exists in any slot
 			item_slots[0].amount += amount  # Increase the amount in the first matching slot
 		else:
 			# Find an empty slot
