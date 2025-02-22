@@ -24,8 +24,20 @@ func _ready():
 	update_slots()
 	close()
 func right_equipment(eq_slot):
-
-	pass
+	var item = equipment_inventory.get(eq_slot)
+	if item != null:
+		inventory.insert(item, 1)
+		equipment_inventory.set(eq_slot, null)
+		ConnectionManager.emit_signal("update_equipment_slots")
+	else:
+		if held_item_data["item"] != null and  held_item_data["item"].property.type == 3 and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
+			equipment_inventory.set(eq_slot, held_item_data["item"])
+			
+			held_item_data["item"] = null
+			held_item_data["amount"] = 0 
+			held_item.get_node("item_display").texture = null
+			held_item.get_node("amount").visible = false
+			ConnectionManager.emit_signal("update_equipment_slots")
 func left_equipment(eq_slot):
 	var item = equipment_inventory.get(eq_slot)
 	if item != null:
@@ -37,7 +49,13 @@ func left_equipment(eq_slot):
 			equipment_inventory.set(eq_slot, null)
 			ConnectionManager.emit_signal("update_equipment_slots")
 		else:
-			pass
+			var temp_item = item
+			equipment_inventory.set(eq_slot, held_item_data["item"])
+			held_item_data["item"] = temp_item 
+			held_item_data["amount"] = 1
+			held_item.get_node("item_display").texture = item.texture
+			held_item.get_node("amount").visible = false
+			ConnectionManager.emit_signal("update_equipment_slots")
 	else:#its null
 		if held_item_data["item"] != null and  held_item_data["item"].property.type == 3 and  held_item_data["item"].property.equipment_type == eq_slot: #held item is not null
 			equipment_inventory.set(eq_slot, held_item_data["item"])
@@ -92,8 +110,17 @@ func drag(slot_index):
 			held_item.get_node("amount").visible = true
 	else:
 		
-		if 	(inventory.slots[slot_index].item == null or inventory.slots[slot_index].item ==  held_item_data["item"]) and held_item_data["item"] != null:
+		if 	inventory.slots[slot_index].item == null and held_item_data["item"] != null:
 			
+			inventory.slots[slot_index].item = held_item_data["item"]
+			inventory.slots[slot_index].amount = inventory.slots[slot_index].amount + held_item_data["amount"] 
+			held_item_data["item"] = null
+			held_item_data["amount"] = 0 
+			held_item.get_node("item_display").texture = null
+			held_item.get_node("amount").visible = false
+			held_item.get_node("amount").text = str(0)
+		
+		elif inventory.slots[slot_index].item ==  held_item_data["item"] and held_item_data["item"] != null and held_item_data["item"].property.stackable == true:
 			inventory.slots[slot_index].item = held_item_data["item"]
 			inventory.slots[slot_index].amount = inventory.slots[slot_index].amount + held_item_data["amount"] 
 			held_item_data["item"] = null

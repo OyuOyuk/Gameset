@@ -8,11 +8,11 @@ func _ready():
 		equipment_slots.append(child)
 	ConnectionManager.connect("update_equipment_slots", update) 
 func update():
-
+	
 	for equipment_slot in equipment_slots:
 		if equipment_slot.has_method("update_slot") and equipment_slot.slot_type != null:
 			var item = equipment_inventory.get(equipment_slot.slot_type)
-		
+			
 			equipment_slot.update_slot(item)
 
 

@@ -4,6 +4,14 @@ var health = 100.0
 var hunger = 100.0
 var thirst = 100.0
 var status_effects = []
+var equipments = {
+	"head" : null,
+	"body" : null,
+	"legs" : null,
+	"hands" : null,
+	"feet" : null,
+	"accessory" :null,
+}
 # Called when the node enters the scene tree for the first time.
 func update_health(amount: float):
 	health += amount

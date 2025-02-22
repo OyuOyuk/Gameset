@@ -39,8 +39,20 @@ func chop_tree(selected_tile, tool, tilemap):
 		#ConnectionManager.emit_signal("broken_object_drops", selected_tile, non_tile_coord )
 		WorldManager.get_tile( current_chunk, selected_tile).object = null
 		tilemap.erase_cell(0, selected_tile)
-func right_tool(selected_tile, tool, tilemap):
-
+func right_tool(selected_tile, tool, tilemaps):
+	var tilemap
+	var object = WorldManager.get_tile(current_chunk, selected_tile).object
+	#if  WorldManager.get_tile(current_chunk, selected_tile).object.plant != null:
+		#tilemap = tilemaps["plants"]
+	if  object.plant != null:
+		if object.plant.plant_type == "flower" :
+			tilemap = tilemaps["flowers"]
+		elif  object.plant.plant_type == "plant":
+			tilemap = tilemaps["trees"]
+		else:
+			tilemap = tilemaps["trees"]
+	elif object.tree != null:
+		tilemap = tilemaps["trees"]
 	if tool.property.tool_type == "axe":
 		if WorldManager.get_tile( current_chunk, selected_tile).object.tree != null:
 			if WorldManager.get_tile( current_chunk, selected_tile).object.tree.turned_sprite == false:
@@ -60,6 +72,7 @@ func chop(selected_tile, tool, tilemap):
 		item_handler(selected_tile, non_tile_coord)
 		if WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type == "flower":
 			VariablesManager.flower_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
+			
 		elif WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type == "plant":
 			VariablesManager.plant_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
 		WorldManager.get_tile( current_chunk, selected_tile).object = null

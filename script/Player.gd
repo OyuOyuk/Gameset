@@ -62,8 +62,8 @@ func _process(delta):
 		print("delete " , selected_tile)
 		#interactionHandler.chop(selected_tile, forageTilemaps["trees"])
 		if inventory.slots[WorldManager.selected_slot].item != null:
-			if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
-				interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps["trees"])
+			if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
+				interactionHandler.right_tool(selected_tile,inventory.slots[WorldManager.selected_slot].item, forageTilemaps)
 	if Input.is_action_just_pressed("interact") and selected_tile != null :
 		if WorldManager.get_tile(current_chunk, selected_tile).object.plant.plant_type == "flower":
 			interactionHandler.interact(selected_tile, forageTilemaps["flowers"])
@@ -79,7 +79,7 @@ func _process(delta):
 	var mouse_tile = WorldManager.get_tile(current_chunk, tiled_mouse_position)
 	if mouse_tile != null:
 		if mouse_tile.object != null:
-			if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+			if inventory.slots[WorldManager.selected_slot].item != null and  inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
 				var tool_type = inventory.slots[WorldManager.selected_slot].item.property.tool_type
 				var object = mouse_tile.object
 				var breakable = VariablesManager.breakable[tool_type]
@@ -170,7 +170,7 @@ func update_animation_parameters():
 		animationTree["parameters/conditions/idle"] = false
 		animationTree["parameters/conditions/is_moving"] = true
 	if Input.is_action_pressed("Left_Click") and inventory.slots[WorldManager.selected_slot].item != null:
-		if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+		if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
 			animationTree["parameters/conditions/swing"] = true
 			timer = 0.7
 			movement = false

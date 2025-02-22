@@ -1265,5 +1265,9 @@ position = Vector2(-319, -37)
 item = ExtResource("38_i1qgh")
 
 [node name="collectable2" parent="." instance=ExtResource("34_poptd")]
-position = Vector2(-319, -37)
+position = Vector2(-267, 3)
+item = ExtResource("40_871gg")
+
+[node name="collectable3" parent="." instance=ExtResource("34_poptd")]
+position = Vector2(-315, 29)
 item = ExtResource("40_871gg")

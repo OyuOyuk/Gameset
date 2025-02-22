@@ -5,8 +5,13 @@
 [resource]
 script = ExtResource("1_m0vkf")
 durability = 20
+defense = 10
+weight = 0
+heat_resistance = 5
+cold_resistance = 0
 equipment_type = "hands"
 equipment_material = "leather"
 type = 3
 usable = false
 consumable = false
+stackable = false
