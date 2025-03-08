@@ -1185,10 +1185,11 @@ script = ExtResource("18_1vv8t")
 script = ExtResource("23_12btu")
 collectable_item = ExtResource("34_poptd")
 
-[node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap", "crosshair") instance=ExtResource("19_nqj67")]
+[node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap", "crosshair", "camera") instance=ExtResource("19_nqj67")]
 y_sort_enabled = false
 tilemap = NodePath("../../worldgen/water")
 crosshair = NodePath("../crosshair")
+camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="world/active/Player"]
 script = ExtResource("11_sn3m7")

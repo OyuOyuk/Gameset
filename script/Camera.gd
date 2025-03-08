@@ -13,7 +13,6 @@ var dead_zone_size := Vector2(800, 400)
 func _process(delta):
 	pass
 func _input(event):
-
 	if screen == "map" and event.is_action("drag"):
 		if event.is_pressed():
 			mouse_start_pos = event.position

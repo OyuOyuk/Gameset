@@ -30,3 +30,6 @@ signal shoot_bow(scene_name:String)
 
 signal right_equipment(scene_name:String)
 signal left_equipment(scene_name:String)
+
+signal scroll_up(scene_name:String)
+signal scroll_down(scene_name:String)

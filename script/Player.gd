@@ -13,6 +13,8 @@ var speed = {
 @onready var tool_collision = get_node("skeleton/tool_collision")
 @onready var interactionHandler = get_node("InteractionHandler")
 @onready var equipped_tool = get_node("skeleton/equiped_item/equipped_tool")
+
+@export var camera : Camera2D
 @export var inventory : Inventory
 var local_trees 
 var forageTilemaps = {
@@ -41,6 +43,17 @@ func _ready():
 	
 	#for pos in touched_tiles:
 		#print("Tile at ", pos, " is ", touched_tiles[pos])
+var min_zoom = Vector2(0.5, 0.5)
+var max_zoom = Vector2(2.5, 2.5)
+
+func zoom_camera(target_zoom: Vector2):
+	var new_zoom = camera.zoom * target_zoom
+	new_zoom.x = clamp(new_zoom.x, min_zoom.x, max_zoom.x)
+	new_zoom.y = clamp(new_zoom.y, min_zoom.y, max_zoom.y)
+
+	var tween = get_tree().create_tween()
+	tween.tween_property(camera, "zoom", new_zoom, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 func new_chunk_handler(new_chunk):
 	current_chunk = WorldManager.get_current_chunk()
 func _process(delta):
@@ -67,10 +80,20 @@ func _process(delta):
 
 			if inventory.slots[WorldManager.selected_slot].item.property.usable == true:
 				interactionHandler.use(inventory.slots[WorldManager.selected_slot].item, WorldManager.selected_slot)
+	if Input.is_action_just_pressed("scroll_left"):
+		if Input.is_action_pressed("alt"):
+			zoom_camera(Vector2(1.1, 1.1))  # Slight increase instead of a big jump
+		else:
+			ConnectionManager.emit_signal("scroll_up")
 
+	if Input.is_action_just_pressed("scroll_right"):
+		if Input.is_action_pressed("alt"):
+			zoom_camera(Vector2(0.9, 0.9))  # Slight decrease instead of a big jump
+		else:
+			ConnectionManager.emit_signal("scroll_down")
 				
 					
-	if Input.is_action_just_pressed("interact") and selected_tile != null :
+	if Input.is_action_just_pressed("interact") and selected_tile != null and  WorldManager.get_tile(current_chunk, selected_tile).object.interactable == true:
 		if WorldManager.get_tile(current_chunk, selected_tile).object.plant.plant_type == "flower":
 			interactionHandler.interact(selected_tile, forageTilemaps["flowers"])
 		else:

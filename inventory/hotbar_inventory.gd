@@ -9,6 +9,8 @@ var is_open = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	inventory.update.connect(update_slots)
+	ConnectionManager.connect("scroll_up", scroll_left)
+	ConnectionManager.connect("scroll_down", scroll_right)
 	for hotbar_slot in hotbar_slots:
 		hotbar_slot.draggable = false
 	update_slots()
@@ -34,13 +36,7 @@ func use_selected_item():
 		print("Using item: ", item.name)
 
 
-func _process(delta):
-	if Input.is_action_just_pressed("scroll_left"):
 
-		scroll_left()
-	elif Input.is_action_just_pressed("scroll_right"):
-
-		scroll_right()
 func scroll_left():
 	if selected_slot > 0:
 		selected_slot -= 1

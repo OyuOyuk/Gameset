@@ -851,15 +851,13 @@ position = Vector2(0, -12)
 z_index = 1
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(0, -35)
-scale = Vector2(1.5, 1.5)
+position = Vector2(0, -20)
 texture = ExtResource("3_0540s")
 hframes = 28
 vframes = 4
 
 [node name="equiped_item" type="Node2D" parent="skeleton"]
 rotation = -6.28319
-scale = Vector2(1.5, 1.5)
 
 [node name="equipped_tool" type="Sprite2D" parent="skeleton/equiped_item"]
 visible = false
