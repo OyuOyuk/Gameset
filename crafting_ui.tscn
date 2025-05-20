@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8wptfv3m0q2v"]
+
+[ext_resource type="Texture2D" uid="uid://cdpa4j67ye3vd" path="res://assets/ui/crafting_bad.png" id="1_jc3cl"]
+[ext_resource type="Script" path="res://script/crafting_ui.gd" id="1_jlaym"]
+[ext_resource type="PackedScene" uid="uid://c80twtdy0a27m" path="res://recipe_list_item.tscn" id="2_rg2je"]
+[ext_resource type="FontFile" uid="uid://ceendimvhr6oq" path="res://assets/fonts/vergilia.ttf" id="3_y8vd0"]
+[ext_resource type="Texture2D" uid="uid://ta6bklks0d3q" path="res://assets/item/berry.png" id="4_62rix"]
+
+[node name="crafting_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jlaym")
+recipe_item = ExtResource("2_rg2je")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 587.0
+offset_bottom = 420.0
+texture = ExtResource("1_jc3cl")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Item_name" type="Label" parent="Control"]
+self_modulate = Color(0.211131, 0.0935041, 0.0151363, 1)
+layout_mode = 0
+offset_left = 391.0
+offset_top = 81.0
+offset_right = 521.0
+offset_bottom = 113.0
+theme_override_fonts/font = ExtResource("3_y8vd0")
+theme_override_font_sizes/font_size = 32
+text = "A fake tale"
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(353, 94)
+scale = Vector2(2, 2)
+texture = ExtResource("4_62rix")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 39.0
+offset_right = 269.0
+offset_bottom = 362.0
+horizontal_scroll_mode = 0
+
+[node name="recipe_list_container" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 455.0
+offset_top = 305.0
+offset_right = 526.0
+offset_bottom = 350.0

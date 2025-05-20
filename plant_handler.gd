@@ -173,5 +173,5 @@ func tilemap_updater(current_chunk):
 		if tile_data.object.plant.growth_stage >= 4:
 			tile_data.object.interactable = true
 		#print(WorldManager.get_tile(current_chunk, tile).object.plant)
-		tile_map.set_cell(1, tile, 3, tile_data.object.plant.atlas_coords)
+		forageTilemaps["plants"].set_cell(1, tile, 0, tile_data.object.plant.atlas_coords)
 

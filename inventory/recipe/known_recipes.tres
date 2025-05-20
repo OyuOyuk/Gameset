@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="recipe_table" load_steps=10 format=3 uid="uid://oolax0un6owg"]
+
+[ext_resource type="Resource" uid="uid://c8b8cxfjl64hu" path="res://inventory/items/stick.tres" id="1_ci4pg"]
+[ext_resource type="Script" path="res://inventory/recipe/recipe_table.gd" id="1_dvcab"]
+[ext_resource type="Script" path="res://inventory/recipe/recipe_ingredient.gd" id="2_s78m4"]
+[ext_resource type="Resource" uid="uid://cym2o68co5tx4" path="res://inventory/items/stone.tres" id="3_g5xjq"]
+[ext_resource type="Resource" uid="uid://cecgshbl1cgvy" path="res://inventory/items/stone_axe.tres" id="4_ja8x6"]
+[ext_resource type="Script" path="res://inventory/recipe/recipe.gd" id="5_q3jdk"]
+
+[sub_resource type="Resource" id="Resource_km82a"]
+script = ExtResource("2_s78m4")
+item = ExtResource("1_ci4pg")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_eakyf"]
+script = ExtResource("2_s78m4")
+item = ExtResource("3_g5xjq")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_2tghf"]
+script = ExtResource("5_q3jdk")
+recipe_id = "stone_axe"
+output_item = ExtResource("4_ja8x6")
+output_amount = 1
+ingredients = Array[ExtResource("2_s78m4")]([SubResource("Resource_km82a"), SubResource("Resource_eakyf")])
+
+[resource]
+script = ExtResource("1_dvcab")
+recipes = Array[ExtResource("5_q3jdk")]([SubResource("Resource_2tghf")])

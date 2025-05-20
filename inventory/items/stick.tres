@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=5 format=3 uid="uid://c8b8cxfjl64hu"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/material_properties.gd" id="1_2ectv"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_etfis"]
+[ext_resource type="Texture2D" uid="uid://ts8q1ixpyh4y" path="res://assets/item/stick.png" id="3_bbm0j"]
+
+[sub_resource type="Resource" id="Resource_bn1ng"]
+script = ExtResource("1_2ectv")
+burnable = true
+Material_type = "generic"
+usable = false
+consumable = false
+
+[resource]
+script = ExtResource("2_etfis")
+name = "stick"
+id = "material:stick"
+texture = ExtResource("3_bbm0j")
+desc = "a simple stick"
+property = SubResource("Resource_bn1ng")

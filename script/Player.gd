@@ -199,7 +199,7 @@ func update_animation_parameters():
 		animationTree["parameters/conditions/idle"] = false
 		animationTree["parameters/conditions/is_moving"] = true
 	if Input.is_action_pressed("Left_Click") and inventory.slots[WorldManager.selected_slot].item != null:
-		if inventory.slots[WorldManager.selected_slot].item.property.type == 0:
+		if inventory.slots[WorldManager.selected_slot].item.property is Tool_Properties:
 			animationTree["parameters/conditions/swing"] = true
 			timer = 0.7
 			movement = false

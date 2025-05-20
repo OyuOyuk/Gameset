@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=5 format=3 uid="uid://cym2o68co5tx4"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/material_properties.gd" id="1_5li0p"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_0k52h"]
+[ext_resource type="Texture2D" uid="uid://s3qjfv6i81ep" path="res://assets/item/Stone.png" id="3_mrueh"]
+
+[sub_resource type="Resource" id="Resource_n3gaf"]
+script = ExtResource("1_5li0p")
+burnable = false
+Material_type = "generic"
+usable = false
+consumable = false
+
+[resource]
+script = ExtResource("2_0k52h")
+name = "rock"
+id = "material:rock"
+texture = ExtResource("3_mrueh")
+desc = ""
+property = SubResource("Resource_n3gaf")

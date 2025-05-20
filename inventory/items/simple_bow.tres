@@ -10,13 +10,13 @@ durability = 100
 weapon_type = "bow"
 weapon_material = "wood"
 damage = 10
-type = 0
 usable = true
 consumable = false
 
 [resource]
 script = ExtResource("2_4s4ic")
 name = "Simple bow"
+id = "weapon:simple_bow"
 texture = ExtResource("3_cnbhj")
 desc = "a simple wooden bow"
 property = SubResource("Resource_tfvgy")

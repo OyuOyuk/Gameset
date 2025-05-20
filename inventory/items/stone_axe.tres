@@ -1,12 +1,21 @@
-[gd_resource type="Resource" script_class="Inventory_Item" load_steps=4 format=3 uid="uid://cecgshbl1cgvy"]
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=5 format=3 uid="uid://cecgshbl1cgvy"]
 
-[ext_resource type="Resource" uid="uid://dkmh51nhe5plp" path="res://inventory/items/item_properties/stone_axe.tres" id="1_lyvxj"]
+[ext_resource type="Script" path="res://inventory/items/item_properties/tool_properties.gd" id="1_sodog"]
 [ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_l1ib6"]
 [ext_resource type="Texture2D" uid="uid://cftd3g4p5nv37" path="res://assets/player/tools/stone_axe.png" id="3_tctod"]
+
+[sub_resource type="Resource" id="Resource_nkk3m"]
+script = ExtResource("1_sodog")
+durability = 10
+tool_type = "axe"
+tool_material = "stone"
+usable = false
+consumable = false
 
 [resource]
 script = ExtResource("2_l1ib6")
 name = "stone axe"
+id = "tool:stone_axe"
 texture = ExtResource("3_tctod")
 desc = "a crude stone axe"
-property = ExtResource("1_lyvxj")
+property = SubResource("Resource_nkk3m")

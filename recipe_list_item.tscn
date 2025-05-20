@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://c80twtdy0a27m"]
+
+[ext_resource type="Script" path="res://recipe_list_item.gd" id="1_adgiy"]
+
+[node name="RecipeListItem" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+size_flags_horizontal = 3
+flat = true
+script = ExtResource("1_adgiy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="iconRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+stretch_mode = 4
+
+[node name="nameLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

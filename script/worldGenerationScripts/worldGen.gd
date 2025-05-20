@@ -358,7 +358,7 @@ func generateWorld(current_chunk):
 					if tile.object.plant.plant_type == "grass":
 						objects.set_cell(1,Vector2i(x,y),2,tile.object.plant.atlas_coords)
 					elif tile.object.plant.plant_type == "plant":
-						objects.set_cell(1,Vector2i(x,y),3,tile.object.plant.atlas_coords)
+						forageTilemaps["plants"].set_cell(1,Vector2i(x,y),0,tile.object.plant.atlas_coords)
 					elif tile.object.plant.plant_type == "flower":
 						forageTilemaps["flowers"].set_cell(1,Vector2i(x,y),tile.object.plant.sprite_variant,tile.object.plant.atlas_coords)
 				elif tile.object.rock != null:

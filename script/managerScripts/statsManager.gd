@@ -4,6 +4,7 @@ var health = 100.0
 var hunger = 100.0
 var thirst = 100.0
 var status_effects = []
+var unlocked_recipes :Array[item_recipe] = []
 # Called when the node enters the scene tree for the first time.
 func update_health(amount: float):
 	health += amount
@@ -18,3 +19,5 @@ func add_status_effect(effect: String):
 	status_effects.append(effect)
 func remove_status_effect(effect: String):
 	status_effects.erase(effect)
+func unlock_recipe(recipe  : item_recipe):
+	unlocked_recipes.append(recipe)

@@ -57,7 +57,7 @@ func right_tool(selected_tile, tool, tilemap):
 				"flower":
 					tile_map = tilemap["flowers"]
 				"plant":
-					tile_map = tilemap["trees"]
+					tile_map = tilemap["plants"]
 				"grass":
 					tile_map = tilemap["trees"]
 			chop(selected_tile, tool, tile_map)

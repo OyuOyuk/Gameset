@@ -1,12 +1,20 @@
-[gd_resource type="Resource" script_class="Inventory_Item" load_steps=4 format=3 uid="uid://dn21wyamm6jn6"]
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=5 format=3 uid="uid://dn21wyamm6jn6"]
 
-[ext_resource type="Resource" uid="uid://b5qila7ty0rpa" path="res://inventory/items/item_properties/fiber.tres" id="1_5jlps"]
+[ext_resource type="Script" path="res://inventory/items/item_properties/material_properties.gd" id="1_n5jqc"]
 [ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_l4p5y"]
 [ext_resource type="Texture2D" uid="uid://dcqci7od8cvi7" path="res://assets/item/fiber.png" id="3_meka4"]
+
+[sub_resource type="Resource" id="Resource_ylccn"]
+script = ExtResource("1_n5jqc")
+burnable = true
+Material_type = "generic"
+usable = false
+consumable = false
 
 [resource]
 script = ExtResource("2_l4p5y")
 name = "Fiber"
+id = "material:fiber"
 texture = ExtResource("3_meka4")
 desc = "remnants of  a plant"
-property = ExtResource("1_5jlps")
+property = SubResource("Resource_ylccn")

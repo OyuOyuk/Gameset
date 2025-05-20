@@ -1,9 +1,18 @@
-[gd_resource type="Resource" script_class="Drop_Table" load_steps=3 format=3 uid="uid://dg54kv66w2l0b"]
+[gd_resource type="Resource" script_class="Drop_Table" load_steps=6 format=3 uid="uid://dg54kv66w2l0b"]
 
 [ext_resource type="Resource" uid="uid://dbox3scnf430s" path="res://inventory/item_drops/item_drops/wood_drop.tres" id="1_h11kl"]
+[ext_resource type="Resource" uid="uid://c8b8cxfjl64hu" path="res://inventory/items/stick.tres" id="2_l4eyn"]
 [ext_resource type="Script" path="res://inventory/item_drops/drop_tables/Drop_Table.gd" id="2_vht2r"]
+[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="3_dmt53"]
+
+[sub_resource type="Resource" id="Resource_auhhm"]
+script = ExtResource("3_dmt53")
+item = ExtResource("2_l4eyn")
+item_chance = 0.9
+min_amount = 2
+max_amount = 5
 
 [resource]
 script = ExtResource("2_vht2r")
 name = "tree"
-drops = Array[Resource("res://inventory/item_drops/item_drops/Item_Drops.gd")]([ExtResource("1_h11kl")])
+drops = Array[ExtResource("3_dmt53")]([ExtResource("1_h11kl"), SubResource("Resource_auhhm")])
