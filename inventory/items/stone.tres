@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://inventory/items/item_properties/material_properties.gd" id="1_5li0p"]
 [ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_0k52h"]
-[ext_resource type="Texture2D" uid="uid://s3qjfv6i81ep" path="res://assets/item/Stone.png" id="3_mrueh"]
+[ext_resource type="Texture2D" uid="uid://s3qjfv6i81ep" path="res://assets/item/weapons/Stone.png" id="3_mrueh"]
 
 [sub_resource type="Resource" id="Resource_n3gaf"]
 script = ExtResource("1_5li0p")
@@ -10,6 +10,7 @@ burnable = false
 Material_type = "generic"
 usable = false
 consumable = false
+stackable = true
 
 [resource]
 script = ExtResource("2_0k52h")

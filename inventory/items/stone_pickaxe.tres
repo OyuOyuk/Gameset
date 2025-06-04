@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Inventory_Item" load_steps=5 format=3 uid="uid://bfq6vlybicegq"]
+
+[ext_resource type="Script" path="res://inventory/items/item_properties/tool_properties.gd" id="1_q2e22"]
+[ext_resource type="Script" path="res://inventory/items/inventory_item.gd" id="2_kxco1"]
+[ext_resource type="Texture2D" uid="uid://bakq3fmyk781n" path="res://assets/player/tools/pickaxe.png" id="3_jywsh"]
+
+[sub_resource type="Resource" id="Resource_yevdq"]
+script = ExtResource("1_q2e22")
+durability = 10
+tool_type = "pickaxe"
+tool_material = "stone"
+usable = false
+consumable = false
+stackable = false
+
+[resource]
+script = ExtResource("2_kxco1")
+name = "stone pickaxe"
+id = "tool:stone_pickaxe"
+texture = ExtResource("3_jywsh")
+desc = "a simple stone pickaxe"
+property = SubResource("Resource_yevdq")

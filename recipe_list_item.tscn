@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c80twtdy0a27m"]
+[gd_scene load_steps=4 format=3 uid="uid://c80twtdy0a27m"]
 
 [ext_resource type="Script" path="res://recipe_list_item.gd" id="1_adgiy"]
+[ext_resource type="FontFile" uid="uid://ceendimvhr6oq" path="res://assets/fonts/vergilia.ttf" id="2_3bqfi"]
+[ext_resource type="Texture2D" uid="uid://bn4h10jpgll7f" path="res://assets/ui/slot.png" id="2_5sg8o"]
 
 [node name="RecipeListItem" type="Button"]
 offset_right = 8.0
@@ -9,19 +11,35 @@ size_flags_horizontal = 3
 flat = true
 script = ExtResource("1_adgiy")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="borderRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+texture = ExtResource("2_5sg8o")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 65.0
+offset_bottom = 43.0
 
 [node name="iconRect" type="TextureRect" parent="HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 stretch_mode = 4
 
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
 [node name="nameLabel" type="Label" parent="HBoxContainer"]
+self_modulate = Color(0.0131673, 0.0035256, 0.00048967, 1)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_3bqfi")
+theme_override_font_sizes/font_size = 24
 vertical_alignment = 1
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

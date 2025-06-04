@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqjbgg0i14ca7"]
+
+[ext_resource type="Texture2D" uid="uid://c5pnu5s102l5i" path="res://assets/item/weapons/bow.png" id="2_ul74o"]
+[ext_resource type="FontFile" uid="uid://ceendimvhr6oq" path="res://assets/fonts/vergilia.ttf" id="3_45q0y"]
+
+[node name="recipe_ingredient_item" type="Control"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="icon" type="TextureRect" parent="."]
+modulate = Color(0.796078, 0.717647, 0.662745, 0.537255)
+layout_mode = 2
+offset_top = -1.0
+offset_right = 32.0
+offset_bottom = 31.0
+texture = ExtResource("2_ul74o")
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 39.0
+offset_right = 79.0
+offset_bottom = 40.0
+
+[node name="amount" type="Label" parent="HBoxContainer"]
+self_modulate = Color(0.203267, 0.110919, 0.0538113, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_45q0y")
+theme_override_font_sizes/font_size = 24
+
+[node name="x" type="Label" parent="HBoxContainer"]
+modulate = Color(0.135507, 0.0949127, 0.0546978, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_45q0y")
+theme_override_font_sizes/font_size = 20
+text = "x"
+
+[node name="text" type="Label" parent="HBoxContainer"]
+self_modulate = Color(0.22208, 0.131092, 0.0529922, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_45q0y")
+theme_override_font_sizes/font_size = 20

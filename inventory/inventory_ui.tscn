@@ -213,7 +213,7 @@ offset_top = 189.0
 offset_right = 223.0
 offset_bottom = 229.0
 script = ExtResource("6_sb2xs")
-slot_type = "elgs"
+slot_type = "legs"
 
 [node name="background" type="Sprite2D" parent="inventory_1/equipment/legs"]
 position = Vector2(-4, -5)

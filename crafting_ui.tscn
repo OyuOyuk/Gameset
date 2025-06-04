@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8wptfv3m0q2v"]
+[gd_scene load_steps=8 format=3 uid="uid://c8wptfv3m0q2v"]
 
 [ext_resource type="Texture2D" uid="uid://cdpa4j67ye3vd" path="res://assets/ui/crafting_bad.png" id="1_jc3cl"]
 [ext_resource type="Script" path="res://script/crafting_ui.gd" id="1_jlaym"]
 [ext_resource type="PackedScene" uid="uid://c80twtdy0a27m" path="res://recipe_list_item.tscn" id="2_rg2je"]
+[ext_resource type="PackedScene" uid="uid://cqjbgg0i14ca7" path="res://inventory/recipe_ingredient_item.tscn" id="3_pcctu"]
 [ext_resource type="FontFile" uid="uid://ceendimvhr6oq" path="res://assets/fonts/vergilia.ttf" id="3_y8vd0"]
 [ext_resource type="Texture2D" uid="uid://ta6bklks0d3q" path="res://assets/item/berry.png" id="4_62rix"]
+[ext_resource type="Texture2D" uid="uid://7makkubejw00" path="res://assets/button_background.png" id="7_mw0u3"]
 
 [node name="crafting_ui" type="Control"]
 layout_mode = 3
@@ -17,6 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jlaym")
 recipe_item = ExtResource("2_rg2je")
+ingredient_item = ExtResource("3_pcctu")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
@@ -25,12 +28,12 @@ offset_right = 587.0
 offset_bottom = 420.0
 texture = ExtResource("1_jc3cl")
 
-[node name="Control" type="Control" parent="."]
+[node name="recipeContainer" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Item_name" type="Label" parent="Control"]
+[node name="Item_name" type="Label" parent="recipeContainer"]
 self_modulate = Color(0.211131, 0.0935041, 0.0151363, 1)
 layout_mode = 0
 offset_left = 391.0
@@ -41,10 +44,22 @@ theme_override_fonts/font = ExtResource("3_y8vd0")
 theme_override_font_sizes/font_size = 32
 text = "A fake tale"
 
-[node name="Sprite2D" type="Sprite2D" parent="Control"]
+[node name="item_sprite" type="Sprite2D" parent="recipeContainer"]
 position = Vector2(353, 94)
 scale = Vector2(2, 2)
 texture = ExtResource("4_62rix")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="recipeContainer"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 139.0
+offset_right = 530.0
+offset_bottom = 339.0
+
+[node name="recipe_ingredients" type="VBoxContainer" parent="recipeContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
@@ -57,9 +72,18 @@ horizontal_scroll_mode = 0
 [node name="recipe_list_container" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="craftButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 455.0
-offset_top = 305.0
-offset_right = 526.0
-offset_bottom = 350.0
+offset_left = 457.0
+offset_top = 319.0
+offset_right = 541.0
+offset_bottom = 373.0
+theme_override_colors/font_color = Color(0.0469077, 0.0262272, 0.00423983, 1)
+theme_override_fonts/font = ExtResource("3_y8vd0")
+text = "Craft"
+icon = ExtResource("7_mw0u3")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="craftButton" to="." method="_on_craft_button_pressed"]

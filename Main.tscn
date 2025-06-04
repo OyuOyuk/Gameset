@@ -41,7 +41,7 @@
 [ext_resource type="Resource" uid="uid://cecgshbl1cgvy" path="res://inventory/items/stone_axe.tres" id="38_i1qgh"]
 [ext_resource type="PackedScene" uid="uid://c8wptfv3m0q2v" path="res://crafting_ui.tscn" id="39_04p0m"]
 [ext_resource type="Resource" uid="uid://cxoos82fxrats" path="res://inventory/items/leather_gloves.tres" id="40_871gg"]
-[ext_resource type="Resource" uid="uid://www2ijw4rput" path="res://inventory/items/simple_bow.tres" id="41_16bot"]
+[ext_resource type="Resource" uid="uid://cym2o68co5tx4" path="res://inventory/items/stone.tres" id="42_jmecx"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i6rj2"]
 frequency = 0.0205
@@ -1380,4 +1380,4 @@ item = ExtResource("40_871gg")
 
 [node name="collectable4" parent="." instance=ExtResource("34_poptd")]
 position = Vector2(-315, 29)
-item = ExtResource("41_16bot")
+item = ExtResource("42_jmecx")

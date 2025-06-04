@@ -1,12 +1,19 @@
-[gd_resource type="Resource" script_class="Drop_Table" load_steps=7 format=3 uid="uid://c1ywdvt7t5x4m"]
+[gd_resource type="Resource" script_class="Drop_Table" load_steps=8 format=3 uid="uid://c1ywdvt7t5x4m"]
 
-[ext_resource type="Resource" uid="uid://bk8aniq3l75h" path="res://inventory/item_drops/item_drops/berry_drop.tres" id="1_3dukk"]
+[ext_resource type="Resource" uid="uid://dj1nld8lx8l8c" path="res://inventory/items/berry.tres" id="1_diiv4"]
 [ext_resource type="Resource" uid="uid://bag6ox5p4fgbk" path="res://inventory/item_drops/item_drops/fiber_drops.tres" id="2_gv2lj"]
 [ext_resource type="Script" path="res://inventory/item_drops/drop_tables/Drop_Table.gd" id="3_kk2d1"]
 [ext_resource type="Resource" uid="uid://c8b8cxfjl64hu" path="res://inventory/items/stick.tres" id="3_tq4mc"]
 [ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="4_ay1s4"]
 
-[sub_resource type="Resource" id="Resource_owy6c"]
+[sub_resource type="Resource" id="Resource_1m3t7"]
+script = ExtResource("4_ay1s4")
+item = ExtResource("1_diiv4")
+item_chance = 1.0
+min_amount = 1
+max_amount = 3
+
+[sub_resource type="Resource" id="Resource_twhk8"]
 script = ExtResource("4_ay1s4")
 item = ExtResource("3_tq4mc")
 item_chance = 1.0
@@ -16,4 +23,5 @@ max_amount = 2
 [resource]
 script = ExtResource("3_kk2d1")
 name = "berry_bush"
-drops = Array[ExtResource("4_ay1s4")]([ExtResource("1_3dukk"), ExtResource("2_gv2lj"), SubResource("Resource_owy6c")])
+core_drops = Array[ExtResource("4_ay1s4")]([SubResource("Resource_1m3t7")])
+extra_drops = Array[ExtResource("4_ay1s4")]([ExtResource("2_gv2lj"), SubResource("Resource_twhk8")])

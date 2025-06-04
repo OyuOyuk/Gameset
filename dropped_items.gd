@@ -4,12 +4,13 @@ extends Node2D
 @export var collectable_item : PackedScene
 # Called when the node enters the scene tree for the first time.
 var drops = []
-var drop_dict = {}
+var core_drops = {}
+var extra_drops = {}
 var multiplier = 1
 func _ready():
 	for drop in master_drop.object_drops:
-		drop_dict[drop.name] = drop.drops
-
+		core_drops[drop.name] = drop.core_drops
+		extra_drops[drop.name] = drop.extra_drops
 	ConnectionManager.connect("direct_item_drops", drop_direct)
 func drop_direct(item, amount, coord):
 	# Instantiate the collectable item

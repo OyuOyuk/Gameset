@@ -7,10 +7,11 @@
 [sub_resource type="Resource" id="Resource_ifobp"]
 script = ExtResource("1_v3c3f")
 durability = 10
-equipment_type = "10"
+equipment_type = "hands"
 equipment_material = "leather"
 usable = false
 consumable = false
+stackable = false
 
 [resource]
 script = ExtResource("2_6f7x8")

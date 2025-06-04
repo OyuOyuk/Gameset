@@ -10,6 +10,7 @@ burnable = true
 Material_type = "forageable"
 usable = false
 consumable = false
+stackable = true
 
 [resource]
 script = ExtResource("2_emgyp")

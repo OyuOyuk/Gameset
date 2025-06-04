@@ -179,6 +179,8 @@ func assignTiles(current_chunk):
 		grass(current_chunk, tile_choices)
 		flowers(current_chunk, tile_choices)
 		rock(current_chunk, tile_choices)
+func land_item():
+	pass
 func plants(current_chunk, tile_choices):
 	for time in range(plant_amount[WorldManager.get_chunk(current_chunk).biome]):
 		var plant_pos = tile_choices.pick_random()
@@ -283,6 +285,7 @@ func rock(current_chunk, tile_choices):
 			object.rock = Vector2i(x*2, y*2)
 			tile_data.breakable_object = "rock"
 			object.object_id = "rock"
+			object.broken_by = ["pickaxe"]
 			tile_data.object = object
 func tree(current_chunk,tile_choices):
 	#

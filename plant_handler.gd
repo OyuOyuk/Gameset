@@ -120,7 +120,7 @@ func wither(pos, type, current_chunk):
 	if tile.plant_type == "plant":
 
 		VariablesManager.plant_tiles[current_chunk].erase(pos)
-		forageTilemaps["trees"].erase_cell(1, pos)
+		forageTilemaps["plants"].erase_cell(1, pos)
 	WorldManager.get_tile(current_chunk, pos ).object = null
 
 func try_spread(plant_name, pos, current_chunk):

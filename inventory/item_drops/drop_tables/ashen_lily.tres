@@ -1,10 +1,19 @@
-[gd_resource type="Resource" script_class="Drop_Table" load_steps=4 format=3 uid="uid://b0m0lxrpvq8ar"]
+[gd_resource type="Resource" script_class="Drop_Table" load_steps=6 format=3 uid="uid://b0m0lxrpvq8ar"]
 
 [ext_resource type="Resource" uid="uid://bag6ox5p4fgbk" path="res://inventory/item_drops/item_drops/fiber_drops.tres" id="1_ftm1u"]
-[ext_resource type="Resource" uid="uid://4qykjehiml0w" path="res://inventory/item_drops/item_drops/ashen_lily_drop.tres" id="2_ikn4v"]
+[ext_resource type="Resource" uid="uid://d1usi60qn8av7" path="res://inventory/items/ashen_lily.tres" id="1_mxvhu"]
+[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="2_hdl04"]
 [ext_resource type="Script" path="res://inventory/item_drops/drop_tables/Drop_Table.gd" id="3_a5pke"]
+
+[sub_resource type="Resource" id="Resource_n4e0e"]
+script = ExtResource("2_hdl04")
+item = ExtResource("1_mxvhu")
+item_chance = 1.0
+min_amount = 1
+max_amount = 1
 
 [resource]
 script = ExtResource("3_a5pke")
 name = "Ashen Lily"
-drops = Array[Resource("res://inventory/item_drops/item_drops/Item_Drops.gd")]([ExtResource("1_ftm1u"), ExtResource("2_ikn4v")])
+core_drops = Array[ExtResource("2_hdl04")]([SubResource("Resource_n4e0e")])
+extra_drops = Array[ExtResource("2_hdl04")]([ExtResource("1_ftm1u")])

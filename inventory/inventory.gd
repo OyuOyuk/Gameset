@@ -6,7 +6,15 @@ signal update
 @export var slots: Array[inventory_slot]
 func update_everything():
 	emit_signal("update")
-
+func search(item: Inventory_Item, amount: int):
+	var item_slots = slots.filter(func(slot): return slot.item == item)
+	var amount_counted = 0
+	for slot in item_slots:
+		amount_counted = amount_counted + slot.amount
+	if amount_counted >= amount:
+		return true
+	else:
+		return false
 # In Inventory.gd
 func insert(item: Inventory_Item, amount: int = 1, target_slot_index: int = -1):
 	if item == null or amount <= 0:
@@ -18,7 +26,7 @@ func insert(item: Inventory_Item, amount: int = 1, target_slot_index: int = -1):
 		if slot.item == null:  # If the target slot is empty
 			slot.item = item
 			slot.amount = amount  # Set amount when first inserted
-		elif slot.item == item:  # If the target slot has the same item
+		elif slot.item == item and slot.item.property.stackable == true:  # If the target slot has the same item
 			slot.amount += amount  # Increase the amount in the existing slot
 		else:
 			print("Target slot already contains a different item.")
@@ -26,7 +34,7 @@ func insert(item: Inventory_Item, amount: int = 1, target_slot_index: int = -1):
 	else:
 		# Check if the item already exists in the inventory
 		var item_slots = slots.filter(func(slot): return slot.item == item)
-		if item_slots.size() > 0:  # If the item already exists in any slot
+		if item_slots.size() > 0 and item.property.stackable == true:  # If the item already exists in any slot
 			item_slots[0].amount += amount  # Increase the amount in the first matching slot
 		else:
 			# Find an empty slot

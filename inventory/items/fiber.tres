@@ -7,9 +7,10 @@
 [sub_resource type="Resource" id="Resource_ylccn"]
 script = ExtResource("1_n5jqc")
 burnable = true
-Material_type = "generic"
+Material_type = "scrap_material"
 usable = false
 consumable = false
+stackable = true
 
 [resource]
 script = ExtResource("2_l4p5y")

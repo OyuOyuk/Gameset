@@ -11,6 +11,7 @@ tool_type = "axe"
 tool_material = "stone"
 usable = false
 consumable = false
+stackable = false
 
 [resource]
 script = ExtResource("2_l1ib6")

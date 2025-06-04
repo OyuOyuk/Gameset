@@ -10,6 +10,7 @@ burnable = true
 Material_type = "generic"
 usable = false
 consumable = false
+stackable = true
 
 [resource]
 script = ExtResource("2_8v8a3")

@@ -4,13 +4,15 @@ extends Node2D
 var bow_shooting = false
 var inventory 
 var current_chunk = WorldManager.get_current_chunk()
-var drop_dict = {}
+var core_drops = {}
+var extra_drops = {}
 var drops = []
 func _ready():
 	for drop in master_drop.object_drops:
-		drop_dict[drop.name] = drop.drops
+		core_drops[drop.name] = drop.core_drops
+		extra_drops[drop.name] = drop.extra_drops
 
-	print(drop_dict)
+	print(core_drops)
 	ConnectionManager.connect("new_chunk_entered", new_chunk_handler)
 	#for pos in touched_tiles:
 		#print("Tile at ", pos, " is ", touched_tiles[pos])
@@ -61,6 +63,8 @@ func right_tool(selected_tile, tool, tilemap):
 				"grass":
 					tile_map = tilemap["trees"]
 			chop(selected_tile, tool, tile_map)
+	elif tool.property.tool_type == "pickaxe":
+		pass
 func chop(selected_tile, tool, tilemap):
 	var tile = WorldManager.get_tile( current_chunk, selected_tile)
 	var non_tile_coord = tilemap.map_to_local(selected_tile)
@@ -111,50 +115,68 @@ func consume(held_item):
 	StatsManager.update_hunger(hunger_value)
 	print(held_item.name)
 func pick(selected_tile, tilemap):
-	var non_tile_coord = tilemap.map_to_local(selected_tile)
 	var tile = WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile)
 	var object = tile.object.object_id
-	if object in drop_dict:
-		drops = drop_dict[object]
-	elif object not in drop_dict and tile.object.plant != null:
-		drops = drop_dict["generic_plant"]
+	if object in core_drops:
+		drops = core_drops[object]
+	elif object not in core_drops and tile.object.plant != null:
+		drops = core_drops["generic_plant"]	
 	for item in drops:
 		var random_amount= randf_range(item.min_amount , item.max_amount )
 		if randf() <= item.item_chance:
-			if item.item.property  is Material_Properties:
-				var material_prop = item.item.property as  Material_Properties
-				if material_prop.Material_type == "scrap_material":
-					continue
-				else:
-					ConnectionManager.emit_signal("player_collect", item.item, random_amount)
-			else:
-				ConnectionManager.emit_signal("player_collect", item.item, random_amount)
-				
-		tile.object.plant.growth_stage = 3
-		tile.object.interactable = false
-		if tile.object.plant.plant_type == "plant":
-			tile.object.plant.atlas_coords = Vector2i(tile.object.plant.growth_stage*2, VariablesManager.plant_coords[tile.object.plant.name]*2)
-			
-			tilemap.set_cell(1, selected_tile, 3, tile.object.plant.atlas_coords)
-		elif tile.object.plant.plant_type == "flower":
-			tile.object.plant.atlas_coords = Vector2i(tile.object.plant.growth_stage*2, VariablesManager.flower_coords[tile.object.plant.name]*2)
-			tilemap.set_cell(1, selected_tile, tile.object.plant.sprite_variant, tile.object.plant.atlas_coords)	
-		#if item.item.property is Food_Properties:
-			#pass
+			ConnectionManager.emit_signal("player_collect", item.item, random_amount)
+	tile.object.plant.growth_stage = 3
+	tile.object.interactable = false
+	if tile.object.plant.plant_type == "plant":
+		tile.object.plant.atlas_coords = Vector2i(tile.object.plant.growth_stage*2, VariablesManager.plant_coords[tile.object.plant.name]*2)
+		
+		tilemap.set_cell(1, selected_tile, 3, tile.object.plant.atlas_coords)
+	elif tile.object.plant.plant_type == "flower":
+		tile.object.plant.atlas_coords = Vector2i(tile.object.plant.growth_stage*2, VariablesManager.flower_coords[tile.object.plant.name]*2)
+		tilemap.set_cell(1, selected_tile, tile.object.plant.sprite_variant, tile.object.plant.atlas_coords)	
+
 func item_handler(selected_tile, coord):
 	var tile = WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile)
 	var object = tile.object.object_id
-	print(object)
-	if object in drop_dict:
-		drops = drop_dict[object]
-		print(drops)
-	elif object not in drop_dict and tile.object.plant != null:
-		drops = drop_dict["generic_plant"]
-	if tile.object.plant != null:
-		if tile.object.plant.growth_stage <= 3:
-			drops = drop_dict["generic_plant"]
-			
-	for item in drops:
-		if randf() <= item.item_chance:
-			var random_amount= randf_range(item.min_amount , item.max_amount )
-			ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+	print(object, " is destroyed")
+	if object in core_drops:
+		for item in core_drops[object]:
+			if randf() <= item.item_chance:
+				var random_amount= randf_range(item.min_amount , item.max_amount )
+				ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+		for item in extra_drops[object]:
+			if randf() <= item.item_chance:
+				var random_amount= randf_range(item.min_amount , item.max_amount )
+				ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+	else:
+		if tile.object.plant != null:
+			for item in core_drops["generic_plant"]:
+				if randf() <= item.item_chance:
+					var random_amount= randf_range(item.min_amount , item.max_amount )
+					ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+			for item in extra_drops["generic_plant"]:
+				if randf() <= item.item_chance:
+					var random_amount= randf_range(item.min_amount , item.max_amount )
+					ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+#func item_handler(selected_tile, coord):
+	#var tile = WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile)
+	#var object = tile.object.object_id
+	#print(object)
+	#if object in core_drops:
+		#drops = [core_drops[object], extra_drops[object]]
+		#
+	#elif object not in core_drops and tile.object.plant != null:
+		#drops = [core_drops["generic_plant"],core_drops["generic_plant"]]
+	#if tile.object.plant != null:
+		#if tile.object.plant.growth_stage <= 3:
+			#drops = [core_drops["generic_plant"],core_drops["generic_plant"]]
+			#
+	#for item in drops[0]:
+		#print(item)
+		#if randf() <= item.item_chance:
+			#var random_amount= randf_range(item.min_amount , item.max_amount )
+			#ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+	#for item in drops[1]:
+		#if randf() <= item.item_chance:
+			#var random_amount= randf_range(item.min_amount , item.max_amount )
+			#ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )

@@ -10,6 +10,7 @@ burnable = false
 Material_type = "stone"
 usable = false
 consumable = false
+stackable = true
 
 [resource]
 script = ExtResource("1_ug7f4")

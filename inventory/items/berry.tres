@@ -12,6 +12,7 @@ spoil_time = 10
 food_effect = ""
 usable = false
 consumable = true
+stackable = true
 
 [resource]
 script = ExtResource("2_uorx7")
