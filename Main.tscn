@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://bjpi46v0ixskd"]
+[gd_scene load_steps=79 format=3 uid="uid://bjpi46v0ixskd"]
 
 [ext_resource type="Script" path="res://script/Main.gd" id="1_6uaq8"]
 [ext_resource type="Script" path="res://script/worldGenerationScripts/dual_grid_system/Grids.gd" id="1_043rh"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://dl11n3hrl6b3d" path="res://assets/world/rocks.png" id="24_ia1sx"]
 [ext_resource type="Texture2D" uid="uid://cwjvw34sic0wm" path="res://assets/world/flowers/flowers_1.png" id="25_4oukl"]
 [ext_resource type="PackedScene" uid="uid://bvhtxe5q0470c" path="res://status_bars.tscn" id="25_sclnd"]
+[ext_resource type="Script" path="res://on_ground_items.gd" id="30_tpebw"]
 [ext_resource type="PackedScene" uid="uid://clgiv7d05w4w8" path="res://collectable.tscn" id="34_poptd"]
 [ext_resource type="Resource" uid="uid://cecgshbl1cgvy" path="res://inventory/items/stone_axe.tres" id="38_i1qgh"]
 [ext_resource type="PackedScene" uid="uid://c8wptfv3m0q2v" path="res://crafting_ui.tscn" id="39_04p0m"]
@@ -1285,6 +1286,9 @@ script = ExtResource("18_1vv8t")
 [node name="dropped_items" type="Node2D" parent="world/active"]
 script = ExtResource("23_12btu")
 collectable_item = ExtResource("34_poptd")
+
+[node name="on_ground_items" type="Node2D" parent="world/active"]
+script = ExtResource("30_tpebw")
 
 [node name="Player" parent="world/active" node_paths=PackedStringArray("tilemap", "crosshair", "camera") instance=ExtResource("19_nqj67")]
 y_sort_enabled = false

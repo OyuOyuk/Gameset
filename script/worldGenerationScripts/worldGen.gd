@@ -13,37 +13,13 @@ var forageTilemaps = {
 @onready var plant_tilemaps = get_tree().get_nodes_in_group("plant_tilemaps")
 var noise : Noise
 var water_noise : Noise
-var size  = VariablesManager.chunkSize
-var rule = {
-	"road" : ["road", "house_plot", "park"],
-	"house_plot": ["road"],
-	"park" : ["park", "road"]
-}	
-var tree_amount = {
-	"FOREST": 150,
-	"GRASSLANDS":20,
-	"SAND":0,
-	"WATER":0, 
-}
-var grass_amount = {
-	"FOREST": 400,
-	"GRASSLANDS":500,
-	"SAND":0,
-	"WATER":0, 
-}
-var plant_amount = {
-	"FOREST": 400,
-	"GRASSLANDS":500,
-	"SAND":0,
-	"WATER":0, 
-}
-var values = {
-	"GRASSLANDS" : -0.3,
-	"FOREST" : -0.1,
-	"SAND" : -0.2,
-	"WATER" : -0.2
-}
-
+@onready var size  = VariablesManager.chunkSize
+@onready var rule = VariablesManager.rule
+@onready var tree_amount = VariablesManager.tree_amount
+@onready var grass_amount = VariablesManager.grass_amount
+@onready var plant_amount = VariablesManager.plant_amount
+@onready var values = VariablesManager.values
+@onready var items_onground = VariablesManager.onground_items
 
 @onready var script_a = $world
 @onready var script_b = $water
@@ -179,8 +155,12 @@ func assignTiles(current_chunk):
 		grass(current_chunk, tile_choices)
 		flowers(current_chunk, tile_choices)
 		rock(current_chunk, tile_choices)
-func land_item():
-	pass
+func land_item(current_chunk, tile_choices):
+	for time in range(items_onground[WorldManager.get_chunk(current_chunk).biome]):
+		var item_pos = tile_choices.pick_random()
+		if WorldManager.get_tile(current_chunk, item_pos ).waterPrescence == false and  WorldManager.get_tile(current_chunk, item_pos ).object == null:
+			var item_coord = world.map_to_local(item_pos)
+			ConnectionManager.emit_signal("ground_item_spawn", item_coord)
 func plants(current_chunk, tile_choices):
 	for time in range(plant_amount[WorldManager.get_chunk(current_chunk).biome]):
 		var plant_pos = tile_choices.pick_random()

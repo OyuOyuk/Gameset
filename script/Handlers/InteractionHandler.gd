@@ -140,10 +140,11 @@ func item_handler(selected_tile, coord):
 	var object = tile.object.object_id
 	print(object, " is destroyed")
 	if object in core_drops:
-		for item in core_drops[object]:
-			if randf() <= item.item_chance:
-				var random_amount= randf_range(item.min_amount , item.max_amount )
-				ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+		if tile.object.plant.growth_stage >= 3:
+			for item in core_drops[object]:
+				if randf() <= item.item_chance:
+					var random_amount= randf_range(item.min_amount , item.max_amount )
+					ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
 		for item in extra_drops[object]:
 			if randf() <= item.item_chance:
 				var random_amount= randf_range(item.min_amount , item.max_amount )

@@ -70,6 +70,7 @@ func _process(delta):
 				
 				# swing_action_timer check prevents rapid re-use while key is held
 				if selected_tile != null  and movement: # Ensure can't use tool if movement is locked by animation
+					print(WorldManager.get_tile(current_chunk,selected_tile).object)
 
 					interactionHandler.right_tool(selected_tile, inventory.slots[WorldManager.selected_slot].item, forageTilemaps)
 					# The swing animation and its timer are set in update_animation_parameters
@@ -146,7 +147,6 @@ func _process(delta):
 func is_within_bounds(pos: Vector2i, top_left: Vector2i, bottom_right: Vector2i) -> bool:
 	return (top_left.x <= pos.x and pos.x <= bottom_right.x) and \
 		   (top_left.y <= pos.y and pos.y <= bottom_right.y)
-
 func _physics_process(_delta):
 	var tile_pos = tilemap.local_to_map(global_position)
 	if tilemap.get_cell_atlas_coords(0, Vector2i(tile_pos.x, tile_pos.y)) == Vector2i(0, 0):
@@ -154,34 +154,34 @@ func _physics_process(_delta):
 	else:
 		state = "land"
 
-	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") # Consider adjusting deadzone here if needed
+	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
-	if movement == true and input_direction != Vector2.ZERO:
+	# --- Direction and Animation Logic ---
+	if input_direction != Vector2.ZERO:
+		# THE KEY CHANGE IS HERE: A bias to prioritize horizontal animations.
+		# This value makes the horizontal input "stronger" in the comparison.
+		# A higher value means the side animations are prioritized more heavily.
+		# 1.0 = no bias. 1.5 = strong bias. Try values between 1.1 and 2.0.
+		const HORIZONTAL_BIAS = 1.4 
+
 		var new_facing_direction = Vector2.ZERO
-		var deadzone_threshold = 0.3 # Keep your tuned value
-
-		var abs_x = abs(input_direction.x)
-		var abs_y = abs(input_direction.y)
-
-		if abs_x > deadzone_threshold and abs_y > deadzone_threshold:
-			if abs_x >= abs_y:
-				new_facing_direction = Vector2(sign(input_direction.x), 0)
-			else:
-				new_facing_direction = Vector2(0, sign(input_direction.y))
-		elif abs_x > abs_y:
+		
+		# Compare the biased horizontal input against the vertical input.
+		# By multiplying abs(x) by our bias, we make it "win" the comparison
+		# even when the raw input is slightly more vertical. This prevents flicker.
+		if abs(input_direction.x) * HORIZONTAL_BIAS >= abs(input_direction.y):
+			# Input is primarily horizontal, so we face left or right.
 			new_facing_direction = Vector2(sign(input_direction.x), 0)
-		elif abs_y > abs_x:
-			new_facing_direction = Vector2(0, sign(input_direction.y))
 		else:
-			if input_direction.x != 0:
-				new_facing_direction = Vector2(sign(input_direction.x), 0)
-			elif input_direction.y != 0:
-				new_facing_direction = Vector2(0, sign(input_direction.y))
+			# Only if the input is decisively vertical do we face up or down.
+			new_facing_direction = Vector2(0, sign(input_direction.y))
 
+		# Update the direction the character is facing.
 		if new_facing_direction != Vector2.ZERO:
 			last_direction = new_facing_direction
-	# Movement logic
-	if movement == true and input_direction != Vector2.ZERO:
+
+	# --- Movement Logic ---
+	if movement == true:
 		velocity = input_direction * speed[state]
 		move_and_slide()
 	else:

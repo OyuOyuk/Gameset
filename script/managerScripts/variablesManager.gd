@@ -76,3 +76,44 @@ var wither_time = {
 }
 var flower_tiles = {}
 var plant_tiles = {}
+var rule = {
+	"road" : ["road", "house_plot", "park"],
+	"house_plot": ["road"],
+	"park" : ["park", "road"]
+}	
+var tree_amount = {
+	"FOREST": 150,
+	"GRASSLANDS":20,
+	"SAND":0,
+	"WATER":0, 
+}
+var grass_amount = {
+	"FOREST": 400,
+	"GRASSLANDS":500,
+	"SAND":0,
+	"WATER":0, 
+}
+var plant_amount = {
+	"FOREST": 400,
+	"GRASSLANDS":500,
+	"SAND":0,
+	"WATER":0, 
+}
+var values = {
+	"GRASSLANDS" : -0.3,
+	"FOREST" : -0.1,
+	"SAND" : -0.2,
+	"WATER" : -0.2
+}
+var onground_items = {
+	"GRASSLANDS" : 10,
+	"FOREST" : 100,
+	"SAND" : 50,
+	"WATER" : 0
+}
+var onground_possible_items = {
+	"GRASSLANDS" : [],
+	"FOREST" : [],
+	"SAND" : [],
+	"WATER" : []
+}

@@ -1,19 +1,10 @@
-[gd_resource type="Resource" script_class="Drop_Table" load_steps=6 format=3 uid="uid://ur4dknkkyoly"]
+[gd_resource type="Resource" script_class="Drop_Table" load_steps=3 format=3 uid="uid://ur4dknkkyoly"]
 
 [ext_resource type="Resource" uid="uid://bag6ox5p4fgbk" path="res://inventory/item_drops/item_drops/fiber_drops.tres" id="1_1l80y"]
-[ext_resource type="Resource" uid="uid://c8b8cxfjl64hu" path="res://inventory/items/stick.tres" id="2_6rg0i"]
 [ext_resource type="Script" path="res://inventory/item_drops/drop_tables/Drop_Table.gd" id="2_iwilj"]
-[ext_resource type="Script" path="res://inventory/item_drops/item_drops/Item_Drops.gd" id="3_ta155"]
-
-[sub_resource type="Resource" id="Resource_kgjfi"]
-script = ExtResource("3_ta155")
-item = ExtResource("2_6rg0i")
-item_chance = 0.8
-min_amount = 1
-max_amount = 4
 
 [resource]
 script = ExtResource("2_iwilj")
 name = "generic_plant"
-core_drops = Array[ExtResource("3_ta155")]([])
-extra_drops = Array[ExtResource("3_ta155")]([ExtResource("1_1l80y"), SubResource("Resource_kgjfi")])
+core_drops = Array[Resource("res://inventory/item_drops/item_drops/Item_Drops.gd")]([])
+extra_drops = Array[Resource("res://inventory/item_drops/item_drops/Item_Drops.gd")]([ExtResource("1_1l80y")])
