@@ -10,7 +10,11 @@ enum type { GRASS, DIRT }
 var forageTilemaps = {
 	
 }
+var objectTilemaps = {
+	
+}
 @onready var plant_tilemaps = get_tree().get_nodes_in_group("plant_tilemaps")
+@onready var object_tilemaps = get_tree().get_nodes_in_group("object_tilemaps")
 var noise : Noise
 var water_noise : Noise
 @onready var size  = VariablesManager.chunkSize
@@ -28,7 +32,9 @@ func _ready():
 	print(find_hexagon_midpoints())
 	for plant_tilemap in plant_tilemaps:
 		forageTilemaps[plant_tilemap.name] = plant_tilemap	
-	
+	for object_tilemap in object_tilemaps:
+		objectTilemaps[object_tilemap.name] = object_tilemap
+
 	noise = LandNoise.noise
 	water_noise = WaterNoise.noise
 	var current_chunk = Vector2i(0, 0)
@@ -38,6 +44,7 @@ func new_chunk(current_chunk):
 	if WorldManager.get_tile(current_chunk, Vector2i(0, 0)) == null:
 		VariablesManager.flower_tiles[current_chunk] = []
 		VariablesManager.plant_tiles[current_chunk] = []
+		VariablesManager.tree_tiles[current_chunk] = []
 		for plant_tilemap in plant_tilemaps:
 			plant_tilemap.clear()
 		assignTiles(current_chunk)
@@ -151,9 +158,9 @@ func assignTiles(current_chunk):
 		set_river_flow(current_chunk )
 	if chunk.biome != "WATER":
 		#tree(current_chunk, tile_choices)
-		new_tree(current_chunk, tile_choices)
+		tree(current_chunk, tile_choices)
 		plants(current_chunk, tile_choices)
-		grass(current_chunk, tile_choices)
+		#grass(current_chunk, tile_choices)
 		flowers(current_chunk, tile_choices)
 		rock(current_chunk, tile_choices)
 func land_item(current_chunk, tile_choices):
@@ -235,26 +242,26 @@ func flowers_circle(center_position, size, current_chunk, plant_type):
 				tile_data.object = object
 				VariablesManager.flower_tiles[current_chunk].append(tile)
 				#tile_data.plant =plant_data #old
-func grass(current_chunk, tile_choices):
-
-	for time in range(grass_amount[WorldManager.get_chunk(current_chunk).biome]):
-		var grass_pos = tile_choices.pick_random()
-		var tile_data = WorldManager.get_tile(current_chunk,grass_pos )
-		if tile_data.waterPrescence == false and tile_data.object == null :
-			var grass_data = PlantData.new()
-			var object = objectData.new()
-			var random_number_x = randi() % 2 * 2
-			
-			tile_data.breakable_object = "grass"
-			grass_data.name = "grass"
-			grass_data.plant_type = "grass"
-			grass_data.health = 1
-			grass_data.atlas_coords = Vector2i(random_number_x, 0)
-			object.broken_by = ["axe"]
-			object.plant = grass_data
-			object.object_id = grass_data.name
-			tile_data.object= object
-			#tile_data.plant = grass_data #old 
+#func grass(current_chunk, tile_choices):
+#
+	#for time in range(grass_amount[WorldManager.get_chunk(current_chunk).biome]):
+		#var grass_pos = tile_choices.pick_random()
+		#var tile_data = WorldManager.get_tile(current_chunk,grass_pos )
+		#if tile_data.waterPrescence == false and tile_data.object == null :
+			#var grass_data = PlantData.new()
+			#var object = objectData.new()
+			#var random_number_x = randi() % 2 * 2
+			#
+			#tile_data.breakable_object = "grass"
+			#grass_data.name = "grass"
+			#grass_data.plant_type = "grass"
+			#grass_data.health = 1
+			#grass_data.atlas_coords = Vector2i(random_number_x, 0)
+			#object.broken_by = ["axe"]
+			#object.plant = grass_data
+			#object.object_id = grass_data.name
+			#tile_data.object= object
+			##tile_data.plant = grass_data #old 
 func rock(current_chunk, tile_choices):
 	for time in range(100):
 		var rock_pos = tile_choices.pick_random()
@@ -268,7 +275,7 @@ func rock(current_chunk, tile_choices):
 			object.object_id = "rock"
 			object.broken_by = ["pickaxe"]
 			tile_data.object = object
-func new_tree(current_chunk, tile_choices):
+func tree(current_chunk, tile_choices):
 	print("Edit")
 	var spawned_tree_positions = []
 	var min_distance_squared = 3 * 3
@@ -290,70 +297,19 @@ func new_tree(current_chunk, tile_choices):
 			var tree_data = PlantData.TreeData.new()
 			var random_tree_type = randi() % 4
 			var random_life_stage = randi() % 4 
+			VariablesManager.tree_tiles[current_chunk].append(tree_pos)
 			tree_data.growth_stage = random_life_stage
 			tree_data.atlas_coords = Vector2i(random_tree_type*5, random_life_stage*8)
 			tree_data.name = VariablesManager.tree_types[0 if random_tree_type == 0 or random_tree_type == 1 else 1]
 			tree_data.plant_type = "tree"
-			tree_data.health = 50
-			object.object_id = tree_data
+			tree_data.health =100
+			object.object_id = tree_data.name
 			object.broken_by = ["axe"]
 			object.plant = tree_data
 			tile.object = object
 			spawned_tree_positions.append(tree_pos)
 			tree_to_spawn = tree_to_spawn - 1
-func tree(current_chunk,tile_choices):
-	#
-	var spawned_tree_positions = []
-	var min_distance_squared = 3 * 3   # Minimum distance between trees
-	
-	var tree_to_spawn = tree_amount[WorldManager.get_chunk(current_chunk).biome]
-	while tree_to_spawn > 0  and tile_choices.size() > 0:
 
-		var tree_pos = tile_choices.pick_random()
-		var too_close = false
-		for existing_pos in spawned_tree_positions:
-			var distance_squared = (tree_pos.x - existing_pos.x) * (tree_pos.x - existing_pos.x) + (tree_pos.y - existing_pos.y) * (tree_pos.y - existing_pos.y)
-			if distance_squared < min_distance_squared:
-				too_close = true
-				break
-		if too_close:
-			tile_choices.erase(tree_pos)
-			continue
-		var  tile = WorldManager.get_tile(current_chunk,tree_pos )
-		if tile.waterPrescence == false :
-			var object = objectData.new()
-			var tree_data = PlantData.TreeData.new()
-			var random_number_x = randi() % 4 * 5
-			var trunk 
-			var trunk_y = 0
-			var random_number_y = randi() % 3
-			tree_data.growth_stage = random_number_y + 1
-			match random_number_y:
-				0:
-					random_number_y = 0
-					trunk = 0
-					tree_data.growth_stage = 1
-				1: 
-					random_number_y = 5
-					trunk = 3
-					tree_data.growth_stage = 2
-				2: 
-					random_number_y = 12
-					trunk = 6
-					tree_data.growth_stage = 3
-			if random_number_x < 8:
-				trunk_y = 2
-			tree_data.atlas_coords = Vector2i(random_number_x, random_number_y)
-			tree_data.root_atlas_coords = Vector2i(trunk, trunk_y)
-			object.tree = tree_data
-			object.object_id = "tree"
-			object.broken_by = ["axe"]
-			tile.object = object 
-			
-			#tile.tree = tree_data #old
-			tile.breakable_object = "tree"
-			spawned_tree_positions.append(tree_pos)
-			tree_to_spawn = tree_to_spawn - 1
 func generateWorld(current_chunk):
 	var minx = -size.x/2
 	for y in range(-size.y/2, size.y/2):
@@ -368,10 +324,8 @@ func generateWorld(current_chunk):
 			elif tile.waterPrescence == false:
 				water.set_cell(0,Vector2i(x,y), 0, Vector2i(1, 0))
 			if tile.object != null:
-				if tile.object.tree != null:
-					objects.set_cell(1,Vector2i(x,y),0,tile.object.tree.atlas_coords)
-					objects.set_cell(0,Vector2i(x,y),1,tile.object.tree.root_atlas_coords)
-				elif tile.object.plant != null:
+
+				if tile.object.plant != null:
 					if tile.object.plant.plant_type == "grass":
 						objects.set_cell(1,Vector2i(x,y),2,tile.object.plant.atlas_coords)
 					elif tile.object.plant.plant_type == "plant":
@@ -379,11 +333,11 @@ func generateWorld(current_chunk):
 					elif tile.object.plant.plant_type == "flower":
 						forageTilemaps["flowers"].set_cell(1,Vector2i(x,y),tile.object.plant.sprite_variant,tile.object.plant.atlas_coords)
 					elif tile.object.plant.plant_type == "tree":
-						forageTilemaps["Trees"].set_cell(0, Vector2i(x, y), 0, tile.object.plant.atlas_coords)
-						forageTilemaps["Trees"].set_cell(1, Vector2i(x, y), 1, tile.object.plant.atlas_coords)
+						forageTilemaps["trees"].set_cell(0, Vector2i(x, y), 0, tile.object.plant.atlas_coords)
+						forageTilemaps["trees"].set_cell(1, Vector2i(x, y), 1, tile.object.plant.atlas_coords)
 						
 				elif tile.object.rock != null:
-					objects.set_cell(1,Vector2i(x,y),5, tile.object.rock )
+					objectTilemaps["minerals"].set_cell(0, Vector2i(x,y), 0, tile.object.rock )
 		if y > 0:
 			minx = minx + 0.5
 		else:

@@ -14,11 +14,12 @@ var tree_growth_stage_multipier= {
 	3 : 1
 }
 var player_position
-var plant_types = ["berry_bush", "bush"]
+var plant_types = ["berry_bush", "bush", "grass"]
 var flower_types = ["Ashen Lily", "flower", "Ember Petals", "Pale WildFlowers"]
 var plant_coords = {
 	"berry_bush" : 0,
 	"bush" : 1,
+	"grass": 2,
 
 }
 var flower_coords = {
@@ -36,6 +37,7 @@ var bloomable = {
 var fruitable = {
 	"berry_bush" : true,
 	"bush" : false,
+	"grass" : false,
 }
 var in_season = {
 	"berry_bush" :["Spring", "Summer", "Autumn", "Winter"],
@@ -46,6 +48,7 @@ var in_season = {
 var growth_time = {
 	"berry_bush" :1,
 	"bush" :1,
+	"grass":1,
 	"Ashen Lily" :1,
 	"flower" :1,
 	"Ember Petals" : 1,
@@ -54,6 +57,7 @@ var growth_time = {
 var spread_chance = {
 	"berry_bush" :0.2,
 	"bush" :0.1,
+	"grass" :0.1,
 	"Ashen Lily" :0.2,
 	"flower" :0.1,
 	"Ember Petals" : 0.1,
@@ -76,6 +80,7 @@ var wither_time = {
 }
 var flower_tiles = {}
 var plant_tiles = {}
+var tree_tiles = {}
 var rule = {
 	"road" : ["road", "house_plot", "park"],
 	"house_plot": ["road"],

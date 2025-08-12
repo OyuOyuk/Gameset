@@ -18,66 +18,85 @@ func _ready():
 		#print("Tile at ", pos, " is ", touched_tiles[pos])
 func new_chunk_handler(new_chunk):
 	current_chunk = WorldManager.get_current_chunk()
-func replace_chop_tree(selected_tile, tool, tilemap):
-	var atlas_coord = tilemap.get_cell_atlas_coords(1, selected_tile)
-	tilemap.erase_cell(1, selected_tile)
-	print("worked")
-	var tile = WorldManager.get_tile( current_chunk, selected_tile)
-	tile.object.tree.turned_sprite = true
-	tile.object.tree.health = tile.object.tree.health - VariablesManager.tool_material_damage[tool.property.tool_material]
-	var non_tile_coord = tilemap.map_to_local(selected_tile)
-	ConnectionManager.emit_signal("change_to_sprites", non_tile_coord, atlas_coord, selected_tile)
-func chop_tree(selected_tile, tool, tilemap):
-	var tile = WorldManager.get_tile( current_chunk, selected_tile)
-	var non_tile_coord = tilemap.map_to_local(selected_tile)
-	tile.object.tree.health = tile.object.tree.health - VariablesManager.tool_material_damage[tool.property.tool_material]
-	if tile.object.tree.health <= 0 and tile.object.tree.chopped == false :
-		print("working")
-		tile.object.tree.chopped = true
-		
-		#ConnectionManager.emit_signal("broken_object_drops", selected_tile, non_tile_coord )
-		item_handler(selected_tile, non_tile_coord)
-		ConnectionManager.emit_signal("chopped_tree", selected_tile, get_parent().position)
-	if tile.object.tree.chopped == true and tile.object.tree.health <= -40:
-		item_handler(selected_tile, non_tile_coord)
-		#ConnectionManager.emit_signal("broken_object_drops", selected_tile, non_tile_coord )
-		WorldManager.get_tile( current_chunk, selected_tile).object = null
-		tilemap.erase_cell(0, selected_tile)
+
 func right_tool(selected_tile, tool, tilemap):
 
 	if tool.property.tool_type == "axe":
-		if WorldManager.get_tile( current_chunk, selected_tile).object.tree != null:
-			if WorldManager.get_tile( current_chunk, selected_tile).object.tree.turned_sprite == false:
-				print("choping")
-				replace_chop_tree(selected_tile, tool , tilemap["trees"])
-			else:
-				
-				chop_tree(selected_tile, tool, tilemap["trees"])
-		elif WorldManager.get_tile( current_chunk, selected_tile).object.plant != null:
+		#if WorldManager.get_tile( current_chunk, selected_tile).object.tree != null:
+			#if WorldManager.get_tile( current_chunk, selected_tile).object.tree.turned_sprite == false:
+				#print("choping")
+				#replace_chop_tree(selected_tile, tool , tilemap["trees"])
+			#else:
+				#
+				#chop_tree(selected_tile, tool, tilemap["trees"])
+		if WorldManager.get_tile( current_chunk, selected_tile).object.plant != null:
 			var tile_map
 			match WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type :
 				"flower":
 					tile_map = tilemap["flowers"]
 				"plant":
 					tile_map = tilemap["plants"]
-				"grass":
+				"tree":
 					tile_map = tilemap["trees"]
-			chop(selected_tile, tool, tile_map)
+			chop_plant(selected_tile, tool, tile_map)
+		elif WorldManager.get_tile(current_chunk, selected_tile).object.feature != null:
+			
+			var tile_map
+			match WorldManager.get_tile( current_chunk, selected_tile).object.feature.feature_type:
+				"tree_trunk":
+					
+					tile_map = tilemap["trees"]
+			chop_feature(selected_tile, tool, tile_map)
 	elif tool.property.tool_type == "pickaxe":
 		pass
-func chop(selected_tile, tool, tilemap):
+func chop_feature(selected_tile, tool, tilemap):
+	var tile = WorldManager.get_tile(current_chunk, selected_tile)
+	
+	var non_tile_coord = tilemap.map_to_local(selected_tile)
+	tile.object.feature.health = tile.object.feature.health - VariablesManager.tool_material_damage[tool.property.tool_material]
+	if tile.object.feature.health <= 0:
+		item_handler(selected_tile, non_tile_coord)
+		if tile.object.feature.feature_type == "tree_trunk":
+			VariablesManager.tree_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
+			tilemap.erase_cell(0, selected_tile)
+		WorldManager.get_tile( current_chunk, selected_tile).object = null
+		
+func chop_plant(selected_tile, tool, tilemap):
+	var data_save = null
 	var tile = WorldManager.get_tile( current_chunk, selected_tile)
 	var non_tile_coord = tilemap.map_to_local(selected_tile)
 	tile.object.plant.health = tile.object.plant.health - VariablesManager.tool_material_damage[tool.property.tool_material]
+	if tile.object.plant.plant_type == "tree" and tile.object.plant.turned_sprite == false:
+		var atlas_coord = tilemap.get_cell_atlas_coords(1, selected_tile)
+		tilemap.erase_cell(1, selected_tile)
+		tile.object.plant.turned_sprite = true
+		ConnectionManager.emit_signal("change_to_sprites", non_tile_coord, atlas_coord, selected_tile)	
 	if tile.object.plant.health <= 0 :
 		
 		item_handler(selected_tile, non_tile_coord)
-		if WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type == "flower":
+		if tile.object.plant.plant_type == "flower":
 			VariablesManager.flower_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
-		elif WorldManager.get_tile( current_chunk, selected_tile).object.plant.plant_type == "plant":
+		elif tile.object.plant.plant_type == "plant":
 			VariablesManager.plant_tiles[WorldManager.get_current_chunk()].erase(selected_tile)
+		elif tile.object.plant.plant_type == "tree":
+			ConnectionManager.emit_signal("chopped_tree", selected_tile, get_parent().position)
+			
+			data_save = tile.object
+
+			
 		WorldManager.get_tile( current_chunk, selected_tile).object = null
 		tilemap.erase_cell(1, selected_tile)
+		if data_save != null:
+			var object = objectData.new()
+			var feature = FeatureData.new()
+			feature.feature_type = "tree_trunk"
+			feature.feature_name = data_save.plant.plant_name
+			feature.health = 40
+			object.broken_by = data_save.broken_by
+			object.object_id = data_save.object_id
+			object.feature = feature
+			tile.object = object
+			data_save = null
 func interact(selected_tile, tilemap):
 	print("interact")
 	if WorldManager.get_tile(current_chunk, selected_tile).object.plant != null:
@@ -151,14 +170,31 @@ func item_handler(selected_tile, coord):
 				ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
 	else:
 		if tile.object.plant != null:
-			for item in core_drops["generic_plant"]:
-				if randf() <= item.item_chance:
-					var random_amount= randf_range(item.min_amount , item.max_amount )
-					ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
-			for item in extra_drops["generic_plant"]:
-				if randf() <= item.item_chance:
-					var random_amount= randf_range(item.min_amount , item.max_amount )
-					ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+			if tile.object.plant.plant_type != "tree":
+				for item in core_drops["generic_plant"]:
+					if randf() <= item.item_chance:
+						var random_amount= randf_range(item.min_amount , item.max_amount )
+						ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+				for item in extra_drops["generic_plant"]:
+					if randf() <= item.item_chance:
+						var random_amount= randf_range(item.min_amount , item.max_amount )
+						ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+			else:
+				for item in core_drops["tree"]:
+					if randf() <= item.item_chance:
+						var random_amount= randf_range(item.min_amount , item.max_amount )
+						ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+				for item in extra_drops["tree"]:
+					if randf() <= item.item_chance:
+						var random_amount= randf_range(item.min_amount , item.max_amount )
+						ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+		if tile.object.feature != null:
+			if tile.object.feature.feature_type == "tree_trunk":
+				for item in core_drops["tree"]:
+					if randf() <= item.item_chance:
+						var random_amount= randf_range(item.min_amount , item.max_amount )
+						ConnectionManager.emit_signal("direct_item_drops", item.item, random_amount, coord )
+				
 #func item_handler(selected_tile, coord):
 	#var tile = WorldManager.get_tile(WorldManager.get_current_chunk(), selected_tile)
 	#var object = tile.object.object_id

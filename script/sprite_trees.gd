@@ -30,7 +30,7 @@ var dict = {
 	Vector2i(15, 12) : 11,
 }
 
-var atlas_texture = preload("res://assets/world/tree.png")  # Preload the atlas texture
+var atlas_texture = preload("res://assets/world/trees/fixed_tree_tops.png")  # Preload the atlas texture
 
 
 # Called when the node enters the scene tree for the first time.
@@ -38,12 +38,14 @@ func _ready():
 	ConnectionManager.connect("change_to_sprites", change)
 	ConnectionManager.connect("chopped_tree", delete)
 # Define regions manually based on sprite positions in the sheet
-func set_sprite_by_index(index: int, sprite : Sprite2D):
-	if index >= 0 and index < sprite_regions.size():
-		# Create a new AtlasTexture for each sprite to avoid shared state issues
+func set_sprite_by_index(atlas_coord, sprite : Sprite2D):
+	if atlas_coord != null:
 		var new_atlas_texture = AtlasTexture.new()
+		
 		new_atlas_texture.atlas = atlas_texture  # Set the atlas directly
-		new_atlas_texture.region = sprite_regions[index]  # Set the specific region for this sprite
+		#new_atlas_texture.region = sprite_regions[index]  # Set the specific region for this sprite
+		new_atlas_texture.region = Rect2(atlas_coord.x / 5 * 160, atlas_coord.y / 8* 256 ,160, 256)
+
 		sprite.texture = new_atlas_texture
 		sprite.z_index = 1
 		sprite.y_sort_enabled = true
@@ -70,19 +72,12 @@ func delete(selected_tile, player_coord):
 
 func change(selected_coord, atlas_coord, selected_tile):
 	var sprite2d = Sprite2D.new() 
-	var offset_y = 0
-	if atlas_coord.y == 0:
-		offset_y = 64
-	elif atlas_coord.y == 5:
-		offset_y = 96
-
-	elif atlas_coord.y == 12:
-		offset_y = 112
+	var offset_y = 112
 		
 	sprite2d.position = selected_coord
 	sprite2d.offset =   Vector2(0, - offset_y )
 	sprite2d.name = str(selected_tile)
 
 
-	set_sprite_by_index(dict[atlas_coord], sprite2d)
+	set_sprite_by_index(atlas_coord, sprite2d)
 	add_child(sprite2d)
