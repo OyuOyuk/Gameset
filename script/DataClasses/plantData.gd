@@ -15,4 +15,4 @@ var fruitable = false
 var chopped = false
 var turned_sprite = false
 class TreeData extends PlantData:
-	var root_atlas_coords = Vector2i(0,0)
+	pass

@@ -117,3 +117,4 @@ var onground_possible_items = {
 	"SAND" : [],
 	"WATER" : []
 }
+var tree_types = ["oak_tree","pine_tree"]
