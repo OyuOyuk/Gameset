@@ -785,13 +785,12 @@ script = ExtResource("1_6uaq8")
 
 [node name="world" type="Node2D" parent="."]
 
-[node name="worldgen" type="Node2D" parent="world" node_paths=PackedStringArray("world", "water", "objects")]
+[node name="worldgen" type="Node2D" parent="world" node_paths=PackedStringArray("world", "water")]
 script = ExtResource("8_p8gn7")
 LandNoise = SubResource("NoiseTexture2D_a0bt4")
 WaterNoise = SubResource("NoiseTexture2D_f5dxa")
 world = NodePath("world")
 water = NodePath("water")
-objects = NodePath("")
 
 [node name="world" type="TileMap" parent="world/worldgen" node_paths=PackedStringArray("displayTilemap")]
 texture_filter = 1
@@ -896,9 +895,8 @@ format = 2
 layer_0/y_sort_enabled = true
 layer_0/z_index = 1
 
-[node name="plant_handler" type="Node2D" parent="world/active" node_paths=PackedStringArray("tile_map")]
+[node name="plant_handler" type="Node2D" parent="world/active"]
 script = ExtResource("24_e02lj")
-tile_map = NodePath("")
 
 [node name="sprite_trees" type="Node2D" parent="world/active"]
 z_index = 1

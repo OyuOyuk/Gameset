@@ -13,9 +13,11 @@ var tree_growth_stage_multipier= {
 	2 : 0.5,
 	3 : 1
 }
+var new_chunk_tree_life_cycle = 30
 var player_position
 var plant_types = ["berry_bush", "bush", "grass"]
 var flower_types = ["Ashen Lily", "flower", "Ember Petals", "Pale WildFlowers"]
+var tree_types = ["oak_tree","pine_tree"]
 var plant_coords = {
 	"berry_bush" : 0,
 	"bush" : 1,
@@ -27,6 +29,10 @@ var flower_coords = {
 	"flower" : 1,
 	"Ember Petals" : 2,
 	"Pale WildFlowers" : 3
+}
+var tree_coords = {
+	"oak_tree" : [0, 1],
+	"pine_tree" : [2, 3]
 }
 var bloomable = {
 	"Ashen Lily" : true,
@@ -52,17 +58,20 @@ var growth_time = {
 	"Ashen Lily" :1,
 	"flower" :1,
 	"Ember Petals" : 1,
-	"Pale WildFlowers" : 1
+	"Pale WildFlowers" : 1,
+	"oak_tree" : 1,
+	"pine_tree" : 1
 }
 var spread_chance = {
 	"berry_bush" :0.2,
 	"bush" :0.1,
-	"grass" :0.1,
+	"grass" :0.5,
 	"Ashen Lily" :0.2,
 	"flower" :0.1,
 	"Ember Petals" : 0.1,
-	"Pale WildFlowers" : 0.2
-
+	"Pale WildFlowers" : 0.2,
+	"oak_tree" : 0.01,
+	"pine_tree" : 0.01,
 }
 var flower_circle_size = {
 	"Ashen Lily" : [3, 4],
@@ -73,10 +82,13 @@ var flower_circle_size = {
 var wither_time = {
 	"berry_bush" : 5,
 	"bush" : 5,
+	"grass":2,
 	"Ashen Lily" : 5,
 	"flower" : 5,
 	"Ember Petals" : 5,
-	"Pale WildFlowers" : 5
+	"Pale WildFlowers" : 5,
+	"oak_tree" : 8,
+	"pine_tree" : 8,
 }
 var flower_tiles = {}
 var plant_tiles = {}
@@ -122,4 +134,4 @@ var onground_possible_items = {
 	"SAND" : [],
 	"WATER" : []
 }
-var tree_types = ["oak_tree","pine_tree"]
+

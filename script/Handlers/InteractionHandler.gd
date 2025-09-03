@@ -90,7 +90,7 @@ func chop_plant(selected_tile, tool, tilemap):
 			var object = objectData.new()
 			var feature = FeatureData.new()
 			feature.feature_type = "tree_trunk"
-			feature.feature_name = data_save.plant.plant_name
+			feature.feature_name = data_save.plant.plant_name + "_trunk"
 			feature.health = 40
 			object.broken_by = data_save.broken_by
 			object.object_id = data_save.object_id
