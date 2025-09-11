@@ -63,15 +63,15 @@ var growth_time = {
 	"pine_tree" : 1
 }
 var spread_chance = {
-	"berry_bush" :0.2,
-	"bush" :0.1,
-	"grass" :0.5,
-	"Ashen Lily" :0.2,
-	"flower" :0.1,
-	"Ember Petals" : 0.1,
-	"Pale WildFlowers" : 0.2,
-	"oak_tree" : 0.01,
-	"pine_tree" : 0.01,
+	"berry_bush" :0.5,
+	"bush" :0.5,
+	"grass" :0.8,
+	"Ashen Lily" :0.5,
+	"flower" :0.5,
+	"Ember Petals" : 0.5,
+	"Pale WildFlowers" : 0.5,
+	"oak_tree" : 0.5,
+	"pine_tree" : 0.5,
 }
 var flower_circle_size = {
 	"Ashen Lily" : [3, 4],
@@ -80,19 +80,20 @@ var flower_circle_size = {
 	"Pale WildFlowers" : [4, 12]
 }
 var wither_time = {
-	"berry_bush" : 5,
-	"bush" : 5,
-	"grass":2,
-	"Ashen Lily" : 5,
-	"flower" : 5,
-	"Ember Petals" : 5,
-	"Pale WildFlowers" : 5,
-	"oak_tree" : 8,
-	"pine_tree" : 8,
+	"berry_bush" : 10,
+	"bush" : 10,
+	"grass":5,
+	"Ashen Lily" : 10,
+	"flower" : 10,
+	"Ember Petals" : 10,
+	"Pale WildFlowers" : 10,
+	"oak_tree" : 18,
+	"pine_tree" : 18,
 }
 var flower_tiles = {}
 var plant_tiles = {}
 var tree_tiles = {}
+var forage_tiles = {}
 var rule = {
 	"road" : ["road", "house_plot", "park"],
 	"house_plot": ["road"],

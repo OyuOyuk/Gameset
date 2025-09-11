@@ -18,6 +18,8 @@ func _ready():
 		forageTilemaps[plant_tilemap.name] = plant_tilemap	
 	ConnectionManager.connect("day_change",growth_handler )
 	ConnectionManager.connect("new_chunk_entered", new_chunk_handler)
+	
+
 func new_chunk_handler(new_chunk):
 	if WorldManager.get_tile(new_chunk, Vector2i(0, 0)) != null:
 		current_chunk = new_chunk
@@ -72,27 +74,28 @@ func dict_cleaner():
 		else:
 			if WorldManager.get_tile(current_chunk, pos).object.plant == null:
 				VariablesManager.plant_tiles[current_chunk].erase(pos)
-#func growth_handler():
-	#
-	#
-	#current_chunk = WorldManager.get_current_chunk()
-	#flower_tiles = VariablesManager.flower_tiles[current_chunk]
-	#plant_tiles = VariablesManager.plant_tiles[current_chunk]
-	#tree_tiles = VariablesManager.tree_tiles[current_chunk]
-	#var tiles_to_update = plant_tiles + flower_tiles + tree_tiles
-	#
-	#for tile in tiles_to_update:
-		#
-		#var tile_data = WorldManager.get_tile(current_chunk, tile).object.plant
-		#print(tile_data)
-		#if tile_data == null:
-			#continue
+func growth_handler():
+	
+	
+	current_chunk = WorldManager.get_current_chunk()
+	flower_tiles = VariablesManager.flower_tiles[current_chunk]
+	plant_tiles = VariablesManager.plant_tiles[current_chunk]
+	tree_tiles = VariablesManager.tree_tiles[current_chunk]
+	var tiles_to_update = plant_tiles + flower_tiles + tree_tiles
+
+	for tile in tiles_to_update:
+		
+		var tile_data = WorldManager.get_tile(current_chunk, tile).object.plant
+		if tile_data == null:
+			continue
+			
+		
 		#var feature = WorldManager.get_tile(current_chunk, tile).object.feature 
 		#if  feature != null:
 			#if feature.feature_type == "tree_trunk":
 				#if randf() < 0.05:
 					#var plant = PlantData.new()
-					#plant.plant_name = feature.feature_name - "_trunk"
+					#plant.name = feature.feature_name - "_trunk"
 					#plant.plant_type = "tree"
 					#plant.growth_stage = 0
 					#plant.health = 100
@@ -100,14 +103,48 @@ func dict_cleaner():
 					#WorldManager.get_tile(current_chunk, tile).object.plant = plant
 					#WorldManager.get_tile(current_chunk, tile).object.feature = null
 					#continue
-		#else:
-			#continue
+			#else:
+				#continue
+		if tile_data.blossomable == true or tile_data.fruitable == true:
+			growth_stage_number = 5
+		tile_data.days_elapsed = tile_data.days_elapsed + 1
+		print("updating : ",tile_data.name)
+		
+		if tile_data.days_elapsed >= VariablesManager.growth_time[str(tile_data.name)]:
+			
+			tile_data.days_elapsed = 0
+			
+			
+			tile_data.growth_stage = min(tile_data.growth_stage + 1, growth_stage_number)
+			if tile_data.plant_type == "flower":
+				
+				tile_data.atlas_coords = Vector2i(tile_data.growth_stage*2, VariablesManager.flower_coords[tile_data.name]*2)
+			elif tile_data.plant_type == "plant":
+				tile_data.atlas_coords = Vector2i(tile_data.growth_stage*2, VariablesManager.plant_coords[tile_data.name]*2)
+			elif tile_data.plant_type == "tree":
+				tile_data.atlas_coords = Vector2i(VariablesManager.tree_coords[tile_data.name].pick_random()*5,tile_data.growth_stage*8 )
+			if tile_data.growth_stage >= growth_stage_number:
+				var spread_chance = VariablesManager.spread_chance[tile_data.name]
+
+				if randf() < spread_chance:
+					try_spread(tile_data.name ,tile, current_chunk)
+				if TimeManager.total_days - tile_data.last_date_updated >= VariablesManager.wither_time[tile_data.name]:
+					wither(tile, tile_data.plant_type ,current_chunk)
+			else:
+				tile_data.last_date_updated = TimeManager.total_days
+	tilemap_updater(current_chunk)
+	print("work!")
+#func growth_handler():
+	#current_chunk = WorldManager.get_current_chunk()
+	#flower_tiles = VariablesManager.flower_tiles[current_chunk]
+	#plant_tiles = VariablesManager.plant_tiles[current_chunk]
+	#tree_tiles = VariablesManager.tree_tiles[current_chunk]
+	#var tiles_to_update = plant_tiles + flower_tiles 
+	#for tile in tiles_to_update:
+		#var tile_data =  WorldManager.get_tile(current_chunk, tile).object.plant
 		#if tile_data.blossomable == true or tile_data.fruitable == true:
 			#growth_stage_number = 5
 		#tile_data.days_elapsed = tile_data.days_elapsed + 1
-	#
-#
-		#print(tile_data.name)
 		#if tile_data.days_elapsed >= VariablesManager.growth_time[tile_data.name]:
 #
 			#tile_data.days_elapsed = 0
@@ -115,7 +152,6 @@ func dict_cleaner():
 			#
 			#tile_data.growth_stage = min(tile_data.growth_stage + 1, growth_stage_number)
 			#if tile_data.plant_type == "flower":
-				#
 				#tile_data.atlas_coords = Vector2i(tile_data.growth_stage*2, VariablesManager.flower_coords[tile_data.name]*2)
 			#elif tile_data.plant_type == "plant":
 				#tile_data.atlas_coords = Vector2i(tile_data.growth_stage*2, VariablesManager.plant_coords[tile_data.name]*2)
@@ -131,16 +167,16 @@ func dict_cleaner():
 			#else:
 				#tile_data.last_date_updated = TimeManager.total_days
 	#tilemap_updater(current_chunk)
-	#print("work!")
-func growth_handler():
-	pass
+		
 func wither(pos, type, current_chunk):
 	var tile = WorldManager.get_tile(current_chunk, pos ).object.plant
+	print("withering at:", pos, "destroying :",tile.name )
 	if tile.plant_type == "flower":
 
 		VariablesManager.flower_tiles[current_chunk].erase(pos)
 		forageTilemaps["flowers"].erase_cell(1, pos)
 		WorldManager.get_tile(current_chunk, pos ).object = null
+		
 	if tile.plant_type == "plant":
 
 		VariablesManager.plant_tiles[current_chunk].erase(pos)
@@ -151,9 +187,11 @@ func wither(pos, type, current_chunk):
 		forageTilemaps["trees"].erase_cell(1, pos)
 		var feature = FeatureData.new()
 		feature.feature_type = "tree_trunk"
-		feature.feature_name = WorldManager.get_tile(current_chunk, pos ).object.plant.plant_name + "_trunk"
+		feature.feature_name = WorldManager.get_tile(current_chunk, pos ).object.plant.name + "_trunk"
 		feature.health = 40
-		
+		WorldManager.get_tile(current_chunk, pos ).object.plant = null
+		WorldManager.get_tile(current_chunk, pos ).object.feature = feature
+		#forageTilemaps["trees"].set_cell(0, pos, 0, WorldManager.get_tile(current_chunk, pos ).object.feature.atlas_coords)
 
 func try_spread(plant_name, pos, current_chunk):
 	var directions = [ Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1),Vector2i(0, -1)]		
@@ -170,7 +208,7 @@ func try_spread(plant_name, pos, current_chunk):
 			var object = objectData.new()
 			var y
 			var x = 0
-			plant_data.plant_name = plant_name
+			plant_data.name = plant_name
 			plant_data.growth_stage = 0
 			plant_data.health = 20
 			plant_data.sprite_variant = randi() %2
